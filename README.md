@@ -33,3 +33,34 @@
 - 先搭 `Python` 索引服务骨架
 - 再补最小检索 API
 - 最后接桌面宠物界面
+
+## 当前代码状态
+
+已经补上第一版 `Python` 索引服务骨架：
+
+- `src/index_service`：服务主包
+- `src/index_service/api.py`：FastAPI 路由
+- `src/index_service/storage.py`：SQLite + FTS5 存储层
+- `src/index_service/indexing.py`：目录扫描与切块建索引
+- `src/index_service/search.py`：最小检索服务
+- `tests/test_indexing.py`：核心链路测试
+
+## 计划中的最小 API
+
+- `GET /healthz`
+- `POST /api/v1/index`
+- `POST /api/v1/search`
+
+## 本地运行
+
+先安装依赖：
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+启动服务：
+
+```bash
+python -m uvicorn index_service.main:app --app-dir src --reload
+```
