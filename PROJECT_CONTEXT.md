@@ -23,12 +23,12 @@
 - 远程默认分支：`main`
 - 本地工作分支：`main`
 - 本地保留一个历史备份分支：`codex/master-pre-main-sync`
-- 当前机器上的标准 `git push / git fetch / git clone` 到 GitHub smart-HTTP 链路不稳定
-- 现阶段远程内容同步可通过 GitHub API 兜底完成
+- 当前机器在合适网络条件下，标准 `git fetch / git push` 到 GitHub 已恢复正常
+- 之前 smart-HTTP 不稳定时，远程内容曾通过 GitHub API 兜底同步
 - 这意味着：
   - 远程文件内容已经同步
-  - 本地与远程的 Git 历史目前还不是完全同构
-  - 后续开发仍统一在本地 `main` 上继续
+  - 本地开发统一在 `main` 上继续
+  - 历史整理时保留备份分支，避免丢失此前本地提交
 
 ## v1 核心目标
 
