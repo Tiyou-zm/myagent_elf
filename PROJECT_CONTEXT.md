@@ -18,6 +18,18 @@
 - 远程仓库：`https://github.com/Tiyou-zm/myagent_elf.git`
 - 约定：后续开发默认都在这个目录内进行
 
+## 当前 Git 同步状态
+
+- 远程默认分支：`main`
+- 本地工作分支：`main`
+- 本地保留一个历史备份分支：`codex/master-pre-main-sync`
+- 当前机器上的标准 `git push / git fetch / git clone` 到 GitHub smart-HTTP 链路不稳定
+- 现阶段远程内容同步可通过 GitHub API 兜底完成
+- 这意味着：
+  - 远程文件内容已经同步
+  - 本地与远程的 Git 历史目前还不是完全同构
+  - 后续开发仍统一在本地 `main` 上继续
+
 ## v1 核心目标
 
 把项目做成一个“本地文件检索助理”：
