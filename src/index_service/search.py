@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from index_service.models import SearchHit
 from index_service.storage import SQLiteIndexStore
 
 
@@ -9,7 +10,7 @@ from index_service.storage import SQLiteIndexStore
 class SearchSummary:
     # 搜索服务的内部返回结构，避免 API 直接依赖存储层对象。
     query: str
-    results: list[dict[str, str | int | float]]
+    results: list[SearchHit]
 
 
 class SearchService:
@@ -22,17 +23,14 @@ class SearchService:
         if not cleaned:
             raise ValueError("Query must not be empty.")
         hits = self.store.search(cleaned, limit)
+        return SearchSummary(query=cleaned, results=hits)
+
+    def search_files(self, query: str, limit: int) -> SearchSummary:
+        cleaned = query.strip()
+        if not cleaned:
+            raise ValueError("Query must not be empty.")
+        hits = self.store.search_files_by_name(cleaned, limit)
         return SearchSummary(
             query=cleaned,
-            results=[
-                {
-                    "path": hit.path,
-                    "chunk_index": hit.chunk_index,
-                    "start_line": hit.start_line,
-                    "end_line": hit.end_line,
-                    "snippet": hit.snippet,
-                    "score": hit.score,
-                }
-                for hit in hits
-            ],
+            results=hits,
         )

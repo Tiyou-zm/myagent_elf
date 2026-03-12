@@ -45,11 +45,20 @@
 - `src/index_service/search.py`：最小检索服务
 - `tests/test_indexing.py`：核心链路测试
 
+当前已经补上的 `v1` 实用能力：
+
+- 内容检索：按文本内容查命中片段
+- 文件检索：按文件名/路径模糊匹配查文件
+- 增量索引：未变化文件会跳过重建
+- 根目录查询：可查看当前登记过的索引目录
+
 ## 计划中的最小 API
 
 - `GET /healthz`
+- `GET /api/v1/roots`
 - `POST /api/v1/index`
 - `POST /api/v1/search`
+- `POST /api/v1/search/files`
 
 ## 本地运行
 
@@ -64,3 +73,22 @@ python -m pip install -r requirements.txt
 ```bash
 python -m uvicorn index_service.main:app --app-dir src --reload
 ```
+
+## 当前接口说明
+
+`POST /api/v1/index`
+
+- 输入：用户授权的目录列表
+- 输出：扫描文件数、实际重建数、未变化跳过数、跳过文件数、删除文件数
+
+`POST /api/v1/search`
+
+- 作用：按文件内容搜索
+
+`POST /api/v1/search/files`
+
+- 作用：按文件名或路径搜索
+
+`GET /api/v1/roots`
+
+- 作用：查看当前已经登记过的索引根目录

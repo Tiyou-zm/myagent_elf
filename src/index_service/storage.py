@@ -5,7 +5,7 @@ from contextlib import closing
 from pathlib import Path
 from typing import Iterable
 
-from index_service.models import FileRecord, SearchHit, TextChunk
+from index_service.models import FileRecord, IndexedRoot, SearchHit, TextChunk
 
 
 class SQLiteIndexStore:
@@ -95,6 +95,42 @@ class SQLiteIndexStore:
                 [(str(root),) for root in roots],
             )
 
+    def list_roots(self) -> list[IndexedRoot]:
+        with closing(self.connect()) as connection:
+            rows = connection.execute(
+                """
+                SELECT root_path, last_indexed_at
+                FROM indexed_roots
+                ORDER BY root_path
+                """
+            ).fetchall()
+        return [
+            IndexedRoot(
+                root_path=row["root_path"],
+                last_indexed_at=row["last_indexed_at"],
+            )
+            for row in rows
+        ]
+
+    def get_file_record(self, path: str) -> FileRecord | None:
+        with closing(self.connect()) as connection:
+            row = connection.execute(
+                """
+                SELECT path, size_bytes, mtime_ns, content_hash
+                FROM files
+                WHERE path = ?
+                """,
+                (path,),
+            ).fetchone()
+        if row is None:
+            return None
+        return FileRecord(
+            path=row["path"],
+            size_bytes=int(row["size_bytes"]),
+            mtime_ns=int(row["mtime_ns"]),
+            content_hash=row["content_hash"],
+        )
+
     def upsert_file(self, record: FileRecord) -> int:
         with closing(self.connect()) as connection, connection:
             # 先按路径做 upsert，v1 阶段只保证同一路径文件的最新索引状态。
@@ -172,11 +208,45 @@ class SQLiteIndexStore:
         return [
             SearchHit(
                 path=row["path"],
+                match_type="content",
                 chunk_index=int(row["chunk_index"]),
                 start_line=int(row["start_line"]),
                 end_line=int(row["end_line"]),
                 snippet=row["snippet"],
                 score=float(row["score"]),
+            )
+            for row in rows
+        ]
+
+    def search_files_by_name(self, query: str, limit: int) -> list[SearchHit]:
+        normalized = f"%{query.lower()}%"
+        with closing(self.connect()) as connection:
+            # 先用简单的路径模糊匹配实现文件检索，后面再考虑更细的排序规则。
+            rows = connection.execute(
+                """
+                SELECT
+                    path,
+                    CASE
+                        WHEN lower(path) LIKE ? THEN 0
+                        ELSE 1
+                    END AS rank_bucket
+                FROM files
+                WHERE lower(path) LIKE ?
+                ORDER BY rank_bucket, length(path), path
+                LIMIT ?
+                """,
+                (normalized, normalized, limit),
+            ).fetchall()
+
+        return [
+            SearchHit(
+                path=row["path"],
+                match_type="filename",
+                chunk_index=0,
+                start_line=0,
+                end_line=0,
+                snippet=row["path"],
+                score=float(row["rank_bucket"]),
             )
             for row in rows
         ]

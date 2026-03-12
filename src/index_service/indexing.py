@@ -15,6 +15,7 @@ class IndexingSummary:
     roots: list[str]
     scanned_files: int
     indexed_files: int
+    unchanged_files: int
     skipped_files: int
     deleted_files: int
     warnings: list[str]
@@ -33,6 +34,7 @@ class IndexingService:
 
         scanned_files = 0
         indexed_files = 0
+        unchanged_files = 0
         skipped_files = 0
         warnings: list[str] = []
         scanned_paths: list[str] = []
@@ -40,7 +42,15 @@ class IndexingService:
         for root in normalized_roots:
             for file_path in self._iter_candidate_files(root):
                 scanned_files += 1
-                scanned_paths.append(str(file_path))
+                file_path_str = str(file_path)
+                scanned_paths.append(file_path_str)
+
+                stat = file_path.stat()
+                existing = self.store.get_file_record(file_path_str)
+                if existing is not None and existing.size_bytes == stat.st_size and existing.mtime_ns == stat.st_mtime_ns:
+                    # 文件元数据没变时先跳过重建，v1 先做这一层增量优化。
+                    unchanged_files += 1
+                    continue
 
                 text = self._read_text(file_path)
                 if text is None:
@@ -50,9 +60,9 @@ class IndexingService:
 
                 file_id = self.store.upsert_file(
                     FileRecord(
-                        path=str(file_path),
-                        size_bytes=file_path.stat().st_size,
-                        mtime_ns=file_path.stat().st_mtime_ns,
+                        path=file_path_str,
+                        size_bytes=stat.st_size,
+                        mtime_ns=stat.st_mtime_ns,
                         content_hash=hashlib.sha1(text.encode("utf-8")).hexdigest(),
                     )
                 )
@@ -68,6 +78,7 @@ class IndexingService:
             roots=[str(root) for root in normalized_roots],
             scanned_files=scanned_files,
             indexed_files=indexed_files,
+            unchanged_files=unchanged_files,
             skipped_files=skipped_files,
             deleted_files=deleted_files,
             warnings=warnings,
