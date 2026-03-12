@@ -17,6 +17,7 @@
 - 本地仓库目录：`C:\\Users\\Administrator\\Desktop\\agent_study`
 - 远程仓库：`https://github.com/Tiyou-zm/myagent_elf.git`
 - 约定：后续开发默认都在这个目录内进行
+- 当前 `origin` 实际推送地址：`git@github.com:Tiyou-zm/myagent_elf.git`
 
 ## 协作约定
 
@@ -29,12 +30,19 @@
 - 远程默认分支：`main`
 - 本地工作分支：`main`
 - 本地保留一个历史备份分支：`codex/master-pre-main-sync`
-- 当前机器在合适网络条件下，标准 `git fetch / git push` 到 GitHub 已恢复正常
+- 当前机器已切到 `SSH over 443` 推送 GitHub
 - 之前 smart-HTTP 不稳定时，远程内容曾通过 GitHub API 兜底同步
 - 这意味着：
   - 远程文件内容已经同步
   - 本地开发统一在 `main` 上继续
   - 历史整理时保留备份分支，避免丢失此前本地提交
+
+## 当前 Git 连接方案
+
+- fetch / push 默认走 SSH，而不是 HTTPS
+- SSH 主机配置写在 `C:\\Users\\Administrator\\.ssh\\config`
+- GitHub 主机名仍写作 `github.com`，但通过 `ssh.github.com:443` 建立连接
+- 这样做是为了绕开本机对 HTTPS push 的偶发连接重置
 
 ## v1 核心目标
 

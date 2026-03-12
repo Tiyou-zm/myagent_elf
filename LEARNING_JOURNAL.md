@@ -330,3 +330,46 @@
 - 继续保持小步推进
 - 尽量一边做一边校验理解，不再只追求代码往前堆
 - 后续如需继续扩功能，优先挑一块小能力配套讲清楚
+
+## Session 009 - Git 调试与 SSH over 443 固化
+
+日期：2026-03-12
+
+### 我们这一步在做什么
+
+把今天反复出现的 GitHub 推送不稳定问题彻底查清楚，并把更稳的连接方案落到本机：
+
+- 检查 Git 代理、环境变量代理、WinHTTP 代理
+- 检查 DNS 和 `github.com:443` 连通性
+- 分别验证普通 HTTPS、`git ls-remote`、`git push`
+- 最后切换到 `SSH over 443`
+
+### 这一步学到的东西
+
+- 问题并不像“代理配错”那么简单
+- 普通 HTTPS 访问 GitHub 和 `git ls-remote` 可以正常，不代表 `git push` 一定稳定
+- 本机更像是对 GitHub HTTPS push 这条链路存在偶发连接重置
+- 对这台机器来说，`SSH over 443` 比 HTTPS push 更适合作为默认方案
+
+### 我们做过的排查
+
+- 确认 Git 没有额外的 `http.proxy` / `https.proxy`
+- 确认环境变量里没有代理残留
+- 确认 WinHTTP 是 direct access
+- 确认 `github.com:443`、`github.com:22`、`ssh.github.com:443` 都可以探测
+- 抓了 `git push` 的详细日志，确认认证和收发包流程本身能走通，但 HTTPS push 仍有偶发 reset
+
+### 最终处理方式
+
+- 在 `C:\\Users\\Administrator\\.ssh` 下生成专用 GitHub SSH key
+- 配置 `C:\\Users\\Administrator\\.ssh\\config`
+- 让 `github.com` 通过 `ssh.github.com:443` 建立 SSH 连接
+- 把仓库 `origin` 从 HTTPS 改成 `git@github.com:Tiyou-zm/myagent_elf.git`
+- 验证 `ssh -T git@github.com` 成功
+- 验证 `git push origin main` 成功
+
+### 当前结论
+
+- 这台机器后续应优先使用 SSH 推送 GitHub
+- 如果再次遇到推送问题，优先检查 SSH 连通性，而不是先怀疑业务代码
+- 今天这次排障结果已经被固化到项目文档，后续不需要从头再查一遍

@@ -109,3 +109,11 @@ python -m uvicorn index_service.main:app --app-dir src --reload
 - 先把功能做成最小可用版本
 - 再用已经写出来的代码反过来教学
 - 讲解时优先用人话和精确可点的文件链接
+
+## Git 现状
+
+这台机器当前 GitHub 推送已切到 `SSH over 443`：
+
+- 仓库远程地址使用 `git@github.com:Tiyou-zm/myagent_elf.git`
+- `C:\Users\Administrator\.ssh\config` 已配置走 `ssh.github.com:443`
+- 后续优先用 SSH 推送，不再默认依赖 HTTPS push
