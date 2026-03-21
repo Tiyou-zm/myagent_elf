@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 import sys
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
@@ -145,6 +146,34 @@ class IndexingServiceTest(unittest.TestCase):
                 response.headers["access-control-allow-origin"],
                 "http://127.0.0.1:4173",
             )
+
+    def test_api_can_open_file_and_parent_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            sample_file = root / "notes.md"
+            sample_file.write_text("open action test\n", encoding="utf-8")
+
+            app = create_app(Settings(database_path=root / "index.db"))
+            client = TestClient(app)
+
+            with patch("index_service.actions._launch_path") as launch_mock:
+                file_response = client.post(
+                    "/api/v1/open",
+                    json={"path": str(sample_file), "mode": "file"},
+                )
+                self.assertEqual(file_response.status_code, 200)
+                self.assertEqual(file_response.json()["mode"], "file")
+                self.assertEqual(file_response.json()["path"], str(sample_file.resolve()))
+                launch_mock.assert_called_with(sample_file.resolve())
+
+                parent_response = client.post(
+                    "/api/v1/open",
+                    json={"path": str(sample_file), "mode": "parent"},
+                )
+                self.assertEqual(parent_response.status_code, 200)
+                self.assertEqual(parent_response.json()["mode"], "parent")
+                self.assertEqual(parent_response.json()["path"], str(root.resolve()))
+                launch_mock.assert_called_with(root.resolve())
 
 
 

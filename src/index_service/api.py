@@ -4,6 +4,7 @@ from fastapi import APIRouter, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from index_service.actions import LocalPathActionService
 from index_service.config import Settings, get_settings
 from index_service.indexing import IndexingService
 from index_service.search import SearchService
@@ -63,6 +64,17 @@ class SearchResponse(BaseModel):
     results: list[SearchHitResponse]
 
 
+class OpenPathRequest(BaseModel):
+    path: str = Field(min_length=1)
+    mode: str = Field(pattern="^(file|parent)$")
+
+
+class ActionResponse(BaseModel):
+    message: str
+    path: str
+    mode: str
+
+
 def _bad_request(detail: str) -> HTTPException:
     # 统一无效输入的返回结构，方便前端后续直接展示或分支处理。
     return HTTPException(
@@ -81,6 +93,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     store.initialize()
     indexing_service = IndexingService(settings, store)
     search_service = SearchService(store)
+    action_service = LocalPathActionService()
 
     router = APIRouter(prefix=settings.api_prefix)
 
@@ -165,6 +178,24 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 )
                 for hit in summary.results
             ],
+        )
+
+    @router.post("/open", response_model=ActionResponse)
+    def open_path(request: OpenPathRequest) -> ActionResponse:
+        try:
+            opened_path = action_service.open_path(request.path, request.mode)
+        except ValueError as exc:
+            raise _bad_request(str(exc)) from exc
+
+        if request.mode == "file":
+            message = "File open command sent."
+        else:
+            message = "Directory open command sent."
+
+        return ActionResponse(
+            message=message,
+            path=str(opened_path),
+            mode=request.mode,
         )
 
     app = FastAPI(title=settings.app_name)

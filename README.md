@@ -63,6 +63,7 @@
 - `POST /api/v1/index`
 - `POST /api/v1/search`
 - `POST /api/v1/search/files`
+- `POST /api/v1/open`
 
 ## 本地运行
 
@@ -96,6 +97,10 @@ python -m uvicorn index_service.main:app --app-dir src --reload
 `GET /api/v1/roots`
 
 - 作用：查看当前已经登记过的索引根目录
+
+`POST /api/v1/open`
+
+- 作用：触发本地打开文件或打开所在目录
 
 ## 今日学习结论
 
@@ -206,5 +211,7 @@ http://127.0.0.1:4173
 - 内容搜索
 - 文件名搜索
 - 根目录查询
+- 打开文件
+- 打开所在目录
 
 同时后端也补上了本地开发用 CORS，允许这个前端壳从 `http://127.0.0.1:4173` 访问 FastAPI。
