@@ -237,3 +237,24 @@ http://127.0.0.1:4173
 - 加载现有 `playground/index.html`
 
 也就是说，当前已经从“网页壳验证调用链”推进到了“桌面窗口承载这条调用链”。
+
+## 当前统一启动方式
+
+为了避免每次手动分别开后端和 Electron，现在又补了统一编排脚本：
+
+- `scripts/start_desktop_stack.ps1`
+- `scripts/stop_desktop_stack.ps1`
+
+启动整套最小桌面栈：
+
+```powershell
+.\scripts\start_desktop_stack.ps1
+```
+
+关闭整套最小桌面栈：
+
+```powershell
+.\scripts\stop_desktop_stack.ps1
+```
+
+当前这一步的意义是把“后端 + 桌面壳”从两套分散命令，推进到一个真正可重复使用的开发入口。

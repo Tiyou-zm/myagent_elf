@@ -211,3 +211,20 @@
 - 后端仍然独立运行
 
 因为 Electron 通过 `file://` 加载页面，后端 CORS 也同步补了 `Origin: null` 的放行。
+
+## 2026-03-21 统一启动编排补充
+
+当前已经补上最小桌面栈的统一启动与停止脚本：
+
+- `scripts/start_desktop_stack.ps1`
+- `scripts/stop_desktop_stack.ps1`
+
+这套脚本当前负责：
+
+- 拉起 Python 后端
+- 等待健康检查通过
+- 拉起 Electron 壳
+- 记录运行状态
+- 统一停止整套栈
+
+这意味着当前桌面端开发入口已经从“记多条命令”推进到“一条启动，一条停止”。
