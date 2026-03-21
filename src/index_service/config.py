@@ -17,6 +17,7 @@ class Settings:
     cors_allowed_origins: tuple[str, ...] = (
         "http://127.0.0.1:4173",
         "http://localhost:4173",
+        "null",
     )
     chunk_size_chars: int = 1200
     chunk_overlap_chars: int = 200

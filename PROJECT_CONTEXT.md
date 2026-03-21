@@ -194,3 +194,20 @@
 - 打开所在目录
 
 因此当前闭环已经从“能调用搜索”推进到“能从结果触发本地动作”。
+
+## 2026-03-21 最小 Electron 壳补充
+
+当前已经补上一个最小 Electron 工程，用来把现有前端壳正式放进桌面窗口：
+
+- `package.json`
+- `electron/main.js`
+- `scripts/start_electron_shell.ps1`
+
+当前策略很克制：
+
+- 先不引 React / Vite
+- Electron 先只负责窗口宿主
+- 前端壳继续沿用现有 `playground/index.html`
+- 后端仍然独立运行
+
+因为 Electron 通过 `file://` 加载页面，后端 CORS 也同步补了 `Origin: null` 的放行。

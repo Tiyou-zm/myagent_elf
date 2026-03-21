@@ -1,0 +1,14 @@
+{
+  "name": "agent-study-electron-shell",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal Electron shell for agent_study.",
+  "main": "electron/main.js",
+  "scripts": {
+    "electron": "electron .",
+    "electron:dev": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^35.1.5"
+  }
+}

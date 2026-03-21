@@ -215,3 +215,25 @@ http://127.0.0.1:4173
 - 打开所在目录
 
 同时后端也补上了本地开发用 CORS，允许这个前端壳从 `http://127.0.0.1:4173` 访问 FastAPI。
+
+## 当前最小 Electron 壳
+
+现在又补上了一个真正的桌面宿主，用来承载现有前端壳：
+
+- `package.json`
+- `electron/main.js`
+- `scripts/start_electron_shell.ps1`
+
+启动方式：
+
+```powershell
+.\scripts\start_index_service.ps1
+.\scripts\start_electron_shell.ps1
+```
+
+当前这层 Electron 先只做两件事：
+
+- 打开桌面窗口
+- 加载现有 `playground/index.html`
+
+也就是说，当前已经从“网页壳验证调用链”推进到了“桌面窗口承载这条调用链”。

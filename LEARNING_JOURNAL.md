@@ -797,3 +797,48 @@
 
 - 开始把这个薄壳迁到 Electron，或者
 - 先继续补前端壳的使用体验
+
+## Session 019 - 把薄壳迁进最小 Electron
+
+日期：2026-03-21
+
+### 我们这一步在做什么
+
+今天没有继续只停留在网页壳，而是正式补了一个最小 Electron 工程，把现有调用链迁进桌面窗口：
+
+- 新增 Electron 入口
+- 新增 Electron 启动脚本
+- 补本地依赖安装
+- 保持后端继续独立运行
+
+### 这一步学到的东西
+
+- Electron 这一层当前最重要的不是框架，而是“桌面宿主”这个角色
+- 只要最小调用链已经在网页壳里跑通，迁到 Electron 的第一步就不需要再重做一套前端
+- Electron 用 `file://` 加载页面时，要额外考虑后端 CORS 对 `Origin: null` 的放行
+
+### 这一步做出的固化
+
+- 新增 `package.json`
+- 新增 `electron/main.js`
+- 新增 `scripts/start_electron_shell.ps1`
+- `.gitignore` 补了 `node_modules/`
+- 后端 CORS 白名单补了 `null`
+
+### 本次验证
+
+- `npm install`
+- `npx electron --version`
+- `python -m unittest tests.test_indexing`
+- `python -m compileall src tests`
+- 真实起过后端和 Electron 进程，确认桌面壳可启动
+
+### 当前结论
+
+- 现在已经不只是“有后端 + 网页壳”，而是“有最小桌面宿主”
+- 这意味着后面再往前推，就可以开始讨论真正的 Electron 应用结构，而不是先纠结桌面入口怎么落
+
+### 下一步
+
+- 继续把当前薄壳整理成更像 Electron 应用的结构，或者
+- 开始接 Electron 侧更正式的前后端启动编排

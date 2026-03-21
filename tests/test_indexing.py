@@ -147,6 +147,25 @@ class IndexingServiceTest(unittest.TestCase):
                 "http://127.0.0.1:4173",
             )
 
+    def test_api_allows_electron_file_origin(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            app = create_app(Settings(database_path=root / "index.db"))
+            client = TestClient(app)
+
+            response = client.options(
+                "/api/v1/search",
+                headers={
+                    "Origin": "null",
+                    "Access-Control-Request-Method": "POST",
+                },
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(
+                response.headers["access-control-allow-origin"],
+                "null",
+            )
+
     def test_api_can_open_file_and_parent_directory(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
