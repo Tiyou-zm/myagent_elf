@@ -24,6 +24,7 @@
 - 默认工作方式是边做边学，而不是只闷头往前写功能
 - 每推进一小步，都要把结果和关键认识同步到 `README.md`、`PROJECT_CONTEXT.md`、`LEARNING_JOURNAL.md`
 - 以后所有 Git 提交信息默认写成对本次工作的浓缩简介，控制在十几到二十字左右，不需要用户重复提醒
+- 以后每完成一步有效推进，默认直接执行 `commit + push`
 - 如果在新电脑上继续学习，优先按 `NEW_MACHINE_SETUP.md` 恢复环境和上下文
 
 ## 当前 Git 同步状态
@@ -139,3 +140,22 @@
 - 优化文件检索与内容检索的排序
 - 增加文件摘要/结果重排
 - 再接 Electron 侧调用链路
+
+## 2026-03-21 进展补充
+
+当前 Python 服务已经完成一次真实启动与接口实测，说明后端状态已经从“只写出了代码”推进到“本地可运行”。
+
+本次固定下来的运行入口：
+
+- `scripts/start_index_service.ps1`
+- `scripts/smoke_test_index_service.ps1`
+
+本次已经实测通过的接口：
+
+- `GET /healthz`
+- `POST /api/v1/index`
+- `POST /api/v1/search`
+- `POST /api/v1/search/files`
+- `GET /api/v1/roots`
+
+因此，下一步不再是“先证明服务能不能跑”，而是“基于稳定启动/验收入口继续推进后端体验或接 Electron”。

@@ -15,6 +15,7 @@
 - 后续代码会按模块逐步加入，不一开始堆满
 - 默认边做边学，每推进一小步都要把关键结论同步回文档
 - 以后所有 Git 提交信息默认写成对本次工作的浓缩简介，控制在十几到二十字左右，不再每次单独提醒
+- 以后每完成一步有效推进，默认直接 `commit + push`
 - 如果换电脑继续学习，先读 `NEW_MACHINE_SETUP.md`
 
 当前 `v1` 方向：
@@ -134,3 +135,32 @@ python -m uvicorn index_service.main:app --app-dir src --reload
 - 仓库远程地址使用 `git@github.com:Tiyou-zm/myagent_elf.git`
 - `C:\Users\Administrator\.ssh\config` 已配置走 `ssh.github.com:443`
 - 后续优先用 SSH 推送，不再默认依赖 HTTPS push
+
+## 固定启动与验收
+
+今天已经把 Python 服务的启动和最小验收固定成脚本：
+
+- `scripts/start_index_service.ps1`
+- `scripts/smoke_test_index_service.ps1`
+
+常用方式：
+
+```powershell
+.\scripts\start_index_service.ps1 -Reload
+```
+
+服务启动后，跑一遍最小闭环验证：
+
+```powershell
+.\scripts\smoke_test_index_service.ps1
+```
+
+这会依次验证：
+
+- `/healthz`
+- `/api/v1/index`
+- `/api/v1/search`
+- `/api/v1/search/files`
+- `/api/v1/roots`
+
+这一步的意义是把项目从“代码存在”进一步固定到“服务可启动、接口可重复验证”。
