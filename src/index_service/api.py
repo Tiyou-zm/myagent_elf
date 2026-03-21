@@ -3,7 +3,7 @@ from __future__ import annotations
 from fastapi import APIRouter, FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from index_service.config import get_settings
+from index_service.config import Settings, get_settings
 from index_service.indexing import IndexingService
 from index_service.search import SearchService
 from index_service.storage import SQLiteIndexStore
@@ -11,6 +11,7 @@ from index_service.storage import SQLiteIndexStore
 
 class HealthResponse(BaseModel):
     status: str
+    message: str
 
 
 class IndexRequest(BaseModel):
@@ -19,6 +20,7 @@ class IndexRequest(BaseModel):
 
 
 class IndexResponse(BaseModel):
+    message: str
     roots: list[str]
     scanned_files: int
     indexed_files: int
@@ -34,6 +36,7 @@ class IndexedRootResponse(BaseModel):
 
 
 class RootsResponse(BaseModel):
+    message: str
     roots: list[IndexedRootResponse]
 
 
@@ -53,12 +56,25 @@ class SearchHitResponse(BaseModel):
 
 
 class SearchResponse(BaseModel):
+    message: str
     query: str
+    total_results: int
     results: list[SearchHitResponse]
 
 
-def create_app() -> FastAPI:
-    settings = get_settings()
+def _bad_request(detail: str) -> HTTPException:
+    # 统一无效输入的返回结构，方便前端后续直接展示或分支处理。
+    return HTTPException(
+        status_code=400,
+        detail={
+            "code": "bad_request",
+            "message": detail,
+        },
+    )
+
+
+def create_app(settings: Settings | None = None) -> FastAPI:
+    settings = settings or get_settings()
     store = SQLiteIndexStore(settings.database_path)
     # 应用启动时先确保基础表结构存在，避免空库时某些接口先访问就报错。
     store.initialize()
@@ -73,9 +89,10 @@ def create_app() -> FastAPI:
         try:
             summary = indexing_service.build_index(request.roots)
         except ValueError as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
+            raise _bad_request(str(exc)) from exc
 
         return IndexResponse(
+            message=f"Indexing finished. {summary.indexed_files} files updated, {summary.unchanged_files} unchanged.",
             roots=summary.roots,
             scanned_files=summary.scanned_files,
             indexed_files=summary.indexed_files,
@@ -89,6 +106,7 @@ def create_app() -> FastAPI:
     def list_roots() -> RootsResponse:
         roots = store.list_roots()
         return RootsResponse(
+            message=f"{len(roots)} indexed roots registered.",
             roots=[
                 IndexedRootResponse(
                     root_path=root.root_path,
@@ -103,10 +121,12 @@ def create_app() -> FastAPI:
         try:
             summary = search_service.search(request.query, request.limit)
         except ValueError as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
+            raise _bad_request(str(exc)) from exc
 
         return SearchResponse(
+            message=f"Found {len(summary.results)} content matches.",
             query=summary.query,
+            total_results=len(summary.results),
             results=[
                 SearchHitResponse(
                     path=hit.path,
@@ -126,10 +146,12 @@ def create_app() -> FastAPI:
         try:
             summary = search_service.search_files(request.query, request.limit)
         except ValueError as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
+            raise _bad_request(str(exc)) from exc
 
         return SearchResponse(
+            message=f"Found {len(summary.results)} filename matches.",
             query=summary.query,
+            total_results=len(summary.results),
             results=[
                 SearchHitResponse(
                     path=hit.path,
@@ -149,7 +171,7 @@ def create_app() -> FastAPI:
     @app.get("/healthz", response_model=HealthResponse)
     def healthz() -> HealthResponse:
         # 给后面 Electron 或脚本探活用的最小健康检查。
-        return HealthResponse(status="ok")
+        return HealthResponse(status="ok", message="Index service is healthy.")
 
     app.include_router(router)
     return app

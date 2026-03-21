@@ -164,3 +164,18 @@ python -m uvicorn index_service.main:app --app-dir src --reload
 - `/api/v1/roots`
 
 这一步的意义是把项目从“代码存在”进一步固定到“服务可启动、接口可重复验证”。
+
+## 当前接口体验补充
+
+为了让接口更像给前端直接使用的产品接口，当前又补了一层响应整理：
+
+- `GET /healthz` 现在除了 `status`，还会返回 `message`
+- `POST /api/v1/index` 现在会返回一条摘要式 `message`
+- `POST /api/v1/search` 和 `POST /api/v1/search/files` 现在会返回：
+  - `message`
+  - `total_results`
+- 输入不合法时，`400` 错误现在统一成结构化格式：
+  - `code`
+  - `message`
+
+这一步的意义是让后面 Electron 接口调用时，不用先猜“这次结果该怎么解释”。

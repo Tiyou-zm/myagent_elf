@@ -3,7 +3,13 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from fastapi.testclient import TestClient
+
+from index_service.api import create_app
 from index_service.config import Settings
 from index_service.indexing import IndexingService
 from index_service.search import SearchService
@@ -64,6 +70,62 @@ class IndexingServiceTest(unittest.TestCase):
             roots = store.list_roots()
             self.assertEqual(len(roots), 1)
             self.assertEqual(roots[0].root_path, str(root))
+
+    def test_api_returns_frontend_friendly_messages(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            sample_file = root / "notes.md"
+            sample_file.write_text(
+                "Python service smoke test content.\n",
+                encoding="utf-8",
+            )
+
+            app = create_app(Settings(database_path=root / "index.db"))
+            client = TestClient(app)
+
+            health_response = client.get("/healthz")
+            self.assertEqual(health_response.status_code, 200)
+            self.assertEqual(health_response.json()["message"], "Index service is healthy.")
+
+            index_response = client.post(
+                "/api/v1/index",
+                json={"roots": [str(root)]},
+            )
+            self.assertEqual(index_response.status_code, 200)
+            index_payload = index_response.json()
+            self.assertIn("message", index_payload)
+            self.assertEqual(index_payload["indexed_files"], 1)
+
+            search_response = client.post(
+                "/api/v1/search",
+                json={"query": "Python", "limit": 5},
+            )
+            self.assertEqual(search_response.status_code, 200)
+            search_payload = search_response.json()
+            self.assertIn("message", search_payload)
+            self.assertEqual(search_payload["total_results"], 1)
+            self.assertEqual(search_payload["results"][0]["match_type"], "content")
+
+            roots_response = client.get("/api/v1/roots")
+            self.assertEqual(roots_response.status_code, 200)
+            roots_payload = roots_response.json()
+            self.assertIn("message", roots_payload)
+            self.assertEqual(len(roots_payload["roots"]), 1)
+
+    def test_api_returns_structured_bad_request(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            app = create_app(Settings(database_path=root / "index.db"))
+            client = TestClient(app)
+
+            response = client.post(
+                "/api/v1/search",
+                json={"query": "   ", "limit": 5},
+            )
+            self.assertEqual(response.status_code, 400)
+            payload = response.json()
+            self.assertEqual(payload["detail"]["code"], "bad_request")
+            self.assertIn("must not be empty", payload["detail"]["message"])
 
 
 if __name__ == "__main__":
