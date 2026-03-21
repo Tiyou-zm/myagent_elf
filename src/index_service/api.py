@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from index_service.config import Settings, get_settings
@@ -167,6 +168,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         )
 
     app = FastAPI(title=settings.app_name)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=list(settings.cors_allowed_origins),
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     @app.get("/healthz", response_model=HealthResponse)
     def healthz() -> HealthResponse:

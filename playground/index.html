@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent Study Frontend Shell</title>
+    <style>
+      :root {
+        --bg: #f3efe4;
+        --panel: #fffaf0;
+        --line: #d7ccb7;
+        --text: #1d1c19;
+        --muted: #665f52;
+        --accent: #0b6e4f;
+        --accent-soft: #d8efe6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+        background:
+          radial-gradient(circle at top right, rgba(11, 110, 79, 0.12), transparent 28%),
+          linear-gradient(180deg, #f8f4ea 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      .page {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 40px 20px 64px;
+      }
+
+      .hero {
+        margin-bottom: 24px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+      }
+
+      h1 {
+        margin: 16px 0 8px;
+        font-size: clamp(32px, 5vw, 52px);
+        line-height: 1.02;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 320px minmax(0, 1fr);
+      }
+
+      .panel {
+        background: color-mix(in srgb, var(--panel) 96%, white 4%);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px;
+        box-shadow: 0 20px 40px rgba(36, 32, 24, 0.06);
+      }
+
+      .panel h2 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+
+      .panel p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .field label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .field input {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.85);
+        font: inherit;
+        color: inherit;
+      }
+
+      .button-row {
+        display: grid;
+        gap: 10px;
+      }
+
+      button {
+        appearance: none;
+        border: 0;
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: var(--accent);
+        color: white;
+        font: inherit;
+        cursor: pointer;
+        transition: transform 120ms ease, opacity 120ms ease;
+      }
+
+      button.secondary {
+        background: #6a5d3b;
+      }
+
+      button.ghost {
+        background: #ece4d3;
+        color: var(--text);
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: wait;
+        transform: none;
+      }
+
+      .status {
+        min-height: 52px;
+        margin-bottom: 16px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: #f7f0de;
+        border: 1px solid #e2d5b2;
+        color: #5d4c1a;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+
+      .status.error {
+        background: #fdebec;
+        border-color: #efb6bc;
+        color: #882f39;
+      }
+
+      .result-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .result-card {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .result-card strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        word-break: break-all;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .snippet {
+        margin: 0;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .empty {
+        color: var(--muted);
+        padding: 18px;
+        text-align: center;
+        border: 1px dashed var(--line);
+        border-radius: 16px;
+      }
+
+      @media (max-width: 860px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <span class="eyebrow">Thin Frontend Shell</span>
+        <h1>先把前端调用链接起来</h1>
+        <p>
+          这不是正式 Electron，而是一个很薄的网页壳。它只做一件事：把 Python
+          服务的索引、搜索、根目录查询连成一个你能直接点的最小前端。
+        </p>
+      </section>
+
+      <section class="grid">
+        <aside class="panel">
+          <h2>接口控制台</h2>
+
+          <div class="field">
+            <label for="baseUrl">后端地址</label>
+            <input id="baseUrl" value="http://127.0.0.1:8000" />
+          </div>
+
+          <div class="field">
+            <label for="rootPath">索引目录</label>
+            <input
+              id="rootPath"
+              value="C:\Users\Administrator\Desktop\agent_study"
+            />
+          </div>
+
+          <div class="field">
+            <label for="query">内容搜索词</label>
+            <input id="query" value="Python" />
+          </div>
+
+          <div class="field">
+            <label for="fileQuery">文件名搜索词</label>
+            <input id="fileQuery" value="README" />
+          </div>
+
+          <div class="button-row">
+            <button id="healthBtn">健康检查</button>
+            <button id="indexBtn" class="secondary">建立索引</button>
+            <button id="contentBtn">内容搜索</button>
+            <button id="fileBtn" class="secondary">文件名搜索</button>
+            <button id="rootsBtn" class="ghost">查看根目录</button>
+          </div>
+        </aside>
+
+        <section class="panel">
+          <h2>返回结果</h2>
+          <div id="status" class="status">等待调用。</div>
+          <div id="results" class="result-list">
+            <div class="empty">先点左侧按钮，观察接口是怎么被前端消费的。</div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const state = {
+        statusEl: document.getElementById("status"),
+        resultsEl: document.getElementById("results"),
+        baseUrl: document.getElementById("baseUrl"),
+        rootPath: document.getElementById("rootPath"),
+        query: document.getElementById("query"),
+        fileQuery: document.getElementById("fileQuery"),
+      };
+
+      const buttons = Array.from(document.querySelectorAll("button"));
+
+      function setLoading(isLoading) {
+        buttons.forEach((button) => {
+          button.disabled = isLoading;
+        });
+      }
+
+      function setStatus(message, isError = false) {
+        state.statusEl.textContent = message;
+        state.statusEl.classList.toggle("error", isError);
+      }
+
+      function renderJsonCard(title, payload) {
+        const card = document.createElement("article");
+        card.className = "result-card";
+        card.innerHTML = `
+          <strong>${title}</strong>
+          <pre class="snippet">${JSON.stringify(payload, null, 2)}</pre>
+        `;
+        return card;
+      }
+
+      function renderSearchResults(payload) {
+        if (!payload.results.length) {
+          state.resultsEl.innerHTML =
+            '<div class="empty">这次没有命中结果。</div>';
+          return;
+        }
+
+        state.resultsEl.innerHTML = "";
+        payload.results.forEach((item) => {
+          const card = document.createElement("article");
+          card.className = "result-card";
+          card.innerHTML = `
+            <strong>${item.path}</strong>
+            <div class="meta">
+              <span>类型：${item.match_type}</span>
+              <span>块：${item.chunk_index}</span>
+              <span>行：${item.start_line}-${item.end_line}</span>
+              <span>分数：${item.score}</span>
+            </div>
+            <p class="snippet">${item.snippet}</p>
+          `;
+          state.resultsEl.appendChild(card);
+        });
+      }
+
+      function renderRoots(payload) {
+        if (!payload.roots.length) {
+          state.resultsEl.innerHTML =
+            '<div class="empty">当前还没有登记过索引根目录。</div>';
+          return;
+        }
+
+        state.resultsEl.innerHTML = "";
+        payload.roots.forEach((root) => {
+          const card = document.createElement("article");
+          card.className = "result-card";
+          card.innerHTML = `
+            <strong>${root.root_path}</strong>
+            <div class="meta">
+              <span>最近索引：${root.last_indexed_at}</span>
+            </div>
+          `;
+          state.resultsEl.appendChild(card);
+        });
+      }
+
+      async function request(path, options = {}) {
+        const response = await fetch(`${state.baseUrl.value}${path}`, {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          ...options,
+        });
+
+        const payload = await response.json();
+        if (!response.ok) {
+          const detail = payload.detail || {};
+          throw new Error(detail.message || payload.message || "请求失败。");
+        }
+        return payload;
+      }
+
+      async function run(action) {
+        try {
+          setLoading(true);
+          setStatus("请求发送中...");
+          await action();
+        } catch (error) {
+          state.resultsEl.innerHTML = '<div class="empty">本次调用失败。</div>';
+          setStatus(error.message, true);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      document.getElementById("healthBtn").addEventListener("click", () =>
+        run(async () => {
+          const payload = await request("/healthz", { method: "GET" });
+          setStatus(payload.message);
+          state.resultsEl.innerHTML = "";
+          state.resultsEl.appendChild(renderJsonCard("健康检查", payload));
+        }),
+      );
+
+      document.getElementById("indexBtn").addEventListener("click", () =>
+        run(async () => {
+          const payload = await request("/api/v1/index", {
+            method: "POST",
+            body: JSON.stringify({
+              roots: [state.rootPath.value],
+            }),
+          });
+          setStatus(payload.message);
+          state.resultsEl.innerHTML = "";
+          state.resultsEl.appendChild(renderJsonCard("索引结果", payload));
+        }),
+      );
+
+      document.getElementById("contentBtn").addEventListener("click", () =>
+        run(async () => {
+          const payload = await request("/api/v1/search", {
+            method: "POST",
+            body: JSON.stringify({
+              query: state.query.value,
+              limit: 10,
+            }),
+          });
+          setStatus(payload.message);
+          renderSearchResults(payload);
+        }),
+      );
+
+      document.getElementById("fileBtn").addEventListener("click", () =>
+        run(async () => {
+          const payload = await request("/api/v1/search/files", {
+            method: "POST",
+            body: JSON.stringify({
+              query: state.fileQuery.value,
+              limit: 10,
+            }),
+          });
+          setStatus(payload.message);
+          renderSearchResults(payload);
+        }),
+      );
+
+      document.getElementById("rootsBtn").addEventListener("click", () =>
+        run(async () => {
+          const payload = await request("/api/v1/roots", { method: "GET" });
+          setStatus(payload.message);
+          renderRoots(payload);
+        }),
+      );
+    </script>
+  </body>
+</html>

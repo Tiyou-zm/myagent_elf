@@ -14,6 +14,10 @@ class Settings:
     app_name: str = "Agent Study Index Service"
     api_prefix: str = "/api/v1"
     database_path: Path = PROJECT_ROOT / "data" / "index.db"
+    cors_allowed_origins: tuple[str, ...] = (
+        "http://127.0.0.1:4173",
+        "http://localhost:4173",
+    )
     chunk_size_chars: int = 1200
     chunk_overlap_chars: int = 200
     max_file_size_bytes: int = 2 * 1024 * 1024

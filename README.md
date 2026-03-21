@@ -155,6 +155,18 @@ python -m uvicorn index_service.main:app --app-dir src --reload
 .\scripts\smoke_test_index_service.ps1
 ```
 
+如果想直接看一个最小前端怎么调用这些接口，还可以再启动前端壳：
+
+```powershell
+.\scripts\start_frontend_shell.ps1
+```
+
+然后打开：
+
+```text
+http://127.0.0.1:4173
+```
+
 这会依次验证：
 
 - `/healthz`
@@ -179,3 +191,20 @@ python -m uvicorn index_service.main:app --app-dir src --reload
   - `message`
 
 这一步的意义是让后面 Electron 接口调用时，不用先猜“这次结果该怎么解释”。
+
+## 当前最小前端壳
+
+为了在不正式开做 Electron 的前提下，先看清“前端怎么接后端”，仓库新增了一个很薄的网页壳：
+
+- `playground/index.html`
+- `scripts/start_frontend_shell.ps1`
+
+它当前能直接调用：
+
+- 健康检查
+- 建立索引
+- 内容搜索
+- 文件名搜索
+- 根目录查询
+
+同时后端也补上了本地开发用 CORS，允许这个前端壳从 `http://127.0.0.1:4173` 访问 FastAPI。

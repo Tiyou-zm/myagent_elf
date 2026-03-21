@@ -127,6 +127,26 @@ class IndexingServiceTest(unittest.TestCase):
             self.assertEqual(payload["detail"]["code"], "bad_request")
             self.assertIn("must not be empty", payload["detail"]["message"])
 
+    def test_api_allows_local_frontend_shell_origin(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            app = create_app(Settings(database_path=root / "index.db"))
+            client = TestClient(app)
+
+            response = client.options(
+                "/api/v1/search",
+                headers={
+                    "Origin": "http://127.0.0.1:4173",
+                    "Access-Control-Request-Method": "POST",
+                },
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(
+                response.headers["access-control-allow-origin"],
+                "http://127.0.0.1:4173",
+            )
+
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,5 @@
 param(
-    [string]$Host = "127.0.0.1",
+    [string]$BindHost = "127.0.0.1",
     [int]$Port = 8000,
     [switch]$Reload
 )
@@ -14,7 +14,7 @@ $arguments = @(
     "--app-dir",
     $appDir,
     "--host",
-    $Host,
+    $BindHost,
     "--port",
     $Port
 )
@@ -23,7 +23,7 @@ if ($Reload) {
     $arguments += "--reload"
 }
 
-Write-Host "Starting index service at http://$Host`:$Port"
+Write-Host "Starting index service at http://$BindHost`:$Port"
 Write-Host "App dir: $appDir"
 
 & python @arguments
