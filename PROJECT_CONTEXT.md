@@ -282,6 +282,7 @@
 - `OC_ART_PROMPT.md`
 - `PET_ANIMATION_PLAN.md`
 - `OC_VISUAL_LOCK.md`
+- `OC_ART_MASTER.md`
 
 当前针对 AI 出图阶段新增的关键约束：
 
