@@ -1,17 +1,21 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agent Study Pet Shell</title>
+    <title>Agent Pet</title>
     <style>
       :root {
-        --cream: #f7f0df;
-        --cream-deep: #e8dcc3;
-        --ink: #222019;
-        --muted: #6a6356;
-        --accent: #0d6f4f;
-        --accent-soft: rgba(13, 111, 79, 0.16);
+        --bg: rgba(255, 255, 255, 0);
+        --panel: rgba(255, 247, 228, 0.96);
+        --panel-soft: rgba(255, 255, 255, 0.66);
+        --panel-edge: rgba(94, 78, 44, 0.18);
+        --ink: #2b2117;
+        --muted: #6f624f;
+        --accent: #0f7a58;
+        --accent-strong: #0b5f44;
+        --accent-soft: rgba(15, 122, 88, 0.14);
+        --shadow: 0 24px 60px rgba(18, 14, 10, 0.26);
       }
 
       * {
@@ -19,60 +23,246 @@
         user-select: none;
       }
 
+      html,
       body {
+        width: 100%;
+        height: 100%;
         margin: 0;
-        min-height: 100vh;
-        font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
-        background: transparent;
-        display: grid;
-        place-items: center;
+        overflow: hidden;
+        background: var(--bg);
+        font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
         color: var(--ink);
       }
 
-      .pet-shell {
-        width: 210px;
-        min-height: 238px;
-        padding: 14px;
-        border-radius: 28px;
-        background:
-          radial-gradient(circle at top, rgba(255, 255, 255, 0.75), transparent 34%),
-          linear-gradient(180deg, var(--cream) 0%, #efe4ce 100%);
-        border: 1px solid rgba(98, 84, 53, 0.18);
-        box-shadow:
-          0 20px 50px rgba(34, 32, 25, 0.22),
-          inset 0 1px 0 rgba(255, 255, 255, 0.7);
-      }
-
-      .pet-face {
+      body {
         display: grid;
         place-items: center;
-        width: 104px;
-        height: 104px;
-        margin: 6px auto 12px;
-        border-radius: 32px;
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        -webkit-app-region: drag;
+      }
+
+      .scene::before,
+      .scene::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        pointer-events: none;
+        filter: blur(2px);
+        opacity: 0.9;
+      }
+
+      .scene::before {
+        width: 188px;
+        height: 188px;
+        left: 22px;
+        top: 18px;
+        background: radial-gradient(circle at 28% 28%, rgba(255, 255, 255, 0.76), rgba(15, 122, 88, 0.18));
+        animation: drift-a 8s ease-in-out infinite;
+      }
+
+      .scene::after {
+        width: 122px;
+        height: 122px;
+        right: 16px;
+        bottom: 26px;
+        background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.64), rgba(203, 154, 76, 0.16));
+        animation: drift-b 9s ease-in-out infinite;
+      }
+
+      .spark {
+        position: absolute;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.58);
+        pointer-events: none;
+        animation: twinkle 7s ease-in-out infinite;
+      }
+
+      .spark.s1 {
+        width: 8px;
+        height: 8px;
+        left: 20px;
+        top: 92px;
+      }
+
+      .spark.s2 {
+        width: 6px;
+        height: 6px;
+        right: 24px;
+        top: 124px;
+        animation-delay: -2.3s;
+      }
+
+      .spark.s3 {
+        width: 7px;
+        height: 7px;
+        left: 56px;
+        bottom: 68px;
+        animation-delay: -4.1s;
+      }
+
+      .pet {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 224px;
+        transform: translate(-50%, -50%);
+        padding: 16px 14px 12px;
+        border-radius: 34px;
         background:
-          radial-gradient(circle at top, rgba(255, 255, 255, 0.8), transparent 30%),
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.85), transparent 32%),
+          linear-gradient(180deg, #fff7e4 0%, #eadbc0 100%);
+        border: 1px solid var(--panel-edge);
+        box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(10px);
+        -webkit-app-region: no-drag;
+      }
+
+      .grabber {
+        width: 42px;
+        height: 5px;
+        margin: 0 auto 10px;
+        border-radius: 999px;
+        background: rgba(66, 54, 39, 0.18);
+      }
+
+      .pet-head {
+        position: relative;
+        width: 126px;
+        height: 126px;
+        margin: -44px auto 10px;
+        display: grid;
+        place-items: center;
+        border-radius: 38px;
+        background:
+          radial-gradient(circle at 50% 26%, rgba(255, 255, 255, 0.74), transparent 28%),
           linear-gradient(180deg, #1f8b68 0%, var(--accent) 100%);
-        color: white;
-        font-size: 44px;
-        box-shadow: 0 12px 26px rgba(13, 111, 79, 0.28);
+        box-shadow:
+          0 16px 34px rgba(15, 122, 88, 0.24),
+          inset 0 1px 0 rgba(255, 255, 255, 0.34);
       }
 
-      h1 {
-        margin: 0 0 6px;
-        text-align: center;
+      .pet-head::before,
+      .pet-head::after {
+        content: "";
+        position: absolute;
+        top: -14px;
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #19825f 0%, #0f6c4f 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26);
+      }
+
+      .pet-head::before {
+        left: 16px;
+        transform: rotate(12deg);
+      }
+
+      .pet-head::after {
+        right: 16px;
+        transform: rotate(-12deg);
+      }
+
+      .face {
+        display: grid;
+        gap: 8px;
+        justify-items: center;
+        transform: translateY(2px);
+      }
+
+      .eyes {
+        display: flex;
+        gap: 26px;
+      }
+
+      .eye {
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+        background: #fffdf7;
+        box-shadow: inset 0 0 0 5px #1a3728;
+        animation: blink 6.4s infinite;
+      }
+
+      .mouth {
+        width: 32px;
+        height: 18px;
+        border-bottom: 4px solid rgba(255, 255, 255, 0.93);
+        border-radius: 0 0 999px 999px;
+        opacity: 0.95;
+      }
+
+      .name-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .name {
         font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
       }
 
-      p {
-        margin: 0 0 14px;
+      .badge {
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(15, 122, 88, 0.14);
+        color: var(--accent);
+        font-size: 11px;
+      }
+
+      .speech {
+        margin: 0 0 10px;
+        padding: 10px 12px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.64);
+        border: 1px solid rgba(111, 98, 79, 0.12);
         color: var(--muted);
-        text-align: center;
+        font-size: 12px;
         line-height: 1.55;
-        font-size: 13px;
+        text-align: center;
       }
 
-      .button-list {
+      .status-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+        padding: 8px 10px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.56);
+        border: 1px solid rgba(111, 98, 79, 0.1);
+      }
+
+      .status {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #99a08d;
+        box-shadow: 0 0 0 0 rgba(15, 122, 88, 0.3);
+      }
+
+      .dot.active {
+        background: #1f9b73;
+        animation: pulse 2s infinite;
+      }
+
+      .actions {
         display: grid;
         gap: 8px;
       }
@@ -81,56 +271,204 @@
         appearance: none;
         border: 0;
         border-radius: 14px;
-        padding: 11px 12px;
+        padding: 10px 12px;
         font: inherit;
         cursor: pointer;
-        transition: transform 120ms ease, opacity 120ms ease;
+        transition:
+          transform 120ms ease,
+          opacity 120ms ease,
+          background 120ms ease,
+          box-shadow 120ms ease;
       }
 
       button:hover {
         transform: translateY(-1px);
       }
 
+      button:active {
+        transform: translateY(0);
+      }
+
       .primary {
-        background: var(--accent);
-        color: white;
+        background: linear-gradient(180deg, #1d926b 0%, var(--accent) 100%);
+        color: #fff;
+        box-shadow: 0 10px 18px rgba(15, 122, 88, 0.22);
       }
 
       .secondary {
         background: var(--accent-soft);
-        color: var(--accent);
+        color: var(--accent-strong);
       }
 
       .ghost {
-        background: rgba(255, 255, 255, 0.55);
+        background: rgba(255, 255, 255, 0.72);
         color: var(--ink);
+      }
+
+      .hint {
+        margin: 10px 0 0;
+        text-align: center;
+        font-size: 11px;
+        color: #796d58;
+      }
+
+      .floating-tip {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.64);
+        border: 1px solid rgba(111, 98, 79, 0.12);
+        color: #6d614c;
+        font-size: 11px;
+        letter-spacing: 0.02em;
+        -webkit-app-region: drag;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(15, 122, 88, 0.26);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(15, 122, 88, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(15, 122, 88, 0);
+        }
+      }
+
+      @keyframes blink {
+        0%,
+        90%,
+        100% {
+          transform: scaleY(1);
+        }
+        95% {
+          transform: scaleY(0.16);
+        }
+      }
+
+      @keyframes drift-a {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(8px, 10px);
+        }
+      }
+
+      @keyframes drift-b {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(-8px, -10px);
+        }
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.65;
+        }
+        50% {
+          transform: translateY(-10px);
+          opacity: 1;
+        }
       }
     </style>
   </head>
   <body>
-    <section class="pet-shell">
-      <div class="pet-face">A</div>
-      <h1>Agent 宠物壳</h1>
-      <p>桌面常驻入口负责唤起搜索，不承担完整结果界面。</p>
-      <div class="button-list">
-        <button class="primary" id="openSearch">打开搜索窗口</button>
-        <button class="secondary" id="hideSearch">隐藏搜索窗口</button>
-        <button class="ghost" id="quitApp">退出应用</button>
-      </div>
-    </section>
+    <main class="scene" aria-label="desktop pet shell">
+      <div class="spark s1"></div>
+      <div class="spark s2"></div>
+      <div class="spark s3"></div>
+
+      <section class="pet" aria-label="desktop pet">
+        <div class="floating-tip">Drag me around · buttons stay clickable</div>
+        <div class="grabber" aria-hidden="true"></div>
+
+        <div class="pet-head" aria-hidden="true">
+          <div class="face">
+            <div class="eyes">
+              <span class="eye"></span>
+              <span class="eye"></span>
+            </div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+
+        <div class="name-row">
+          <div class="name">Agent</div>
+          <div class="badge">pet</div>
+        </div>
+
+        <p class="speech" id="speech">I will stay on your desktop. When you need search, I can bring the search window forward.</p>
+
+        <div class="status-row">
+          <div class="status" id="statusPill">Idle</div>
+          <div class="dot" id="statusDot"></div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="openSearch">Open Search Window</button>
+          <button class="secondary" id="hideSearch">Hide Search Window</button>
+          <button class="ghost" id="quitApp">Quit App</button>
+        </div>
+
+        <div class="hint">Desktop pet mode first. Search is only one of her abilities.</div>
+      </section>
+    </main>
 
     <script>
-      document
-        .getElementById("openSearch")
-        .addEventListener("click", () => window.desktopShell.showSearchWindow());
+      const speech = document.getElementById("speech");
+      const statusPill = document.getElementById("statusPill");
+      const statusDot = document.getElementById("statusDot");
 
-      document
-        .getElementById("hideSearch")
-        .addEventListener("click", () => window.desktopShell.hideSearchWindow());
+      const states = {
+        idle: {
+          speech: "I will stay on your desktop. When you need search, I can bring the search window forward.",
+          status: "Idle",
+          active: false,
+        },
+        searchOpen: {
+          speech: "The search window is open now. You can pass the task to me.",
+          status: "Search window opened",
+          active: true,
+        },
+        searchHidden: {
+          speech: "The search window is hidden. I will keep waiting quietly.",
+          status: "Search window hidden",
+          active: false,
+        },
+      };
 
-      document
-        .getElementById("quitApp")
-        .addEventListener("click", () => window.desktopShell.quitApp());
+      function renderState(state) {
+        speech.textContent = state.speech;
+        statusPill.textContent = state.status;
+        statusDot.classList.toggle("active", state.active);
+      }
+
+      document.getElementById("openSearch").addEventListener("click", async () => {
+        await window.desktopShell.showSearchWindow();
+        renderState(states.searchOpen);
+      });
+
+      document.getElementById("hideSearch").addEventListener("click", async () => {
+        await window.desktopShell.hideSearchWindow();
+        renderState(states.searchHidden);
+      });
+
+      document.getElementById("quitApp").addEventListener("click", () => {
+        window.desktopShell.quitApp();
+      });
+
+      renderState(states.idle);
     </script>
   </body>
 </html>
