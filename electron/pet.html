@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent Study Pet Shell</title>
+    <style>
+      :root {
+        --cream: #f7f0df;
+        --cream-deep: #e8dcc3;
+        --ink: #222019;
+        --muted: #6a6356;
+        --accent: #0d6f4f;
+        --accent-soft: rgba(13, 111, 79, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+        user-select: none;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+        background: transparent;
+        display: grid;
+        place-items: center;
+        color: var(--ink);
+      }
+
+      .pet-shell {
+        width: 210px;
+        min-height: 238px;
+        padding: 14px;
+        border-radius: 28px;
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.75), transparent 34%),
+          linear-gradient(180deg, var(--cream) 0%, #efe4ce 100%);
+        border: 1px solid rgba(98, 84, 53, 0.18);
+        box-shadow:
+          0 20px 50px rgba(34, 32, 25, 0.22),
+          inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      }
+
+      .pet-face {
+        display: grid;
+        place-items: center;
+        width: 104px;
+        height: 104px;
+        margin: 6px auto 12px;
+        border-radius: 32px;
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.8), transparent 30%),
+          linear-gradient(180deg, #1f8b68 0%, var(--accent) 100%);
+        color: white;
+        font-size: 44px;
+        box-shadow: 0 12px 26px rgba(13, 111, 79, 0.28);
+      }
+
+      h1 {
+        margin: 0 0 6px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.55;
+        font-size: 13px;
+      }
+
+      .button-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      button {
+        appearance: none;
+        border: 0;
+        border-radius: 14px;
+        padding: 11px 12px;
+        font: inherit;
+        cursor: pointer;
+        transition: transform 120ms ease, opacity 120ms ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .primary {
+        background: var(--accent);
+        color: white;
+      }
+
+      .secondary {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+
+      .ghost {
+        background: rgba(255, 255, 255, 0.55);
+        color: var(--ink);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="pet-shell">
+      <div class="pet-face">A</div>
+      <h1>Agent 宠物壳</h1>
+      <p>桌面常驻入口负责唤起搜索，不承担完整结果界面。</p>
+      <div class="button-list">
+        <button class="primary" id="openSearch">打开搜索窗口</button>
+        <button class="secondary" id="hideSearch">隐藏搜索窗口</button>
+        <button class="ghost" id="quitApp">退出应用</button>
+      </div>
+    </section>
+
+    <script>
+      document
+        .getElementById("openSearch")
+        .addEventListener("click", () => window.desktopShell.showSearchWindow());
+
+      document
+        .getElementById("hideSearch")
+        .addEventListener("click", () => window.desktopShell.hideSearchWindow());
+
+      document
+        .getElementById("quitApp")
+        .addEventListener("click", () => window.desktopShell.quitApp());
+    </script>
+  </body>
+</html>
