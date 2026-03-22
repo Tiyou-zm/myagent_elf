@@ -289,6 +289,33 @@
 
 当前针对 AI 出图阶段新增的关键约束：
 
+## 2026-03-23 绯铃素材目录固化
+
+当前不再把绯铃素材停留在“聊天里确认过几张图”的状态，而是正式在仓库里建立固定目录：
+
+- `assets/characters/feiling/base/`
+- `assets/characters/feiling/states/`
+- `assets/characters/feiling/animations/`
+- `assets/characters/feiling/references/`
+
+并新增：
+
+- `assets/characters/feiling/README.md`
+- `assets/characters/feiling/ASSET_MANIFEST.md`
+
+当前阶段判断：
+
+- 全身母版已经足够进入接入阶段
+- 第一批状态图已经基本可用
+- 后续研发应优先围绕这批固定素材做接入，而不是继续无边界重画
+
+当前最实际的产品节奏：
+
+1. 先把当前母版和状态图落盘到素材目录
+2. 先把 `idle / happy / thinking / smug` 接到桌宠里
+3. 再补 `blink / idle_breath`
+4. 最后视接入效果补 `confused`
+
 - 不只要有人设，还要有独立的视觉锁定文档
 - 当前重点锁定：
   - 2 到 2.5 头身

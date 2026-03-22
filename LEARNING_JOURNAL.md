@@ -1189,7 +1189,53 @@
   - 当前优先动画：
     - `idle_breath`
     - `blink`
-    - 稳定后再补 `happy_bounce`
+
+## Session 028 - 固化绯铃素材目录
+
+日期：2026-03-23
+
+### 我们这一轮在做什么
+
+这一轮不是继续逼着角色大改，而是把已经差不多确认的绯铃母版和状态图，正式收口成仓库里的固定素材目录。
+
+目标是解决两个实际问题：
+
+- 图已经差不多了，但还没有统一的落盘位置
+- 后面接桌宠时，如果素材还散落在聊天上下文里，会很难持续接入
+
+### 这一轮固化了什么
+
+新增目录：
+
+- `assets/characters/feiling/base/`
+- `assets/characters/feiling/states/`
+- `assets/characters/feiling/animations/`
+- `assets/characters/feiling/references/`
+
+新增文档：
+
+- `assets/characters/feiling/README.md`
+- `assets/characters/feiling/ASSET_MANIFEST.md`
+
+### 对当前这组图的判断
+
+- 全身母版已经可以用作 `v1` 基准
+- 状态图这轮已经足够开做
+- 当前最实用的几张是：
+  - `idle`
+  - `happy_soft`
+  - `thinking`
+  - `smug`
+
+### 剩余小问题
+
+- “思考”和“困惑”还没有完全拉开
+- 如果接入后识别度不够，再单独补一张更明确的 `confused`
+
+### 当前结论
+
+- 绯铃素材已经从“对话里逐张确认”推进到了“仓库里有固定资产目录”
+- 后面推进桌宠接入时，应优先复用这批已确认素材，而不是再重开一轮大改
 
 ### 当前结论
 

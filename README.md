@@ -296,6 +296,36 @@ http://127.0.0.1:4173
 - `FIRST_ANIMATION_BRIEF.md`
   - 绯铃第一批动画任务单
 
+## 当前绯铃素材目录
+
+为了把已经确认的母版和状态图真正收口到仓库里，当前新增了：
+
+- `assets/characters/feiling/`
+  - `README.md`
+  - `ASSET_MANIFEST.md`
+  - `base/`
+  - `states/`
+  - `animations/`
+  - `references/`
+
+当前这一步的意义不是继续扩需求，而是先把“已经差不多定下来的绯铃素材”有组织地沉淀成固定目录。
+
+当前判断：
+
+- `base/feiling_master_v1.png`
+  - 可以作为第一版全身母版
+- 第一批状态图已经基本够用：
+  - `idle`
+  - `happy_shy`
+  - `happy_soft`
+  - `thinking`
+  - `smug`
+
+需要注意：
+
+- 当前“思考”和“困惑”还没有完全拉开
+- 如果后续接入后感觉辨识度不够，再单独补一张更明确的 `confused`
+
 当前绯铃的核心方向已经定成：
 
 - 白尾灵狐拟人桌宠
