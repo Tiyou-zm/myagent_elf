@@ -3,17 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agent Pet</title>
+    <title>Agent Study Pet</title>
     <style>
       :root {
         --ink: #241f1a;
-        --muted: #6e6458;
-        --shell: rgba(249, 239, 219, 0.94);
-        --shell-deep: rgba(232, 216, 188, 0.98);
+        --muted: #6d6256;
+        --shell: rgba(248, 238, 217, 0.94);
+        --shell-deep: rgba(233, 216, 188, 0.98);
+        --edge: rgba(100, 82, 50, 0.18);
         --accent: #0f7a57;
         --accent-strong: #0a6145;
         --accent-soft: rgba(15, 122, 87, 0.14);
-        --shadow: rgba(32, 27, 21, 0.26);
+        --shadow: rgba(33, 27, 21, 0.26);
       }
 
       * {
@@ -43,16 +44,16 @@
         min-height: 292px;
         padding: 16px 16px 14px;
         border-radius: 34px 34px 30px 30px;
-        -webkit-app-region: drag;
         background:
           radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.82), transparent 30%),
           radial-gradient(circle at 15% 12%, rgba(255, 255, 255, 0.5), transparent 12%),
           radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.34), transparent 14%),
           linear-gradient(180deg, var(--shell) 0%, var(--shell-deep) 100%);
-        border: 1px solid rgba(103, 85, 53, 0.18);
+        border: 1px solid var(--edge);
         box-shadow:
           0 22px 55px var(--shadow),
           inset 0 1px 0 rgba(255, 255, 255, 0.74);
+        -webkit-app-region: drag;
         animation: floaty 4.8s ease-in-out infinite;
       }
 
@@ -104,6 +105,11 @@
         width: 8px;
         height: 8px;
         border-radius: 999px;
+        background: #9aa08f;
+        box-shadow: 0 0 0 4px rgba(154, 160, 143, 0.16);
+      }
+
+      .pet-badge.active::before {
         background: var(--accent);
         box-shadow: 0 0 0 4px var(--accent-soft);
       }
@@ -175,28 +181,6 @@
         font-size: 13px;
       }
 
-      .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        width: fit-content;
-        margin: 0 auto 14px;
-        padding: 7px 11px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.62);
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .status-pill::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: var(--accent);
-        box-shadow: 0 0 0 4px var(--accent-soft);
-      }
-
       .button-list {
         display: grid;
         gap: 8px;
@@ -220,6 +204,13 @@
 
       button:active {
         transform: translateY(0);
+      }
+
+      button:disabled {
+        cursor: default;
+        opacity: 0.48;
+        transform: none;
+        filter: none;
       }
 
       .primary {
@@ -260,7 +251,7 @@
     <section class="pet-shell">
       <div class="pet-topline">
         <div class="pet-badge" id="statusPill">搜索窗口已隐藏</div>
-        <div class="pet-closehint">桌宠壳</div>
+        <div class="pet-closehint">可拖动</div>
       </div>
 
       <div class="pet-face" aria-hidden="true">
@@ -268,31 +259,38 @@
       </div>
 
       <h1>Agent 桌宠</h1>
-      <p id="description">我负责常驻桌面，搜索面板需要时再唤起。</p>
+      <p id="description">我会常驻在桌面上。需要时，再把搜索窗口叫出来帮你工作。</p>
 
       <div class="button-list">
-        <button class="primary" id="openSearch">打开搜索窗口</button>
-        <button class="secondary" id="hideSearch">隐藏搜索窗口</button>
-        <button class="ghost" id="quitApp">退出应用</button>
+        <button class="primary" id="openSearch">唤起搜索</button>
+        <button class="secondary" id="hideSearch">收起搜索</button>
+        <button class="ghost" id="quitApp">退出桌宠</button>
       </div>
 
-      <div class="footer-tip">桌宠主，搜索辅</div>
+      <div class="footer-tip">桌宠为主，搜索只是她的一项能力。</div>
     </section>
 
     <script>
       const statusPill = document.getElementById("statusPill");
       const description = document.getElementById("description");
+      const openSearchButton = document.getElementById("openSearch");
+      const hideSearchButton = document.getElementById("hideSearch");
 
       function renderState(state) {
         const searchVisible = Boolean(state && state.searchVisible);
+
         if (searchVisible) {
           statusPill.textContent = "搜索窗口已打开";
-          description.textContent = "搜索面板在前台工作，我会继续在桌面角落待机。";
-          return;
+          statusPill.classList.add("active");
+          description.textContent = "搜索面板正在前台工作，我会继续留在桌面角落待机。";
+        } else {
+          statusPill.textContent = "搜索窗口已隐藏";
+          statusPill.classList.remove("active");
+          description.textContent = "我会常驻在桌面上。需要时，再把搜索窗口叫出来帮你工作。";
         }
 
-        statusPill.textContent = "搜索窗口已隐藏";
-        description.textContent = "我负责常驻桌面，搜索面板需要时再唤起。";
+        openSearchButton.disabled = searchVisible;
+        hideSearchButton.disabled = !searchVisible;
       }
 
       document
