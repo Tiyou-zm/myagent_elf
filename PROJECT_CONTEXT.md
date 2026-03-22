@@ -284,6 +284,8 @@
 - `OC_VISUAL_LOCK.md`
 - `OC_ART_MASTER.md`
 - `FULLBODY_MASTER_BRIEF.md`
+- `STATE_SET_BRIEF.md`
+- `FIRST_ANIMATION_BRIEF.md`
 
 当前针对 AI 出图阶段新增的关键约束：
 

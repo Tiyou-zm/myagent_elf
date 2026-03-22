@@ -291,6 +291,10 @@ http://127.0.0.1:4173
   - 给不能接收多文件的出图 agent 使用的单文件总需求
 - `FULLBODY_MASTER_BRIEF.md`
   - 专门用于固定绯铃全身母版的任务单
+- `STATE_SET_BRIEF.md`
+  - 绯铃第一批状态图任务单
+- `FIRST_ANIMATION_BRIEF.md`
+  - 绯铃第一批动画任务单
 
 当前绯铃的核心方向已经定成：
 
