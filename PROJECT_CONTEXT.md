@@ -392,6 +392,8 @@
 
 - `assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg`
 - `assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_half_overlay_v1.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_closed_overlay_v1.png`
 
 当前实现范围刻意保持很小：
 
@@ -402,6 +404,7 @@
 
 - 先让桌宠开始有“生命感”
 - 不把动画状态机和素材需求一口气扩太大
+- 当前进一步收口成“眼睛覆盖层”方案，避免整张切图带来的手部不一致问题
 
 - 不只要有人设，还要有独立的视觉锁定文档
 - 当前重点锁定：

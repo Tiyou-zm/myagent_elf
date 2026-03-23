@@ -392,15 +392,19 @@ http://127.0.0.1:4173
 
 - `assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg`
 - `assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_half_overlay_v1.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_closed_overlay_v1.png`
 
 当前实现方式：
 
 - `electron/pet.html`
-  - 在 `idle` 状态下定时切换：
+  - 在 `idle` 状态下定时叠加眼睛覆盖层：
     - 睁眼
     - 半闭眼
     - 闭眼
     - 睁眼
+
+这样做是因为当前整张眨眼图和待机母图的手部动作不一致，直接整张切帧会穿帮。
 
 这一步的意义：
 

@@ -66,11 +66,14 @@
 
 - `animations/feiling_idle_blink_half_v1.jpg`
 - `animations/feiling_idle_blink_closed_v1.png`
+- `animations/feiling_idle_blink_half_overlay_v1.png`
+- `animations/feiling_idle_blink_closed_overlay_v1.png`
 
 说明：
 
 - 当前只做 `idle blink`
 - 不扩展到 `happy_soft`、`thinking`、`confused`、`smug`
+- 运行时优先使用 `overlay` 版本，避免整张切图导致手部动作不一致
 
 ## 当前观察
 

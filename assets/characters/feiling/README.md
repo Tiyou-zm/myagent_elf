@@ -35,8 +35,12 @@
 
 - `animations/feiling_idle_blink_half_v1.jpg`
 - `animations/feiling_idle_blink_closed_v1.png`
+- `animations/feiling_idle_blink_half_overlay_v1.png`
+- `animations/feiling_idle_blink_closed_overlay_v1.png`
 
 说明：
 
 - 当前先只给 `idle` 状态接眨眼
 - 其他状态暂时不做眨眼扩展
+- 其中真正运行时使用的是 `overlay` 版本
+- 这样可以只覆盖眼睛区域，不会把手部、尾巴和身体姿势一起切坏

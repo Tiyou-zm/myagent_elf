@@ -125,6 +125,18 @@
         filter: drop-shadow(0 12px 18px rgba(70, 44, 41, 0.16));
       }
 
+      .pet-art-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        width: 222px;
+        height: 320px;
+        margin: auto;
+        object-fit: contain;
+        pointer-events: none;
+        opacity: 0;
+      }
+
       h1 {
         margin: 0 0 4px;
         text-align: center;
@@ -231,6 +243,7 @@
 
       <div class="pet-stage">
         <img class="pet-art" id="petArt" alt="绯铃桌宠" />
+        <img class="pet-art-overlay" id="petBlinkOverlay" alt="" aria-hidden="true" />
       </div>
 
       <h1>绯铃</h1>
@@ -264,8 +277,8 @@
       };
 
       const blinkAssets = {
-        half: "../assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg",
-        closed: "../assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png",
+        half: "../assets/characters/feiling/animations/feiling_idle_blink_half_overlay_v1.png",
+        closed: "../assets/characters/feiling/animations/feiling_idle_blink_closed_overlay_v1.png",
       };
 
       const stateLabels = {
@@ -277,6 +290,7 @@
       };
 
       const petArt = document.getElementById("petArt");
+      const petBlinkOverlay = document.getElementById("petBlinkOverlay");
       const statusPill = document.getElementById("statusPill");
       const stateLabel = document.getElementById("stateLabel");
       const description = document.getElementById("description");
@@ -303,6 +317,16 @@
         petArt.src = source;
       }
 
+      function showBlinkOverlay(source) {
+        petBlinkOverlay.src = source;
+        petBlinkOverlay.style.opacity = "1";
+      }
+
+      function hideBlinkOverlay() {
+        petBlinkOverlay.style.opacity = "0";
+        petBlinkOverlay.removeAttribute("src");
+      }
+
       function scheduleBlink() {
         clearBlinkTimers();
 
@@ -316,19 +340,19 @@
             return;
           }
 
-          setPetImage(blinkAssets.half);
+          showBlinkOverlay(blinkAssets.half);
           blinkFrameTimeoutId = setTimeout(() => {
             if (currentStateKey !== "idle") {
               return;
             }
 
-            setPetImage(blinkAssets.closed);
+            showBlinkOverlay(blinkAssets.closed);
             blinkFrameTimeoutId = setTimeout(() => {
               if (currentStateKey !== "idle") {
                 return;
               }
 
-              setPetImage(stateAssets.idle);
+              hideBlinkOverlay();
               scheduleBlink();
             }, 90);
           }, 70);
@@ -341,6 +365,7 @@
         currentStateKey = activeState;
 
         setPetImage(stateAssets[activeState]);
+        hideBlinkOverlay();
         stateLabel.textContent = stateLabels[activeState] || "待机";
         description.textContent =
           (state && state.petDescription) || "绯铃会安静待在桌面角落，等你开口。";
