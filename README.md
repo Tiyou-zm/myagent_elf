@@ -1,4 +1,4 @@
-# agent_study
+﻿# agent_study
 
 这是我们一起搭建个人桌面宠物 Agent 的学习仓库。
 
@@ -352,10 +352,10 @@ http://127.0.0.1:4173
 
 当前素材注意事项：
 
-- 现在接入的是 JPG 导出图
-- 背景棋盘格已烘焙进图片
+- 现在接入的是透明 PNG 素材
+- 背景已切为真实透明通道
 - 适合先做开发接入
-- 正式版仍建议换成透明 PNG
+- 当前已切到透明 PNG
 - 绯铃素材目录现已统一改成英文路径，避免后续脚本、Electron 和外部工具被中文路径绊住
 
 ## 当前绯铃状态联动
@@ -390,10 +390,10 @@ http://127.0.0.1:4173
 
 当前新增素材：
 
-- `assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg`
+- `assets/characters/feiling/animations/feiling_idle_blink_half_v1.png`
 - `assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png`
-- `assets/characters/feiling/animations/feiling_idle_blink_half_overlay_v1.png`
-- `assets/characters/feiling/animations/feiling_idle_blink_closed_overlay_v1.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_half_overlay_v2.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_closed_overlay_v2.png`
 
 当前实现方式：
 
@@ -419,7 +419,7 @@ http://127.0.0.1:4173
 
 这份文档只负责一件事：
 
-- 基于 `feiling_idle_v1.jpg` 产出第一组待机眨眼图
+- 基于 `feiling_idle_v1.png` 产出第一组待机眨眼图
 
 也就是先做：
 
@@ -469,3 +469,5 @@ http://127.0.0.1:4173
   - 只有确认端口释放后才删除运行状态文件
 
 这一步的意义是避免出现“脚本提示停了，但后端端口还挂着”的假停机状态。
+
+

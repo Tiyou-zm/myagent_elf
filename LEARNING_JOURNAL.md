@@ -1,4 +1,4 @@
-# Learning Journal
+﻿# Learning Journal
 
 ## Session 001 - 项目立项
 
@@ -1247,7 +1247,7 @@
 
 不是继续写设定，也不是继续出图，而是做两件实际事情：
 
-- 把现有 JPG 素材按标准文件名归档到 `base/` 和 `states/`
+- 把现有 PNG 素材按标准文件名归档到 `base/` 和 `states/`
 - 让 `electron/pet.html` 真正根据桌宠状态显示不同的绯铃图
 
 ### 这一轮固化了什么
@@ -1255,12 +1255,12 @@
 - 原始导出图保留到：
   - `assets/characters/feiling/references/source_exports/`
 - 标准接入图落到：
-  - `assets/characters/feiling/base/feiling_master_v1.jpg`
-  - `assets/characters/feiling/states/feiling_idle_v1.jpg`
-  - `assets/characters/feiling/states/feiling_happy_soft_v1.jpg`
-  - `assets/characters/feiling/states/feiling_thinking_v1.jpg`
-  - `assets/characters/feiling/states/feiling_confused_v1.jpg`
-  - `assets/characters/feiling/states/feiling_smug_v1.jpg`
+  - `assets/characters/feiling/base/feiling_master_v1.png`
+  - `assets/characters/feiling/states/feiling_idle_v1.png`
+  - `assets/characters/feiling/states/feiling_happy_soft_v1.png`
+  - `assets/characters/feiling/states/feiling_thinking_v1.png`
+  - `assets/characters/feiling/states/feiling_confused_v1.png`
+  - `assets/characters/feiling/states/feiling_smug_v1.png`
 
 - Electron 主进程新增桌宠状态管理
 - 桌宠壳新增静态状态预览和图片切换
@@ -1289,12 +1289,12 @@
 
 原始导出图统一改成了英文命名，例如：
 
-- `feiling_master_source_v1.jpg`
-- `feiling_state_idle_source_v1.jpg`
-- `feiling_state_happy_source_v1.jpg`
-- `feiling_state_thinking_source_v1.jpg`
-- `feiling_state_confused_source_v1.jpg`
-- `feiling_state_smug_source_v1.jpg`
+- `feiling_master_source_v1.png`
+- `feiling_state_idle_source_v1.png`
+- `feiling_state_happy_source_v1.png`
+- `feiling_state_thinking_source_v1.png`
+- `feiling_state_confused_source_v1.png`
+- `feiling_state_smug_source_v1.png`
 
 ### 当前结论
 
@@ -1356,7 +1356,7 @@
 
 它专门约束：
 
-- 只基于 `feiling_idle_v1.jpg`
+- 只基于 `feiling_idle_v1.png`
 - 只输出：
   - `blink_half`
   - `blink_closed`
@@ -1390,12 +1390,12 @@
 
 原始导出图改成英文并落到：
 
-- `references/source_exports/feiling_idle_blink_half_source_v1.jpg`
+- `references/source_exports/feiling_idle_blink_half_source_v1.png`
 - `references/source_exports/feiling_idle_blink_closed_source_v1.png`
 
 标准接入图落到：
 
-- `animations/feiling_idle_blink_half_v1.jpg`
+- `animations/feiling_idle_blink_half_v1.png`
 - `animations/feiling_idle_blink_closed_v1.png`
 
 代码侧：
@@ -1431,8 +1431,8 @@
 
 新增运行时眨眼素材：
 
-- `animations/feiling_idle_blink_half_overlay_v1.png`
-- `animations/feiling_idle_blink_closed_overlay_v1.png`
+- `animations/feiling_idle_blink_half_overlay_v2.png`
+- `animations/feiling_idle_blink_closed_overlay_v2.png`
 
 代码侧：
 
@@ -1451,3 +1451,5 @@
   1. 先出第一批状态图
   2. 再出第一批最小动画
   3. 最后再继续扩更多交互动作
+
+

@@ -1,4 +1,4 @@
-# Project Context
+﻿# Project Context
 
 ## 项目名称
 
@@ -390,10 +390,10 @@
 
 当前已经把第一组待机眨眼图接入素材目录和桌宠壳：
 
-- `assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg`
+- `assets/characters/feiling/animations/feiling_idle_blink_half_v1.png`
 - `assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png`
-- `assets/characters/feiling/animations/feiling_idle_blink_half_overlay_v1.png`
-- `assets/characters/feiling/animations/feiling_idle_blink_closed_overlay_v1.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_half_overlay_v2.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_closed_overlay_v2.png`
 
 当前实现范围刻意保持很小：
 
@@ -413,3 +413,5 @@
   - 白毛狐耳红瞳
   - 红白蓝轻制服
   - 强 Q 版桌宠，而不是普通立绘
+
+

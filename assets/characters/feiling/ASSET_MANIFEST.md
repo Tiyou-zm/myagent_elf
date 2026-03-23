@@ -1,4 +1,4 @@
-# 绯铃素材清单
+﻿# 绯铃素材清单
 
 ## 当前阶段结论
 
@@ -19,41 +19,41 @@
 
 ### 母版
 
-- `base/feiling_master_v1.jpg`
+- `base/feiling_master_v1.png`
   - 当前确认的全身中性母版
   - 用于后续所有状态图和动画扩展
 
 ### 状态图
 
-- `states/feiling_idle_v1.jpg`
+- `states/feiling_idle_v1.png`
   - 中性待机
   - 可直接复用母版，或复制母版作为待机图
 
-- `states/feiling_happy_soft_v1.jpg`
+- `states/feiling_happy_soft_v1.png`
   - 轻微微笑、站姿稳定
   - 适合做通用开心态、欢迎态、搜索完成态
 
-- `states/feiling_thinking_v1.jpg`
+- `states/feiling_thinking_v1.png`
   - 托腮思考
   - 适合做搜索中、判断中、检索中状态
 
-- `states/feiling_confused_v1.jpg`
+- `states/feiling_confused_v1.png`
   - 困惑
   - 适合做没理解指令、等待澄清、搜索结果不明显时的反馈
 
-- `states/feiling_smug_v1.jpg`
+- `states/feiling_smug_v1.png`
   - 小腹黑得意
   - 适合做“我就知道”“我已经帮你找到了”的轻得意反馈
 
 ### 原始导出图
 
-- `references/source_exports/feiling_master_source_v1.jpg`
-- `references/source_exports/feiling_state_idle_source_v1.jpg`
-- `references/source_exports/feiling_state_happy_source_v1.jpg`
-- `references/source_exports/feiling_state_thinking_source_v1.jpg`
-- `references/source_exports/feiling_state_confused_source_v1.jpg`
-- `references/source_exports/feiling_state_smug_source_v1.jpg`
-- `references/source_exports/feiling_idle_blink_half_source_v1.jpg`
+- `references/source_exports/feiling_master_source_v1.png`
+- `references/source_exports/feiling_state_idle_source_v1.png`
+- `references/source_exports/feiling_state_happy_source_v1.png`
+- `references/source_exports/feiling_state_thinking_source_v1.png`
+- `references/source_exports/feiling_state_confused_source_v1.png`
+- `references/source_exports/feiling_state_smug_source_v1.png`
+- `references/source_exports/feiling_idle_blink_half_source_v1.png`
 - `references/source_exports/feiling_idle_blink_closed_source_v1.png`
 
 说明：
@@ -64,10 +64,10 @@
 
 ### 动画接入图
 
-- `animations/feiling_idle_blink_half_v1.jpg`
+- `animations/feiling_idle_blink_half_v1.png`
 - `animations/feiling_idle_blink_closed_v1.png`
-- `animations/feiling_idle_blink_half_overlay_v1.png`
-- `animations/feiling_idle_blink_closed_overlay_v1.png`
+- `animations/feiling_idle_blink_half_overlay_v2.png`
+- `animations/feiling_idle_blink_closed_overlay_v2.png`
 
 说明：
 
@@ -90,8 +90,8 @@
 
 ### 还可以后续补强的地方
 
-- 当前这些文件是 JPG，棋盘格背景已经烘焙进去了
-- 现在可以先用于桌宠开发接入，但正式版应换成透明 PNG
+- 当前这些文件是 PNG，已确认带透明通道
+- 这些文件现在已经是桌宠运行时使用的透明 PNG
 - “思考”和“困惑”虽然已经都有了，但后面仍可继续拉开动作和神情差异
 - `smug` 这张已经可用，但后面接入桌宠时要控制频率，避免角色显得太轻佻
 
@@ -109,3 +109,7 @@
 5. `confused`
 6. `idle_breath`
 7. `blink`
+
+
+- eferences/legacy_raster_exports/ 保存旧 JPG 导出归档，不参与当前运行时引用。
+
