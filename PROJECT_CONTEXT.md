@@ -316,6 +316,29 @@
 3. 再补 `blink / idle_breath`
 4. 最后视接入效果补 `confused`
 
+## 2026-03-24 绯铃静态状态接入
+
+当前阶段已经从“素材整理”推进到“静态状态真正接进桌宠壳”：
+
+- 绯铃素材已按标准文件名落到：
+  - `assets/characters/feiling/base/`
+  - `assets/characters/feiling/states/`
+  - `assets/characters/feiling/references/source_exports/`
+- Electron 桌宠壳现在直接引用绯铃状态图
+- 主进程维护当前桌宠状态，桌宠壳可根据状态切图
+
+当前最小状态机：
+
+1. 默认 `idle`
+2. 打开搜索窗口时 `happy_soft`
+3. 收起搜索窗口时回到 `idle`
+4. 桌宠壳内部保留静态状态预览能力，用于开发确认素材
+
+这一步的意义：
+
+- 桌宠第一次真正从“有角色设定”推进到“角色图已经进入运行时界面”
+- 后续接动画时，不需要再从 0 搭角色渲染入口
+
 - 不只要有人设，还要有独立的视觉锁定文档
 - 当前重点锁定：
   - 2 到 2.5 头身

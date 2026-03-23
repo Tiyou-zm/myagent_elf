@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agent Study Pet</title>
+    <title>Feiling Desktop Pet</title>
     <style>
       :root {
-        --ink: #241f1a;
-        --muted: #6d6256;
-        --shell: rgba(248, 238, 217, 0.94);
-        --shell-deep: rgba(233, 216, 188, 0.98);
-        --edge: rgba(100, 82, 50, 0.18);
-        --accent: #0f7a57;
-        --accent-strong: #0a6145;
-        --accent-soft: rgba(15, 122, 87, 0.14);
-        --shadow: rgba(33, 27, 21, 0.26);
+        --ink: #2b211d;
+        --muted: #7f6b62;
+        --shell-top: rgba(255, 247, 241, 0.96);
+        --shell-bottom: rgba(248, 233, 226, 0.98);
+        --shell-edge: rgba(132, 95, 84, 0.18);
+        --accent: #d4575d;
+        --accent-strong: #b63d46;
+        --accent-soft: rgba(212, 87, 93, 0.14);
+        --shadow: rgba(53, 34, 30, 0.25);
       }
 
       * {
@@ -39,45 +39,19 @@
       }
 
       .pet-shell {
-        position: relative;
-        width: 226px;
-        min-height: 292px;
-        padding: 16px 16px 14px;
-        border-radius: 34px 34px 30px 30px;
+        width: 286px;
+        min-height: 460px;
+        padding: 14px 14px 12px;
+        border-radius: 34px 34px 28px 28px;
+        border: 1px solid var(--shell-edge);
         background:
-          radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.82), transparent 30%),
-          radial-gradient(circle at 15% 12%, rgba(255, 255, 255, 0.5), transparent 12%),
-          radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.34), transparent 14%),
-          linear-gradient(180deg, var(--shell) 0%, var(--shell-deep) 100%);
-        border: 1px solid var(--edge);
+          radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.74), transparent 16%),
+          radial-gradient(circle at 78% 12%, rgba(255, 255, 255, 0.5), transparent 16%),
+          linear-gradient(180deg, var(--shell-top) 0%, var(--shell-bottom) 100%);
         box-shadow:
-          0 22px 55px var(--shadow),
-          inset 0 1px 0 rgba(255, 255, 255, 0.74);
+          0 18px 46px var(--shadow),
+          inset 0 1px 0 rgba(255, 255, 255, 0.82);
         -webkit-app-region: drag;
-        animation: floaty 4.8s ease-in-out infinite;
-      }
-
-      .pet-shell::before,
-      .pet-shell::after {
-        content: "";
-        position: absolute;
-        top: 20px;
-        width: 48px;
-        height: 48px;
-        border-radius: 18px 18px 8px 8px;
-        background: linear-gradient(180deg, #2b9a73 0%, var(--accent-strong) 100%);
-        box-shadow: 0 10px 20px rgba(15, 122, 87, 0.18);
-        z-index: -1;
-      }
-
-      .pet-shell::before {
-        left: 22px;
-        transform: rotate(-18deg);
-      }
-
-      .pet-shell::after {
-        right: 22px;
-        transform: rotate(18deg);
       }
 
       .pet-topline {
@@ -85,7 +59,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
 
       .pet-badge {
@@ -94,10 +68,9 @@
         gap: 6px;
         padding: 6px 10px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.58);
+        background: rgba(255, 255, 255, 0.62);
         color: var(--muted);
         font-size: 12px;
-        letter-spacing: 0.02em;
       }
 
       .pet-badge::before {
@@ -105,8 +78,8 @@
         width: 8px;
         height: 8px;
         border-radius: 999px;
-        background: #9aa08f;
-        box-shadow: 0 0 0 4px rgba(154, 160, 143, 0.16);
+        background: #c39d86;
+        box-shadow: 0 0 0 4px rgba(195, 157, 134, 0.14);
       }
 
       .pet-badge.active::before {
@@ -115,82 +88,81 @@
       }
 
       .pet-closehint {
-        color: rgba(36, 31, 26, 0.45);
+        color: rgba(43, 33, 29, 0.4);
         font-size: 11px;
       }
 
-      .pet-face {
-        width: 110px;
-        height: 110px;
-        margin: 2px auto 10px;
-        border-radius: 34px;
+      .pet-stage {
         position: relative;
         display: grid;
         place-items: center;
+        min-height: 268px;
+        margin-bottom: 8px;
+        border-radius: 26px;
         background:
-          radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.58), transparent 28%),
-          linear-gradient(180deg, #24a078 0%, var(--accent) 100%);
-        box-shadow:
-          0 14px 28px rgba(15, 122, 87, 0.28),
-          inset 0 1px 0 rgba(255, 255, 255, 0.35);
+          radial-gradient(circle at 50% 14%, rgba(255, 255, 255, 0.78), transparent 28%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.64) 0%, rgba(255, 255, 255, 0.26) 100%);
+        overflow: hidden;
       }
 
-      .pet-face::before,
-      .pet-face::after {
+      .pet-stage::after {
         content: "";
         position: absolute;
-        top: 42px;
-        width: 12px;
+        bottom: 16px;
+        width: 148px;
         height: 18px;
         border-radius: 999px;
-        background: #fff7ea;
-        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+        background: rgba(80, 46, 42, 0.12);
+        filter: blur(8px);
       }
 
-      .pet-face::before {
-        left: 34px;
-      }
-
-      .pet-face::after {
-        right: 34px;
-      }
-
-      .face-dot {
-        position: absolute;
-        top: 54px;
-        left: 50%;
-        width: 32px;
-        height: 10px;
-        transform: translateX(-50%);
-        border-radius: 999px;
-        border-bottom: 3px solid rgba(255, 247, 234, 0.96);
+      .pet-art {
+        position: relative;
+        z-index: 1;
+        width: 222px;
+        height: 320px;
+        object-fit: contain;
+        filter: drop-shadow(0 12px 18px rgba(70, 44, 41, 0.16));
       }
 
       h1 {
-        margin: 0 0 6px;
+        margin: 0 0 4px;
         text-align: center;
         font-size: 18px;
-        line-height: 1.2;
+        line-height: 1.15;
       }
 
-      p {
-        margin: 0 0 12px;
-        color: var(--muted);
+      .state-line {
+        margin: 0 0 6px;
         text-align: center;
-        line-height: 1.55;
+        color: var(--accent-strong);
         font-size: 13px;
       }
 
-      .button-list {
+      p {
+        margin: 0 0 10px;
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.5;
+        font-size: 12px;
+      }
+
+      .button-list,
+      .state-list {
         display: grid;
         gap: 8px;
+      }
+
+      .state-list {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        margin-bottom: 8px;
       }
 
       button {
         appearance: none;
         border: 0;
         border-radius: 14px;
-        padding: 11px 12px;
+        padding: 10px 12px;
         font: inherit;
         cursor: pointer;
         transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
@@ -208,42 +180,45 @@
 
       button:disabled {
         cursor: default;
-        opacity: 0.48;
+        opacity: 0.52;
         transform: none;
         filter: none;
       }
 
-      .primary {
-        background: linear-gradient(180deg, #1a9a71 0%, var(--accent) 100%);
-        color: white;
-        box-shadow: 0 10px 18px rgba(15, 122, 87, 0.2);
+      .state-button {
+        padding: 8px 0;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.68);
+        color: var(--muted);
+        font-size: 12px;
       }
 
-      .secondary {
+      .state-button.active {
         background: var(--accent-soft);
         color: var(--accent-strong);
       }
 
+      .primary {
+        background: linear-gradient(180deg, #e36a70 0%, var(--accent) 100%);
+        color: white;
+        box-shadow: 0 10px 18px rgba(212, 87, 93, 0.22);
+      }
+
+      .secondary {
+        background: rgba(212, 87, 93, 0.12);
+        color: var(--accent-strong);
+      }
+
       .ghost {
-        background: rgba(255, 255, 255, 0.58);
+        background: rgba(255, 255, 255, 0.62);
         color: var(--ink);
       }
 
       .footer-tip {
-        margin-top: 10px;
+        margin-top: 8px;
         text-align: center;
-        color: rgba(110, 100, 88, 0.88);
+        color: rgba(111, 83, 74, 0.84);
         font-size: 11px;
-      }
-
-      @keyframes floaty {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-6px);
-        }
       }
     </style>
   </head>
@@ -254,12 +229,21 @@
         <div class="pet-closehint">可拖动</div>
       </div>
 
-      <div class="pet-face" aria-hidden="true">
-        <div class="face-dot"></div>
+      <div class="pet-stage">
+        <img class="pet-art" id="petArt" alt="绯铃桌宠" />
       </div>
 
-      <h1>Agent 桌宠</h1>
-      <p id="description">我会常驻在桌面上。需要时，再把搜索窗口叫出来帮你工作。</p>
+      <h1>绯铃</h1>
+      <div class="state-line" id="stateLabel">待机</div>
+      <p id="description">绯铃会安静待在桌面角落，等你开口。</p>
+
+      <div class="state-list">
+        <button class="state-button" data-state="idle">待机</button>
+        <button class="state-button" data-state="happy_soft">开心</button>
+        <button class="state-button" data-state="thinking">思考</button>
+        <button class="state-button" data-state="confused">困惑</button>
+        <button class="state-button" data-state="smug">得意</button>
+      </div>
 
       <div class="button-list">
         <button class="primary" id="openSearch">唤起搜索</button>
@@ -267,30 +251,57 @@
         <button class="ghost" id="quitApp">退出桌宠</button>
       </div>
 
-      <div class="footer-tip">桌宠为主，搜索只是她的一项能力。</div>
+      <div class="footer-tip">当前先用静态状态图接入，动画后补。</div>
     </section>
 
     <script>
+      const stateAssets = {
+        idle: "../assets/characters/feiling/states/feiling_idle_v1.jpg",
+        happy_soft: "../assets/characters/feiling/states/feiling_happy_soft_v1.jpg",
+        thinking: "../assets/characters/feiling/states/feiling_thinking_v1.jpg",
+        confused: "../assets/characters/feiling/states/feiling_confused_v1.jpg",
+        smug: "../assets/characters/feiling/states/feiling_smug_v1.jpg",
+      };
+
+      const stateLabels = {
+        idle: "待机",
+        happy_soft: "开心",
+        thinking: "思考",
+        confused: "困惑",
+        smug: "小得意",
+      };
+
+      const petArt = document.getElementById("petArt");
       const statusPill = document.getElementById("statusPill");
+      const stateLabel = document.getElementById("stateLabel");
       const description = document.getElementById("description");
       const openSearchButton = document.getElementById("openSearch");
       const hideSearchButton = document.getElementById("hideSearch");
+      const stateButtons = Array.from(document.querySelectorAll("[data-state]"));
 
       function renderState(state) {
         const searchVisible = Boolean(state && state.searchVisible);
+        const activeState = state && state.petState ? state.petState : "idle";
+
+        petArt.src = stateAssets[activeState];
+        stateLabel.textContent = stateLabels[activeState] || "待机";
+        description.textContent =
+          (state && state.petDescription) || "绯铃会安静待在桌面角落，等你开口。";
 
         if (searchVisible) {
           statusPill.textContent = "搜索窗口已打开";
           statusPill.classList.add("active");
-          description.textContent = "搜索面板正在前台工作，我会继续留在桌面角落待机。";
         } else {
           statusPill.textContent = "搜索窗口已隐藏";
           statusPill.classList.remove("active");
-          description.textContent = "我会常驻在桌面上。需要时，再把搜索窗口叫出来帮你工作。";
         }
 
         openSearchButton.disabled = searchVisible;
         hideSearchButton.disabled = !searchVisible;
+
+        stateButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.state === activeState);
+        });
       }
 
       document
@@ -304,6 +315,12 @@
       document
         .getElementById("quitApp")
         .addEventListener("click", () => window.desktopShell.quitApp());
+
+      stateButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          window.desktopShell.setPetState(button.dataset.state);
+        });
+      });
 
       window.desktopShell.onShellState((state) => {
         renderState(state);

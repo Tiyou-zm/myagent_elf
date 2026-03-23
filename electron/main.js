@@ -3,18 +3,59 @@ const path = require("path");
 
 let petWindow = null;
 let searchWindow = null;
+let petState = "idle";
+
+const PET_STATES = {
+  idle: {
+    label: "待机",
+    description: "绯铃会安静待在桌面角落，等你开口。",
+  },
+  happy_soft: {
+    label: "开心",
+    description: "绯铃轻轻回应你，像是在说“我在”。",
+  },
+  thinking: {
+    label: "思考",
+    description: "绯铃正在认真想事情，适合检索和判断中的状态。",
+  },
+  confused: {
+    label: "困惑",
+    description: "绯铃暂时没完全理解你的意思，等你再说清楚一点。",
+  },
+  smug: {
+    label: "小得意",
+    description: "绯铃带一点轻微得意，但还是偏袒你的。",
+  },
+};
 
 function positionPetWindow(window) {
   const { workArea } = screen.getPrimaryDisplay();
   const [width, height] = window.getSize();
-  const x = Math.round(workArea.x + workArea.width - width - 28);
-  const y = Math.round(workArea.y + workArea.height - height - 36);
+  const x = Math.round(workArea.x + workArea.width - width - 24);
+  const y = Math.round(workArea.y + workArea.height - height - 24);
   window.setPosition(x, y);
+}
+
+function normalizePetState(nextState) {
+  if (nextState && PET_STATES[nextState]) {
+    return nextState;
+  }
+
+  return "idle";
+}
+
+function setPetState(nextState) {
+  petState = normalizePetState(nextState);
+  syncShellState();
 }
 
 function getShellState() {
   return {
     searchVisible: Boolean(searchWindow && searchWindow.isVisible()),
+    petState,
+    petStateLabel: PET_STATES[petState].label,
+    petDescription: PET_STATES[petState].description,
+    availableStates: Object.keys(PET_STATES),
   };
 }
 
@@ -26,12 +67,12 @@ function syncShellState() {
 
 function createPetWindow() {
   petWindow = new BrowserWindow({
-    width: 228,
-    height: 312,
-    minWidth: 228,
-    minHeight: 312,
-    maxWidth: 228,
-    maxHeight: 312,
+    width: 296,
+    height: 478,
+    minWidth: 296,
+    minHeight: 478,
+    maxWidth: 296,
+    maxHeight: 478,
     frame: false,
     transparent: true,
     resizable: false,
@@ -41,7 +82,7 @@ function createPetWindow() {
     minimizable: false,
     fullscreenable: false,
     thickFrame: false,
-    title: "Agent Study Pet Shell",
+    title: "Feiling Desktop Pet",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -78,10 +119,10 @@ function createSearchWindow() {
 
   searchWindow.loadFile(path.join(__dirname, "..", "playground", "index.html"));
   searchWindow.on("show", () => {
-    syncShellState();
+    setPetState("happy_soft");
   });
   searchWindow.on("hide", () => {
-    syncShellState();
+    setPetState("idle");
   });
   searchWindow.on("close", (event) => {
     if (!app.isQuiting) {
@@ -119,6 +160,11 @@ ipcMain.handle("desktop-shell:hide-search", () => {
 });
 
 ipcMain.handle("desktop-shell:get-state", () => {
+  return getShellState();
+});
+
+ipcMain.handle("desktop-shell:set-pet-state", (_event, nextState) => {
+  setPetState(nextState);
   return getShellState();
 });
 

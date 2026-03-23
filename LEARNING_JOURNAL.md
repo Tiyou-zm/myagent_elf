@@ -1237,6 +1237,41 @@
 - 绯铃素材已经从“对话里逐张确认”推进到了“仓库里有固定资产目录”
 - 后面推进桌宠接入时，应优先复用这批已确认素材，而不是再重开一轮大改
 
+## Session 029 - 把绯铃静态图接进桌宠壳
+
+日期：2026-03-24
+
+### 我们这一轮在做什么
+
+这一轮正式把绯铃从“素材目录里的图片”推进到“Electron 桌宠壳正在显示的角色”。
+
+不是继续写设定，也不是继续出图，而是做两件实际事情：
+
+- 把现有 JPG 素材按标准文件名归档到 `base/` 和 `states/`
+- 让 `electron/pet.html` 真正根据桌宠状态显示不同的绯铃图
+
+### 这一轮固化了什么
+
+- 原始导出图保留到：
+  - `assets/characters/feiling/references/source_exports/`
+- 标准接入图落到：
+  - `assets/characters/feiling/base/feiling_master_v1.jpg`
+  - `assets/characters/feiling/states/feiling_idle_v1.jpg`
+  - `assets/characters/feiling/states/feiling_happy_soft_v1.jpg`
+  - `assets/characters/feiling/states/feiling_thinking_v1.jpg`
+  - `assets/characters/feiling/states/feiling_confused_v1.jpg`
+  - `assets/characters/feiling/states/feiling_smug_v1.jpg`
+
+- Electron 主进程新增桌宠状态管理
+- 桌宠壳新增静态状态预览和图片切换
+- 预加载层新增 `setPetState()`，为后续功能触发表情切换打基础
+
+### 当前结论
+
+- 绯铃第一次真正进入运行中的桌宠壳
+- 现在项目不再只是“有素材”和“有窗口”，而是“窗口里已经开始显示绯铃本人”
+- 后续再接 `blink`、`idle_breath` 时，只是在现有入口上升级，不需要重搭角色显示体系
+
 ### 当前结论
 
 - 绯铃现在已经不再停留在“只有母版立绘”

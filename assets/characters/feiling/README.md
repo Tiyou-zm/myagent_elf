@@ -11,19 +11,21 @@
 - `animations/`
   - 存放精灵图、序列帧和动画说明
 - `references/`
-  - 存放外部参考图、导出的对照图
+  - 存放外部参考图、原始导出图和对照图
 
-## 当前命名建议
+## 当前文件命名
 
-- `base/feiling_master_v1.png`
-- `states/feiling_idle_v1.png`
-- `states/feiling_happy_shy_v1.png`
-- `states/feiling_happy_soft_v1.png`
-- `states/feiling_thinking_v1.png`
-- `states/feiling_smug_v1.png`
+- `base/feiling_master_v1.jpg`
+- `states/feiling_idle_v1.jpg`
+- `states/feiling_happy_soft_v1.jpg`
+- `states/feiling_thinking_v1.jpg`
+- `states/feiling_confused_v1.jpg`
+- `states/feiling_smug_v1.jpg`
 
 ## 使用约定
 
-- 当前仓库先固化目录和清单，不直接保存聊天附件本身。
-- 需要把你已经确认的 PNG 手动导出到这里，并按上面的文件名落盘。
-- 后续所有状态图和动画，都以 `base/feiling_master_v1.png` 为唯一母版继续扩展。
+- `references/source_exports/` 用来保留原始导出图。
+- `base/` 和 `states/` 只放标准命名后的接入版本。
+- 后续所有状态图和动画，都以 `base/feiling_master_v1.jpg` 为唯一母版继续扩展。
+- 当前这批素材是 JPG，棋盘格背景已经烘焙进图片里。
+- 所以它们现在适合先做桌宠开发接入，但最终正式版仍建议换成透明背景 PNG。

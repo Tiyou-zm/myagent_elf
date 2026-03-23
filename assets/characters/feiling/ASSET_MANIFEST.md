@@ -7,7 +7,7 @@
 当前这组图已经足够承担 `v1` 素材起步：
 
 - 1 张全身母版
-- 4 张可用状态图
+- 5 张可用状态图
 
 它们已经可以支撑：
 
@@ -15,33 +15,33 @@
 - 状态切换
 - 后续 `idle_breath` 和 `blink` 的动画制作
 
-## 文件落盘建议
+## 文件落盘
 
 ### 母版
 
-- `base/feiling_master_v1.png`
+- `base/feiling_master_v1.jpg`
   - 当前确认的全身中性母版
   - 用于后续所有状态图和动画扩展
 
 ### 状态图
 
-- `states/feiling_idle_v1.png`
+- `states/feiling_idle_v1.jpg`
   - 中性待机
   - 可直接复用母版，或复制母版作为待机图
 
-- `states/feiling_happy_shy_v1.png`
-  - 双手收拢、偏害羞和偏亲近的开心态
-  - 很适合做“打开搜索窗口”或“回应主人”时的柔和反馈
-
-- `states/feiling_happy_soft_v1.png`
+- `states/feiling_happy_soft_v1.jpg`
   - 轻微微笑、站姿稳定
   - 适合做通用开心态、欢迎态、搜索完成态
 
-- `states/feiling_thinking_v1.png`
+- `states/feiling_thinking_v1.jpg`
   - 托腮思考
   - 适合做搜索中、判断中、检索中状态
 
-- `states/feiling_smug_v1.png`
+- `states/feiling_confused_v1.jpg`
+  - 困惑
+  - 适合做没理解指令、等待澄清、搜索结果不明显时的反馈
+
+- `states/feiling_smug_v1.jpg`
   - 小腹黑得意
   - 适合做“我就知道”“我已经帮你找到了”的轻得意反馈
 
@@ -60,8 +60,9 @@
 
 ### 还可以后续补强的地方
 
-- “思考”和“困惑”目前还没有完全拉开
-- 如果后面要让状态更一眼可辨，建议额外再补一张更明确的 `confused`
+- 当前这些文件是 JPG，棋盘格背景已经烘焙进去了
+- 现在可以先用于桌宠开发接入，但正式版应换成透明 PNG
+- “思考”和“困惑”虽然已经都有了，但后面仍可继续拉开动作和神情差异
 - `smug` 这张已经可用，但后面接入桌宠时要控制频率，避免角色显得太轻佻
 
 ## 接入优先级建议
@@ -75,7 +76,6 @@
 
 然后再补：
 
-5. `happy_shy`
-6. `confused`（后续新增）
-7. `idle_breath`
-8. `blink`
+5. `confused`
+6. `idle_breath`
+7. `blink`
