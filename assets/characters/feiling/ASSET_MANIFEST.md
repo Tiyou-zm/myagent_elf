@@ -45,6 +45,21 @@
   - 小腹黑得意
   - 适合做“我就知道”“我已经帮你找到了”的轻得意反馈
 
+### 原始导出图
+
+- `references/source_exports/feiling_master_source_v1.jpg`
+- `references/source_exports/feiling_state_idle_source_v1.jpg`
+- `references/source_exports/feiling_state_happy_source_v1.jpg`
+- `references/source_exports/feiling_state_thinking_source_v1.jpg`
+- `references/source_exports/feiling_state_confused_source_v1.jpg`
+- `references/source_exports/feiling_state_smug_source_v1.jpg`
+
+说明：
+
+- 这些文件用于保留你最初导出的原始版本
+- 标准接入仍然优先使用 `base/` 和 `states/` 里的规范命名文件
+- 当前绯铃素材目录已统一改成英文路径
+
 ## 当前观察
 
 ### 已经足够好的地方

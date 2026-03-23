@@ -1272,6 +1272,35 @@
 - 现在项目不再只是“有素材”和“有窗口”，而是“窗口里已经开始显示绯铃本人”
 - 后续再接 `blink`、`idle_breath` 时，只是在现有入口上升级，不需要重搭角色显示体系
 
+## Session 032 - 统一绯铃素材英文路径
+
+日期：2026-03-24
+
+### 我们这一轮在做什么
+
+这一轮没有继续加功能，而是把绯铃素材目录里的原始导出图统一改成英文文件名。
+
+目标很实际：
+
+- 避免后续脚本、Electron、外部工具和批处理在 Windows 环境里被中文路径绊住
+- 保证素材目录更适合持续接入和后续自动化处理
+
+### 这一轮固化了什么
+
+原始导出图统一改成了英文命名，例如：
+
+- `feiling_master_source_v1.jpg`
+- `feiling_state_idle_source_v1.jpg`
+- `feiling_state_happy_source_v1.jpg`
+- `feiling_state_thinking_source_v1.jpg`
+- `feiling_state_confused_source_v1.jpg`
+- `feiling_state_smug_source_v1.jpg`
+
+### 当前结论
+
+- 现在绯铃素材目录从子目录到图片文件名都已经是英文路径
+- 标准接入文件名和原始导出文件名已经统一分层，后续更利于维护
+
 ## Session 030 - 让绯铃状态跟搜索行为联动
 
 日期：2026-03-24
