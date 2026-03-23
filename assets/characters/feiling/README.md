@@ -48,3 +48,22 @@
 
 - eferences/legacy_raster_exports/ 保存旧 JPG 导出归档，不参与当前运行时引用。
 
+
+## 2026-03-24 透明运行时版本
+
+当前运行时正式切换到透明 PNG：
+- `base/feiling_master_v1.png`
+- `states/feiling_idle_v1.png`
+- `states/feiling_happy_soft_v1.png`
+- `states/feiling_thinking_v1.png`
+- `states/feiling_confused_v1.png`
+- `states/feiling_smug_v1.png`
+- `animations/feiling_idle_blink_half_v1.png`
+- `animations/feiling_idle_blink_closed_v1.png`
+- `animations/feiling_idle_blink_half_overlay_v2.png`
+- `animations/feiling_idle_blink_closed_overlay_v2.png`
+
+旧 JPG 导出图已归档到：
+- `references/legacy_raster_exports/`
+
+当前 `source_exports/` 只保留透明 PNG 源文件。

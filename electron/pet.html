@@ -6,15 +6,15 @@
     <title>Feiling Desktop Pet</title>
     <style>
       :root {
-        --ink: #2b211d;
-        --muted: #7f6b62;
-        --shell-top: rgba(255, 247, 241, 0.96);
-        --shell-bottom: rgba(248, 233, 226, 0.98);
-        --shell-edge: rgba(132, 95, 84, 0.18);
-        --accent: #d4575d;
-        --accent-strong: #b63d46;
-        --accent-soft: rgba(212, 87, 93, 0.14);
-        --shadow: rgba(53, 34, 30, 0.25);
+        --ink: #36221e;
+        --ink-soft: rgba(54, 34, 30, 0.72);
+        --panel: rgba(255, 247, 242, 0.95);
+        --panel-strong: rgba(248, 234, 227, 0.98);
+        --panel-edge: rgba(129, 89, 80, 0.18);
+        --accent: #d45a60;
+        --accent-strong: #b7414b;
+        --accent-soft: rgba(212, 90, 96, 0.14);
+        --shadow: rgba(62, 39, 35, 0.24);
       }
 
       * {
@@ -30,155 +30,158 @@
         overflow: hidden;
         background: transparent;
         font-family: "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
-        color: var(--ink);
       }
 
       body {
         display: grid;
-        place-items: center;
+        place-items: end center;
       }
 
       .pet-shell {
-        width: 286px;
-        min-height: 460px;
-        padding: 14px 14px 12px;
-        border-radius: 34px 34px 28px 28px;
-        border: 1px solid var(--shell-edge);
-        background:
-          radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.74), transparent 16%),
-          radial-gradient(circle at 78% 12%, rgba(255, 255, 255, 0.5), transparent 16%),
-          linear-gradient(180deg, var(--shell-top) 0%, var(--shell-bottom) 100%);
-        box-shadow:
-          0 18px 46px var(--shadow),
-          inset 0 1px 0 rgba(255, 255, 255, 0.82);
+        position: relative;
+        width: 304px;
+        height: 404px;
         -webkit-app-region: drag;
       }
 
-      .pet-topline {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 10px;
-      }
-
-      .pet-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.62);
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .pet-badge::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: #c39d86;
-        box-shadow: 0 0 0 4px rgba(195, 157, 134, 0.14);
-      }
-
-      .pet-badge.active::before {
-        background: var(--accent);
-        box-shadow: 0 0 0 4px var(--accent-soft);
-      }
-
-      .pet-closehint {
-        color: rgba(43, 33, 29, 0.4);
-        font-size: 11px;
-      }
-
       .pet-stage {
-        position: relative;
+        position: absolute;
+        inset: 0;
         display: grid;
-        place-items: center;
-        min-height: 268px;
-        margin-bottom: 8px;
-        border-radius: 26px;
-        background:
-          radial-gradient(circle at 50% 14%, rgba(255, 255, 255, 0.78), transparent 28%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.64) 0%, rgba(255, 255, 255, 0.26) 100%);
-        overflow: hidden;
+        place-items: end center;
       }
 
-      .pet-stage::after {
-        content: "";
+      .pet-shadow {
         position: absolute;
-        bottom: 16px;
-        width: 148px;
-        height: 18px;
+        bottom: 18px;
+        width: 146px;
+        height: 20px;
         border-radius: 999px;
-        background: rgba(80, 46, 42, 0.12);
-        filter: blur(8px);
+        background: rgba(63, 39, 35, 0.13);
+        filter: blur(9px);
       }
 
       .pet-art {
         position: relative;
         z-index: 1;
-        width: 222px;
-        height: 320px;
+        width: 258px;
+        height: 360px;
         object-fit: contain;
-        filter: drop-shadow(0 12px 18px rgba(70, 44, 41, 0.16));
+        filter: drop-shadow(0 14px 20px rgba(71, 44, 41, 0.16));
       }
 
       .pet-art-overlay {
         position: absolute;
         inset: 0;
         z-index: 2;
-        width: 222px;
-        height: 320px;
+        width: 258px;
+        height: 360px;
         margin: auto;
         object-fit: contain;
         pointer-events: none;
         opacity: 0;
       }
 
-      h1 {
-        margin: 0 0 4px;
-        text-align: center;
-        font-size: 18px;
-        line-height: 1.15;
+      .status-chip {
+        position: absolute;
+        top: 22px;
+        left: 26px;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        max-width: 168px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 250, 247, 0.82);
+        color: var(--ink-soft);
+        font-size: 11px;
+        line-height: 1;
+        border: 1px solid rgba(136, 99, 88, 0.12);
+        box-shadow: 0 10px 20px rgba(65, 41, 38, 0.08);
+        backdrop-filter: blur(8px);
       }
 
-      .state-line {
-        margin: 0 0 6px;
-        text-align: center;
-        color: var(--accent-strong);
-        font-size: 13px;
+      .status-chip::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #c7a08e;
+        box-shadow: 0 0 0 4px rgba(199, 160, 142, 0.14);
       }
 
-      p {
-        margin: 0 0 10px;
-        color: var(--muted);
-        text-align: center;
-        line-height: 1.5;
-        font-size: 12px;
+      .status-chip.active::before {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px var(--accent-soft);
       }
 
-      .button-list,
-      .state-list {
-        display: grid;
-        gap: 8px;
+      .menu-anchor {
+        position: absolute;
+        right: 16px;
+        top: 152px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        -webkit-app-region: no-drag;
       }
 
-      .state-list {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+      .pet-menu {
+        width: 196px;
+        padding: 10px;
+        border-radius: 22px;
+        background:
+          radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.76), transparent 24%),
+          linear-gradient(180deg, var(--panel) 0%, var(--panel-strong) 100%);
+        border: 1px solid var(--panel-edge);
+        box-shadow: 0 16px 30px var(--shadow);
+        opacity: 0;
+        transform: translateX(8px) scale(0.98);
+        transform-origin: right center;
+        pointer-events: none;
+        transition:
+          opacity 140ms ease,
+          transform 140ms ease;
+      }
+
+      .pet-menu.open {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .menu-header {
         margin-bottom: 8px;
+        padding: 0 4px;
+      }
+
+      .menu-title {
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .menu-subtitle {
+        margin-top: 3px;
+        color: var(--ink-soft);
+        font-size: 11px;
+      }
+
+      .menu-group {
+        display: grid;
+        gap: 6px;
       }
 
       button {
         appearance: none;
         border: 0;
-        border-radius: 14px;
-        padding: 10px 12px;
         font: inherit;
         cursor: pointer;
-        transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
-        -webkit-app-region: no-drag;
+        transition:
+          transform 120ms ease,
+          filter 120ms ease,
+          opacity 120ms ease;
       }
 
       button:hover {
@@ -192,16 +195,129 @@
 
       button:disabled {
         cursor: default;
-        opacity: 0.52;
+        opacity: 0.54;
         transform: none;
         filter: none;
       }
 
+      .menu-toggle {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #fbe2d6 0%, #f5c6bb 100%);
+        border: 1px solid rgba(171, 108, 90, 0.18);
+        box-shadow:
+          0 12px 24px rgba(61, 36, 31, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.76);
+        color: var(--accent-strong);
+      }
+
+      .menu-toggle::before,
+      .menu-toggle::after,
+      .menu-toggle span {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 16px;
+        height: 2px;
+        margin-left: -8px;
+        border-radius: 999px;
+        background: currentColor;
+        transition: transform 140ms ease, opacity 140ms ease;
+      }
+
+      .menu-toggle::before {
+        top: 14px;
+      }
+
+      .menu-toggle span {
+        top: 20px;
+      }
+
+      .menu-toggle::after {
+        top: 26px;
+      }
+
+      .menu-toggle.open::before {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      .menu-toggle.open span {
+        opacity: 0;
+      }
+
+      .menu-toggle.open::after {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      .menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        padding: 11px 13px;
+        border-radius: 14px;
+        text-align: left;
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--ink);
+      }
+
+      .menu-button.primary {
+        background: linear-gradient(180deg, #e36b71 0%, var(--accent) 100%);
+        color: #fff;
+        box-shadow: 0 10px 18px rgba(212, 90, 96, 0.2);
+      }
+
+      .menu-button.ghost {
+        background: rgba(212, 90, 96, 0.1);
+        color: var(--accent-strong);
+      }
+
+      .menu-label {
+        display: grid;
+        gap: 2px;
+      }
+
+      .menu-label strong {
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .menu-label span {
+        font-size: 11px;
+        color: inherit;
+        opacity: 0.78;
+      }
+
+      .menu-button.dev-toggle {
+        padding: 9px 13px;
+        background: rgba(247, 236, 231, 0.94);
+        color: var(--ink-soft);
+      }
+
+      .dev-panel {
+        display: none;
+        gap: 6px;
+        padding-top: 4px;
+      }
+
+      .dev-panel.open {
+        display: grid;
+      }
+
+      .dev-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
+
       .state-button {
-        padding: 8px 0;
+        padding: 9px 0;
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.68);
-        color: var(--muted);
+        color: var(--ink-soft);
         font-size: 12px;
       }
 
@@ -209,62 +325,63 @@
         background: var(--accent-soft);
         color: var(--accent-strong);
       }
-
-      .primary {
-        background: linear-gradient(180deg, #e36a70 0%, var(--accent) 100%);
-        color: white;
-        box-shadow: 0 10px 18px rgba(212, 87, 93, 0.22);
-      }
-
-      .secondary {
-        background: rgba(212, 87, 93, 0.12);
-        color: var(--accent-strong);
-      }
-
-      .ghost {
-        background: rgba(255, 255, 255, 0.62);
-        color: var(--ink);
-      }
-
-      .footer-tip {
-        margin-top: 8px;
-        text-align: center;
-        color: rgba(111, 83, 74, 0.84);
-        font-size: 11px;
-      }
     </style>
   </head>
   <body>
     <section class="pet-shell">
-      <div class="pet-topline">
-        <div class="pet-badge" id="statusPill">搜索窗口已隐藏</div>
-        <div class="pet-closehint">可拖动</div>
+      <div class="status-chip" id="statusPill">搜索窗口已隐藏</div>
+
+      <div class="menu-anchor">
+        <div class="pet-menu" id="petMenu">
+          <div class="menu-header">
+            <div class="menu-title" id="stateLabel">待机</div>
+            <div class="menu-subtitle" id="description">绯铃会安静待在桌面角落，等你开口。</div>
+          </div>
+
+          <div class="menu-group">
+            <button class="menu-button primary" id="toggleSearch">
+              <div class="menu-label">
+                <strong id="toggleSearchTitle">唤起搜索</strong>
+                <span id="toggleSearchHint">打开功能面板</span>
+              </div>
+            </button>
+
+            <button class="menu-button ghost" id="quitApp">
+              <div class="menu-label">
+                <strong>退出桌宠</strong>
+                <span>关闭当前桌面栈</span>
+              </div>
+            </button>
+
+            <button class="menu-button dev-toggle" id="toggleDevStates">
+              <div class="menu-label">
+                <strong>开发状态预览</strong>
+                <span>手动确认绯铃表情切换</span>
+              </div>
+            </button>
+
+            <div class="dev-panel" id="devPanel">
+              <div class="dev-grid">
+                <button class="state-button" data-state="idle">待机</button>
+                <button class="state-button" data-state="happy_soft">开心</button>
+                <button class="state-button" data-state="thinking">思考</button>
+                <button class="state-button" data-state="confused">困惑</button>
+                <button class="state-button" data-state="smug">得意</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单">
+          <span></span>
+        </button>
       </div>
 
       <div class="pet-stage">
+        <div class="pet-shadow"></div>
         <img class="pet-art" id="petArt" alt="绯铃桌宠" />
         <img class="pet-art-overlay" id="petBlinkOverlay" alt="" aria-hidden="true" />
       </div>
-
-      <h1>绯铃</h1>
-      <div class="state-line" id="stateLabel">待机</div>
-      <p id="description">绯铃会安静待在桌面角落，等你开口。</p>
-
-      <div class="state-list">
-        <button class="state-button" data-state="idle">待机</button>
-        <button class="state-button" data-state="happy_soft">开心</button>
-        <button class="state-button" data-state="thinking">思考</button>
-        <button class="state-button" data-state="confused">困惑</button>
-        <button class="state-button" data-state="smug">得意</button>
-      </div>
-
-      <div class="button-list">
-        <button class="primary" id="openSearch">唤起搜索</button>
-        <button class="secondary" id="hideSearch">收起搜索</button>
-        <button class="ghost" id="quitApp">退出桌宠</button>
-      </div>
-
-      <div class="footer-tip">当前先用静态状态图接入，动画后补。</div>
     </section>
 
     <script>
@@ -294,12 +411,21 @@
       const statusPill = document.getElementById("statusPill");
       const stateLabel = document.getElementById("stateLabel");
       const description = document.getElementById("description");
-      const openSearchButton = document.getElementById("openSearch");
-      const hideSearchButton = document.getElementById("hideSearch");
+      const menuToggle = document.getElementById("menuToggle");
+      const petMenu = document.getElementById("petMenu");
+      const toggleSearchButton = document.getElementById("toggleSearch");
+      const toggleSearchTitle = document.getElementById("toggleSearchTitle");
+      const toggleSearchHint = document.getElementById("toggleSearchHint");
+      const quitAppButton = document.getElementById("quitApp");
+      const toggleDevStatesButton = document.getElementById("toggleDevStates");
+      const devPanel = document.getElementById("devPanel");
       const stateButtons = Array.from(document.querySelectorAll("[data-state]"));
+
       let currentStateKey = "idle";
       let blinkTimeoutId = null;
       let blinkFrameTimeoutId = null;
+      let menuOpen = false;
+      let devPanelOpen = false;
 
       function clearBlinkTimers() {
         if (blinkTimeoutId) {
@@ -327,6 +453,18 @@
         petBlinkOverlay.removeAttribute("src");
       }
 
+      function setMenuOpen(nextOpen) {
+        menuOpen = nextOpen;
+        petMenu.classList.toggle("open", menuOpen);
+        menuToggle.classList.toggle("open", menuOpen);
+        menuToggle.setAttribute("aria-expanded", menuOpen ? "true" : "false");
+      }
+
+      function setDevPanelOpen(nextOpen) {
+        devPanelOpen = nextOpen;
+        devPanel.classList.toggle("open", devPanelOpen);
+      }
+
       function scheduleBlink() {
         clearBlinkTimers();
 
@@ -352,8 +490,11 @@
                 return;
               }
 
-              hideBlinkOverlay();
-              scheduleBlink();
+              showBlinkOverlay(blinkAssets.half);
+              blinkFrameTimeoutId = setTimeout(() => {
+                hideBlinkOverlay();
+                scheduleBlink();
+              }, 70);
             }, 90);
           }, 70);
         }, nextDelay);
@@ -373,13 +514,14 @@
         if (searchVisible) {
           statusPill.textContent = "搜索窗口已打开";
           statusPill.classList.add("active");
+          toggleSearchTitle.textContent = "收起搜索";
+          toggleSearchHint.textContent = "暂时隐藏功能面板";
         } else {
           statusPill.textContent = "搜索窗口已隐藏";
           statusPill.classList.remove("active");
+          toggleSearchTitle.textContent = "唤起搜索";
+          toggleSearchHint.textContent = "打开功能面板";
         }
-
-        openSearchButton.disabled = searchVisible;
-        hideSearchButton.disabled = !searchVisible;
 
         stateButtons.forEach((button) => {
           button.classList.toggle("active", button.dataset.state === activeState);
@@ -392,22 +534,32 @@
         }
       }
 
-      document
-        .getElementById("openSearch")
-        .addEventListener("click", () => window.desktopShell.showSearchWindow());
+      menuToggle.addEventListener("click", () => {
+        setMenuOpen(!menuOpen);
+      });
 
-      document
-        .getElementById("hideSearch")
-        .addEventListener("click", () => window.desktopShell.hideSearchWindow());
+      toggleSearchButton.addEventListener("click", () => {
+        window.desktopShell.toggleSearchWindow();
+      });
 
-      document
-        .getElementById("quitApp")
-        .addEventListener("click", () => window.desktopShell.quitApp());
+      quitAppButton.addEventListener("click", () => {
+        window.desktopShell.quitApp();
+      });
+
+      toggleDevStatesButton.addEventListener("click", () => {
+        setDevPanelOpen(!devPanelOpen);
+      });
 
       stateButtons.forEach((button) => {
         button.addEventListener("click", () => {
           window.desktopShell.setPetState(button.dataset.state);
         });
+      });
+
+      window.addEventListener("click", (event) => {
+        if (!event.target.closest(".menu-anchor")) {
+          setMenuOpen(false);
+        }
       });
 
       window.desktopShell.onShellState((state) => {

@@ -113,3 +113,27 @@
 
 - eferences/legacy_raster_exports/ 保存旧 JPG 导出归档，不参与当前运行时引用。
 
+
+## 2026-03-24 更新说明
+
+当前运行时素材：
+- `base/feiling_master_v1.png`
+- `states/feiling_idle_v1.png`
+- `states/feiling_happy_soft_v1.png`
+- `states/feiling_thinking_v1.png`
+- `states/feiling_confused_v1.png`
+- `states/feiling_smug_v1.png`
+- `animations/feiling_idle_blink_half_v1.png`
+- `animations/feiling_idle_blink_closed_v1.png`
+- `animations/feiling_idle_blink_half_overlay_v2.png`
+- `animations/feiling_idle_blink_closed_overlay_v2.png`
+
+当前透明源文件：
+- `references/source_exports/*.png`
+
+旧 JPG 归档：
+- `references/legacy_raster_exports/`
+
+说明：
+- 运行时不再引用 JPG
+- `overlay_v1` 已退役，当前使用 `overlay_v2`

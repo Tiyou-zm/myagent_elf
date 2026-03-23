@@ -471,3 +471,23 @@ http://127.0.0.1:4173
 这一步的意义是避免出现“脚本提示停了，但后端端口还挂着”的假停机状态。
 
 
+
+## 2026-03-24 透明素材与最小桌宠壳
+
+当前绯铃运行时素材已经正式切到透明 PNG：
+- `assets/characters/feiling/base/feiling_master_v1.png`
+- `assets/characters/feiling/states/*.png`
+- `assets/characters/feiling/animations/*.png`
+
+旧的 JPG 导出图没有删除，而是归档到：
+- `assets/characters/feiling/references/legacy_raster_exports/`
+
+当前桌宠壳也已经从“带大卡片面板的开发壳”收口成：
+- 默认只显示绯铃本体
+- 右侧一个小菜单按钮
+- 菜单里承载：
+  - 唤起/收起搜索
+  - 退出桌宠
+  - 开发状态预览
+
+这一步的意义是把产品形态进一步拉回“桌宠主、搜索辅”。

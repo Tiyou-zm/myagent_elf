@@ -415,3 +415,20 @@
   - 强 Q 版桌宠，而不是普通立绘
 
 
+
+## 2026-03-24 透明素材与桌宠形态补充
+
+当前绯铃运行时素材已经统一切到透明 PNG，运行时引用只保留：
+- `base/feiling_master_v1.png`
+- `states/*.png`
+- `animations/*.png`
+
+旧的 JPG 原始导出图归档到：
+- `assets/characters/feiling/references/legacy_raster_exports/`
+
+Electron 桌宠壳本轮改成更贴近真实产品形态的结构：
+- 默认只显示绯铃本体
+- 右侧提供一个小菜单按钮
+- 菜单承载搜索入口与开发预览，不再让大面板常驻桌面
+
+这一步之后，桌宠窗口已经不再以“开发面板”作为默认视觉，而是开始接近真正的桌面宠物入口。
