@@ -263,6 +263,11 @@
         smug: "../assets/characters/feiling/states/feiling_smug_v1.jpg",
       };
 
+      const blinkAssets = {
+        half: "../assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg",
+        closed: "../assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png",
+      };
+
       const stateLabels = {
         idle: "待机",
         happy_soft: "开心",
@@ -278,12 +283,64 @@
       const openSearchButton = document.getElementById("openSearch");
       const hideSearchButton = document.getElementById("hideSearch");
       const stateButtons = Array.from(document.querySelectorAll("[data-state]"));
+      let currentStateKey = "idle";
+      let blinkTimeoutId = null;
+      let blinkFrameTimeoutId = null;
+
+      function clearBlinkTimers() {
+        if (blinkTimeoutId) {
+          clearTimeout(blinkTimeoutId);
+          blinkTimeoutId = null;
+        }
+
+        if (blinkFrameTimeoutId) {
+          clearTimeout(blinkFrameTimeoutId);
+          blinkFrameTimeoutId = null;
+        }
+      }
+
+      function setPetImage(source) {
+        petArt.src = source;
+      }
+
+      function scheduleBlink() {
+        clearBlinkTimers();
+
+        if (currentStateKey !== "idle") {
+          return;
+        }
+
+        const nextDelay = 2800 + Math.floor(Math.random() * 2200);
+        blinkTimeoutId = setTimeout(() => {
+          if (currentStateKey !== "idle") {
+            return;
+          }
+
+          setPetImage(blinkAssets.half);
+          blinkFrameTimeoutId = setTimeout(() => {
+            if (currentStateKey !== "idle") {
+              return;
+            }
+
+            setPetImage(blinkAssets.closed);
+            blinkFrameTimeoutId = setTimeout(() => {
+              if (currentStateKey !== "idle") {
+                return;
+              }
+
+              setPetImage(stateAssets.idle);
+              scheduleBlink();
+            }, 90);
+          }, 70);
+        }, nextDelay);
+      }
 
       function renderState(state) {
         const searchVisible = Boolean(state && state.searchVisible);
         const activeState = state && state.petState ? state.petState : "idle";
+        currentStateKey = activeState;
 
-        petArt.src = stateAssets[activeState];
+        setPetImage(stateAssets[activeState]);
         stateLabel.textContent = stateLabels[activeState] || "待机";
         description.textContent =
           (state && state.petDescription) || "绯铃会安静待在桌面角落，等你开口。";
@@ -302,6 +359,12 @@
         stateButtons.forEach((button) => {
           button.classList.toggle("active", button.dataset.state === activeState);
         });
+
+        if (activeState === "idle") {
+          scheduleBlink();
+        } else {
+          clearBlinkTimers();
+        }
       }
 
       document

@@ -386,6 +386,23 @@
    - `blink_closed`
 3. 跑通后，再考虑把眨眼扩到其他状态
 
+## 2026-03-24 绯铃待机眨眼接入
+
+当前已经把第一组待机眨眼图接入素材目录和桌宠壳：
+
+- `assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg`
+- `assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png`
+
+当前实现范围刻意保持很小：
+
+- 只有 `idle` 会眨眼
+- 其他状态先不跟进
+
+这样做的好处：
+
+- 先让桌宠开始有“生命感”
+- 不把动画状态机和素材需求一口气扩太大
+
 - 不只要有人设，还要有独立的视觉锁定文档
 - 当前重点锁定：
   - 2 到 2.5 头身

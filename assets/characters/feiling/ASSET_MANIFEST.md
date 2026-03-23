@@ -53,12 +53,24 @@
 - `references/source_exports/feiling_state_thinking_source_v1.jpg`
 - `references/source_exports/feiling_state_confused_source_v1.jpg`
 - `references/source_exports/feiling_state_smug_source_v1.jpg`
+- `references/source_exports/feiling_idle_blink_half_source_v1.jpg`
+- `references/source_exports/feiling_idle_blink_closed_source_v1.png`
 
 说明：
 
 - 这些文件用于保留你最初导出的原始版本
 - 标准接入仍然优先使用 `base/` 和 `states/` 里的规范命名文件
 - 当前绯铃素材目录已统一改成英文路径
+
+### 动画接入图
+
+- `animations/feiling_idle_blink_half_v1.jpg`
+- `animations/feiling_idle_blink_closed_v1.png`
+
+说明：
+
+- 当前只做 `idle blink`
+- 不扩展到 `happy_soft`、`thinking`、`confused`、`smug`
 
 ## 当前观察
 

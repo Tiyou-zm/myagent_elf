@@ -1372,6 +1372,45 @@
   - 让出图 agent 跑 `blink`
   - 代码侧准备最小眨眼状态机
 
+## Session 033 - 接入绯铃待机眨眼
+
+日期：2026-03-24
+
+### 我们这一轮在做什么
+
+这一轮把刚生成好的两张待机眨眼图正式接进了绯铃素材目录和桌宠壳。
+
+目标还是保持克制：
+
+- 不做完整动画系统
+- 只做 `idle` 的最小眨眼
+- 先验证“绯铃会轻轻眨眼”这件事本身
+
+### 这一轮固化了什么
+
+原始导出图改成英文并落到：
+
+- `references/source_exports/feiling_idle_blink_half_source_v1.jpg`
+- `references/source_exports/feiling_idle_blink_closed_source_v1.png`
+
+标准接入图落到：
+
+- `animations/feiling_idle_blink_half_v1.jpg`
+- `animations/feiling_idle_blink_closed_v1.png`
+
+代码侧：
+
+- `electron/pet.html`
+  - 在 `idle` 状态下定时播放：
+    - 半闭眼
+    - 闭眼
+    - 回到睁眼
+
+### 当前结论
+
+- 绯铃现在已经不只是切静态状态，而是开始有了最轻的一层待机动画
+- 这一步验证的是“动画入口”和“素材组织方式”都已经成立
+
 ### 当前结论
 
 - 绯铃现在已经不再停留在“只有母版立绘”

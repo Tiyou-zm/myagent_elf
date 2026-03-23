@@ -30,3 +30,13 @@
 - 当前这批素材是 JPG，棋盘格背景已经烘焙进图片里。
 - 所以它们现在适合先做桌宠开发接入，但最终正式版仍建议换成透明背景 PNG。
 - 当前绯铃素材目录中的文件和子目录都统一使用英文命名，避免后续代码、脚本和工具链在 Windows 环境里因为中文路径踩坑。
+
+## 当前已接入的眨眼素材
+
+- `animations/feiling_idle_blink_half_v1.jpg`
+- `animations/feiling_idle_blink_closed_v1.png`
+
+说明：
+
+- 当前先只给 `idle` 状态接眨眼
+- 其他状态暂时不做眨眼扩展

@@ -381,6 +381,32 @@ http://127.0.0.1:4173
 - 绯铃第一次不只是“显示在桌面上”
 - 而是开始在真实工作流里表达反应
 
+## 当前绯铃待机眨眼
+
+绯铃现在已经开始接第一层动画，但范围控制得很小：
+
+- 只给 `idle` 状态接眨眼
+- 暂时不扩展到其他状态
+
+当前新增素材：
+
+- `assets/characters/feiling/animations/feiling_idle_blink_half_v1.jpg`
+- `assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png`
+
+当前实现方式：
+
+- `electron/pet.html`
+  - 在 `idle` 状态下定时切换：
+    - 睁眼
+    - 半闭眼
+    - 闭眼
+    - 睁眼
+
+这一步的意义：
+
+- 先让绯铃“安静活着”
+- 不把动画系统一开始做重
+
 ## 当前眨眼出图任务
 
 为了避免一上来把动画范围做大，当前又单独补了一份：
