@@ -81,11 +81,6 @@
         font-size: 18px;
       }
 
-      .panel p {
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
       .field {
         display: grid;
         gap: 8px;
@@ -227,10 +222,10 @@
     <main class="page">
       <section class="hero">
         <span class="eyebrow">Thin Frontend Shell</span>
-        <h1>先把前端调用链接起来</h1>
+        <h1>先把前端调用链真正接起来</h1>
         <p>
-          这不是正式 Electron，而是一个很薄的网页壳。它只做一件事：把 Python
-          服务的索引、搜索、根目录查询连成一个你能直接点的最小前端。
+          这个页面继续承担最薄的搜索壳，但现在它还会把桌宠状态带起来。
+          目标不是做最终 UI，而是先让绯铃在搜索过程中有明确反应。
         </p>
       </section>
 
@@ -245,10 +240,7 @@
 
           <div class="field">
             <label for="rootPath">索引目录</label>
-            <input
-              id="rootPath"
-              value="C:\Users\Administrator\Desktop\agent_study"
-            />
+            <input id="rootPath" value="C:\Users\Administrator\Desktop\agent_study" />
           </div>
 
           <div class="field">
@@ -274,7 +266,7 @@
           <h2>返回结果</h2>
           <div id="status" class="status">等待调用。</div>
           <div id="results" class="result-list">
-            <div class="empty">先点左侧按钮，观察接口是怎么被前端消费的。</div>
+            <div class="empty">先点左侧按钮，观察接口结果和绯铃状态联动。</div>
           </div>
         </section>
       </section>
@@ -291,6 +283,18 @@
       };
 
       const buttons = Array.from(document.querySelectorAll("button"));
+
+      async function syncPetState(nextState) {
+        if (!window.desktopShell || !window.desktopShell.setPetState) {
+          return;
+        }
+
+        try {
+          await window.desktopShell.setPetState(nextState);
+        } catch (_error) {
+          // 非 Electron 环境下静默忽略。
+        }
+      }
 
       function setLoading(isLoading) {
         buttons.forEach((button) => {
@@ -315,8 +319,7 @@
 
       function renderSearchResults(payload) {
         if (!payload.results.length) {
-          state.resultsEl.innerHTML =
-            '<div class="empty">这次没有命中结果。</div>';
+          state.resultsEl.innerHTML = '<div class="empty">这次没有命中结果。</div>';
           return;
         }
 
@@ -350,8 +353,7 @@
 
       function renderRoots(payload) {
         if (!payload.roots.length) {
-          state.resultsEl.innerHTML =
-            '<div class="empty">当前还没有登记过索引根目录。</div>';
+          state.resultsEl.innerHTML = '<div class="empty">当前还没有登记过索引根目录。</div>';
           return;
         }
 
@@ -391,6 +393,7 @@
           body: JSON.stringify({ path, mode }),
         });
         setStatus(payload.message);
+        await syncPetState("happy_soft");
       }
 
       async function run(action) {
@@ -401,6 +404,7 @@
         } catch (error) {
           state.resultsEl.innerHTML = '<div class="empty">本次调用失败。</div>';
           setStatus(error.message, true);
+          await syncPetState("confused");
         } finally {
           setLoading(false);
         }
@@ -412,11 +416,13 @@
           setStatus(payload.message);
           state.resultsEl.innerHTML = "";
           state.resultsEl.appendChild(renderJsonCard("健康检查", payload));
+          await syncPetState("happy_soft");
         }),
       );
 
       document.getElementById("indexBtn").addEventListener("click", () =>
         run(async () => {
+          await syncPetState("thinking");
           const payload = await request("/api/v1/index", {
             method: "POST",
             body: JSON.stringify({
@@ -426,11 +432,13 @@
           setStatus(payload.message);
           state.resultsEl.innerHTML = "";
           state.resultsEl.appendChild(renderJsonCard("索引结果", payload));
+          await syncPetState(payload.indexed_files > 0 ? "happy_soft" : "confused");
         }),
       );
 
       document.getElementById("contentBtn").addEventListener("click", () =>
         run(async () => {
+          await syncPetState("thinking");
           const payload = await request("/api/v1/search", {
             method: "POST",
             body: JSON.stringify({
@@ -440,11 +448,13 @@
           });
           setStatus(payload.message);
           renderSearchResults(payload);
+          await syncPetState(payload.results.length ? "smug" : "confused");
         }),
       );
 
       document.getElementById("fileBtn").addEventListener("click", () =>
         run(async () => {
+          await syncPetState("thinking");
           const payload = await request("/api/v1/search/files", {
             method: "POST",
             body: JSON.stringify({
@@ -454,16 +464,23 @@
           });
           setStatus(payload.message);
           renderSearchResults(payload);
+          await syncPetState(payload.results.length ? "smug" : "confused");
         }),
       );
 
       document.getElementById("rootsBtn").addEventListener("click", () =>
         run(async () => {
+          await syncPetState("thinking");
           const payload = await request("/api/v1/roots", { method: "GET" });
           setStatus(payload.message);
           renderRoots(payload);
+          await syncPetState(payload.roots.length ? "happy_soft" : "confused");
         }),
       );
+
+      window.addEventListener("error", async () => {
+        await syncPetState("confused");
+      });
     </script>
   </body>
 </html>
