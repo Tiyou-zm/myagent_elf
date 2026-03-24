@@ -23,6 +23,9 @@
     - `C:\Users\Administrator\Desktop\feiling\stop_feiling.bat`
   - 当前桌宠壳继续单独打磨，不再把气泡、拖拽和主界面遮挡问题带回 `agent_study`
   - 当前仍在继续压缩主窗边界，优先降低对桌面的遮挡
+  - 当前已补待机精灵任务单：
+    - `C:\Users\Administrator\Desktop\feiling\BLINK_SPRITESHEET_BRIEF.md`
+    - `C:\Users\Administrator\Desktop\feiling\IDLE_BREATH_SPRITESHEET_BRIEF.md`
 
 仓库约定：
 

@@ -28,6 +28,10 @@
     - 降低桌面遮挡
   - 当前最新方向：
     - 主窗优先继续向角色真实边界贴近
+  - 当前已补：
+    - `BLINK_SPRITESHEET_BRIEF.md`
+    - `IDLE_BREATH_SPRITESHEET_BRIEF.md`
+    - 为后续待机精灵图出图提供独立任务单
 
 ## Git 仓库
 
