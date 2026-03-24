@@ -21,44 +21,47 @@
         UseLayoutRounding="True"
         SnapsToDevicePixels="True">
     <Grid x:Name="Root"
-          Background="Transparent"
-          PreviewMouseLeftButtonDown="OnShellMouseLeftButtonDown"
-          PreviewMouseMove="OnShellMouseMove"
-          PreviewMouseLeftButtonUp="OnShellMouseLeftButtonUp">
-        <Grid Margin="0,0,20,0">
+          Background="Transparent">
+        <Grid Margin="0,0,14,0">
             <Ellipse Width="120"
                      Height="18"
                      VerticalAlignment="Bottom"
                      Margin="0,0,0,10"
                      Fill="#2A3B2522" />
 
-            <Border x:Name="PetVisual"
-                    Width="210"
-                    Height="360"
-                    VerticalAlignment="Bottom"
-                    Background="Transparent"
-                    RenderTransformOrigin="0.5,1">
-                <Border.CacheMode>
+            <Grid x:Name="PetDragSurface"
+                  Width="210"
+                  Height="360"
+                  VerticalAlignment="Bottom"
+                  Background="#01000000"
+                  RenderTransformOrigin="0.5,1"
+                  MouseEnter="PetDragSurface_OnMouseEnter"
+                  MouseLeave="PetDragSurface_OnMouseLeave"
+                  MouseLeftButtonDown="OnShellMouseLeftButtonDown"
+                  MouseMove="OnShellMouseMove"
+                  MouseLeftButtonUp="OnShellMouseLeftButtonUp">
+                <Grid.CacheMode>
                     <BitmapCache />
-                </Border.CacheMode>
-                <Border.RenderTransform>
+                </Grid.CacheMode>
+                <Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="PetScaleTransform" ScaleX="1" ScaleY="1" />
                         <TranslateTransform x:Name="PetTranslateTransform" X="0" Y="0" />
                     </TransformGroup>
-                </Border.RenderTransform>
+                </Grid.RenderTransform>
                 <Image x:Name="PetImage"
                        Width="210"
                        Height="360"
                        Stretch="Uniform"
+                       IsHitTestVisible="False"
                        RenderOptions.BitmapScalingMode="HighQuality" />
-            </Border>
+            </Grid>
         </Grid>
 
         <Grid HorizontalAlignment="Right"
               VerticalAlignment="Center"
-              Margin="0,0,0,0"
-              Width="44">
+              Margin="0,0,2,0"
+              Width="40">
             <Popup x:Name="MenuPopup"
                    PlacementTarget="{Binding ElementName=MenuButton}"
                    Placement="Left"
@@ -122,8 +125,8 @@
             </Popup>
 
             <Button x:Name="MenuButton"
-                    Width="36"
-                    Height="36"
+                    Width="34"
+                    Height="34"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Cursor="Hand"

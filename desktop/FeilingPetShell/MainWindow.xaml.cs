@@ -23,14 +23,6 @@ public partial class MainWindow : Window
         LoadPetImage();
 
         Loaded += OnLoaded;
-        MouseEnter += (_, _) => AnimatePetScale(1.018, 120);
-        MouseLeave += (_, _) =>
-        {
-            if (!_dragging && !_pointerDown)
-            {
-                AnimatePetScale(1.0, 140);
-            }
-        };
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -103,40 +95,31 @@ public partial class MainWindow : Window
         PetTranslateTransform.BeginAnimation(System.Windows.Media.TranslateTransform.YProperty, rise);
     }
 
-    private bool IsMenuSource(object? source)
+    private void PetDragSurface_OnMouseEnter(object sender, MouseEventArgs e)
     {
-        if (source is not DependencyObject dependencyObject)
+        AnimatePetScale(1.018, 120);
+    }
+
+    private void PetDragSurface_OnMouseLeave(object sender, MouseEventArgs e)
+    {
+        if (!_dragging && !_pointerDown)
         {
-            return false;
+            AnimatePetScale(1.0, 140);
         }
-
-        var current = dependencyObject;
-        while (current is not null)
-        {
-            if (current == MenuButton || current == MenuPopup || current == OpenSearchButton)
-            {
-                return true;
-            }
-
-            current = System.Windows.Media.VisualTreeHelper.GetParent(current);
-        }
-
-        return false;
     }
 
     private void OnShellMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (IsMenuSource(e.OriginalSource))
-        {
-            return;
-        }
-
         _pointerDown = true;
         _dragging = false;
         _dragStartScreen = PointToScreen(e.GetPosition(this));
         _dragStartWindow = new Point(Left, Top);
-        CaptureMouse();
+        if (sender is IInputElement inputElement)
+        {
+            Mouse.Capture(inputElement);
+        }
         AnimatePetScale(0.992, 70);
+        e.Handled = true;
     }
 
     private void OnShellMouseMove(object sender, MouseEventArgs e)
@@ -171,7 +154,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        ReleaseMouseCapture();
+        Mouse.Capture(null);
         var wasDragging = _dragging;
         _pointerDown = false;
         _dragging = false;
@@ -184,6 +167,7 @@ public partial class MainWindow : Window
 
         PlayClickFeedback();
         AnimatePetScale(1.0, 140);
+        e.Handled = true;
     }
 
     private void MenuButton_OnClick(object sender, RoutedEventArgs e)
