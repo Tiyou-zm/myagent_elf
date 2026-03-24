@@ -38,15 +38,17 @@
 
       .pet-shell {
         position: relative;
-        width: 332px;
-        height: 500px;
+        width: 300px;
+        height: 492px;
       }
 
       .pet-hitbox {
         position: absolute;
-        inset: 0 34px 0 0;
+        inset: 0 28px 0 0;
         display: grid;
         place-items: end center;
+        z-index: 1;
+        background: transparent;
         cursor: grab;
         touch-action: none;
       }
@@ -58,11 +60,12 @@
       .pet-shadow {
         position: absolute;
         bottom: 20px;
-        width: 160px;
+        width: 150px;
         height: 22px;
         border-radius: 999px;
         background: rgba(59, 37, 34, 0.14);
         filter: blur(8px);
+        pointer-events: none;
         transition:
           transform 160ms ease,
           opacity 160ms ease;
@@ -72,6 +75,7 @@
         position: relative;
         display: grid;
         place-items: end center;
+        pointer-events: none;
         transform-origin: center bottom;
         transition:
           transform 160ms ease,
@@ -120,7 +124,7 @@
       .pet-art {
         position: relative;
         z-index: 1;
-        width: 286px;
+        width: 264px;
         height: 450px;
         object-fit: contain;
         filter: drop-shadow(0 12px 18px rgba(73, 45, 42, 0.14));
@@ -130,7 +134,7 @@
       .menu-anchor {
         position: absolute;
         top: 188px;
-        right: 12px;
+        right: 2px;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -209,6 +213,7 @@
       }
 
       .pet-menu {
+        display: none;
         width: 184px;
         padding: 12px;
         border-radius: 18px;
@@ -217,26 +222,12 @@
           linear-gradient(180deg, var(--panel) 0%, rgba(251, 239, 232, 0.98) 100%);
         border: 1px solid var(--panel-edge);
         box-shadow: 0 16px 28px var(--shadow);
-        opacity: 0;
-        visibility: hidden;
         pointer-events: none;
-        transform: translateX(8px) scale(0.98);
-        transform-origin: right center;
-        transition:
-          opacity 140ms ease,
-          transform 140ms ease,
-          visibility 0s linear 140ms;
       }
 
       .pet-menu.open {
-        opacity: 1;
-        visibility: visible;
+        display: block;
         pointer-events: auto;
-        transform: translateX(0) scale(1);
-        transition:
-          opacity 140ms ease,
-          transform 140ms ease,
-          visibility 0s linear 0s;
       }
 
       .menu-title {
