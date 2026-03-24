@@ -80,6 +80,16 @@ python -m pip install -r requirements.txt
 python -m uvicorn index_service.main:app --app-dir src --reload
 ```
 
+如果要接本地私有 LLM 配置，可以在仓库根目录放一个不会进 Git 的 `.env.local`，例如：
+
+```text
+FEILING_LLM_BASE_URL=...
+FEILING_LLM_API_KEY=...
+FEILING_LLM_MODEL=...
+```
+
+`scripts/start_index_service.ps1` 启动时会自动加载这份本地配置。
+
 ## 当前接口说明
 
 `POST /api/v1/index`

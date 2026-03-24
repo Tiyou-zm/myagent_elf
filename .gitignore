@@ -7,3 +7,6 @@ data/*.db
 data/runtime/
 desktop/**/bin/
 desktop/**/obj/
+.env.local
+.env.local.*
+local/
