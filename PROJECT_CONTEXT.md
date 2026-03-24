@@ -19,6 +19,9 @@
 - `C:\\Users\\Administrator\\Desktop\\feiling`
   - 新的独立绯铃桌宠项目
   - 当前只做陪伴型桌宠本体，不继续绑定搜索/Agent 入口
+  - 当前提供根目录一键脚本：
+    - `run_feiling.bat`
+    - `stop_feiling.bat`
 
 ## Git 仓库
 

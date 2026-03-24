@@ -1939,3 +1939,6 @@ WPF 桌宠壳当前改成：
 - `agent_study` 和绯铃桌宠现在正式分线
 - 后面做桌宠，不必再被 Agent 方向牵着走
 - 后面做 Agent，也不必再被桌宠表现层拖住节奏
+- `feiling` 根目录已补双击入口：
+  - `run_feiling.bat`
+  - `stop_feiling.bat`

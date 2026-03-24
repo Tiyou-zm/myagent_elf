@@ -18,6 +18,9 @@
   - `C:\Users\Administrator\Desktop\feiling`
   - 当前先专注做“标准陪伴型桌宠”
   - 等桌宠本体成熟后，再考虑把 agent 能力赋回绯铃
+  - 当前可直接双击：
+    - `C:\Users\Administrator\Desktop\feiling\run_feiling.bat`
+    - `C:\Users\Administrator\Desktop\feiling\stop_feiling.bat`
 
 仓库约定：
 
