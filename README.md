@@ -22,6 +22,7 @@
     - `C:\Users\Administrator\Desktop\feiling\run_feiling.bat`
     - `C:\Users\Administrator\Desktop\feiling\stop_feiling.bat`
   - 当前桌宠壳继续单独打磨，不再把气泡、拖拽和主界面遮挡问题带回 `agent_study`
+  - 当前仍在继续压缩主窗边界，优先降低对桌面的遮挡
 
 仓库约定：
 
