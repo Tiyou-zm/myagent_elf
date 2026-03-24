@@ -26,6 +26,8 @@
   - 当前已补待机精灵任务单：
     - `C:\Users\Administrator\Desktop\feiling\BLINK_SPRITESHEET_BRIEF.md`
     - `C:\Users\Administrator\Desktop\feiling\IDLE_BREATH_SPRITESHEET_BRIEF.md`
+  - 当前已补混合表现任务单：
+    - `C:\Users\Administrator\Desktop\feiling\LIVE2D_SPRITE_HYBRID_BRIEF.md`
 
 仓库约定：
 

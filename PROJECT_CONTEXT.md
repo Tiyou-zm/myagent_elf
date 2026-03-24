@@ -32,6 +32,9 @@
     - `BLINK_SPRITESHEET_BRIEF.md`
     - `IDLE_BREATH_SPRITESHEET_BRIEF.md`
     - 为后续待机精灵图出图提供独立任务单
+  - 当前新增：
+    - `LIVE2D_SPRITE_HYBRID_BRIEF.md`
+    - 明确后续绯铃主体走 Live2D、短动作走精灵图的混合路线
 
 ## Git 仓库
 
