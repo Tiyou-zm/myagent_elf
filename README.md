@@ -715,3 +715,26 @@ http://127.0.0.1:4173
 - `FEILING_LLM_MODEL`
 
 如果这些环境变量存在，后端会按 OpenAI 兼容接口尝试调用；没有配置时，就先走本地检索模板回答。
+
+## 2026-03-25 EasyVtuber 导帧实验已跑通
+
+`EasyVtuber` 这条实验线现在已经不再停留在“改代码但看不到结果”的阶段，而是已经真正导出了一轮绯铃待机帧。
+
+当前确认完成的关键点：
+
+- 补齐了 `ezvtuber-rt` 子模块
+- 用本地 `.venv` 补齐了最小运行依赖
+- 把 Google Drive 下来的模型包识别为 `7z` 并成功解压到 `data/models`
+- 修掉了 `core_ort.py` 里错误加载 `rife_x1` 的判断
+- 把 `pose_simplify` 改成了轻量索引表，切断了对 `tha2 -> torch` 的额外依赖
+- 实际导出了 `12` 帧 PNG：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\output_frames\feiling_idle_test`
+- 顺手补了拼表脚本：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\build_sprite_sheet.py`
+- 已生成首张预览精灵图：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\output_frames\feiling_idle_test_sheet.png`
+
+这意味着：
+
+- `EasyVtuber` 现在已经可以作为“绯铃待机循环素材实验工具”继续往下用
+- 它不再只是理论备选，而是已经有第一轮实际输出

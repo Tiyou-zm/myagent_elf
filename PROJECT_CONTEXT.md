@@ -673,3 +673,33 @@ Electron 桌宠壳本轮改成更贴近真实产品形态的结构：
 1. 本体可抓取
 2. 菜单可点击
 3. 再继续调整 hover / click 手感
+
+## 2026-03-25 EasyVtuber 实验状态更新
+
+当前 `EasyVtuber` 本地实验目录已经从“半成品源码”推进到“可导出绯铃待机序列帧”的阶段。
+
+当前实验目录：
+
+- `C:\Users\Administrator\Desktop\EasyVtuber_inspect`
+
+当前已确认的技术结论：
+
+- 源码仓库本身不够，必须补子模块和模型
+- 模型下载包并不是标准 zip，而是 `7z`
+- 当前最小导帧链路已经跑通：
+  - `idle_export_input`
+  - `output_frames`
+  - PNG 序列帧输出
+- 当前实验绕开了一个不值得继续背的历史依赖：
+  - `pose_simplify` 不再依赖 `tha2 -> torch`
+
+当前产物：
+
+- `12` 帧导出 PNG
+- 一张首轮 sprite sheet 预览图
+
+这条线当前的定位是：
+
+- 作为“待机循环素材生成实验工具”
+- 先服务于 `idle loop / blink / breath`
+- 暂不作为正式长期生产线承诺

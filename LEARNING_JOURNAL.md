@@ -2104,3 +2104,36 @@ WPF 桌宠壳当前改成：
 
 - 当前待机眨眼继续维持“只服务于 idle”的范围
 - 这轮主要是把嘴部漂移风险压低，并让眨眼节奏更自然一些
+
+## Session 052 - 跑通 EasyVtuber 待机导帧
+
+日期：2026-03-25
+
+### 我们这一轮在做什么
+
+这一轮没有继续空谈 `EasyVtuber` 能不能用，而是把它真正补到能导出绯铃待机序列帧。
+
+### 这一轮固化了什么
+
+- 确认模型下载包不是标准 zip，而是 `7z`
+- 用本地 `.venv` 安装并使用 `py7zr` 完成解包
+- 把解压后多出来的一层 `EZVTB_RT_NEW_DATA` 整理回 `data/models`
+- 修掉 `ezvtuber-rt/ezvtb_rt/core_ort.py` 中对 `rife_x1` 的错误加载判断
+- 用轻量索引表重写 `src/utils/pose_simplify.py`
+  - 切断了 `tha2 -> torch` 依赖
+- 实际跑通导帧命令，导出了：
+  - `12` 帧 `feiling_idle_0000.png` ~ `feiling_idle_0011.png`
+- 新增：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\build_sprite_sheet.py`
+- 并成功生成：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\output_frames\feiling_idle_test_sheet.png`
+
+### 当前结论
+
+- `EasyVtuber` 现在已经从“实验性改造”进入“有真实产出”
+- 这条路线至少可以继续承担：
+  - `idle loop`
+  - `blink`
+  - `breath`
+- 下一步不该再纠结“能不能跑”，而是该开始看：
+  - 导出的待机帧视觉质量是否值得继续投入
