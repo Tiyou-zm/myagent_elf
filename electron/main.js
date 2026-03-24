@@ -67,14 +67,15 @@ function syncShellState() {
 
 function createPetWindow() {
   petWindow = new BrowserWindow({
-    width: 276,
-    height: 404,
-    minWidth: 276,
-    minHeight: 404,
-    maxWidth: 276,
-    maxHeight: 404,
+    width: 332,
+    height: 500,
+    minWidth: 332,
+    minHeight: 500,
+    maxWidth: 332,
+    maxHeight: 500,
     frame: false,
     transparent: true,
+    backgroundColor: "#00000000",
     resizable: false,
     alwaysOnTop: true,
     skipTaskbar: true,
