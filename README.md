@@ -777,3 +777,16 @@ http://127.0.0.1:4173
   - `C:\Users\Administrator\Desktop\feiling\assets\characters\feiling\animations\idle_loop`
 
 当前 `feiling` 的 WPF 桌宠也已经开始优先读取这组 `idle_loop` 帧做正式待机循环。
+
+### 补充修正
+
+后续定位到一个非常具体的播放问题：
+
+- 原始 `idle_loop` 帧虽然已经统一裁切到同一尺寸
+- 但 WPF 加载时又把每一帧按透明边界单独 `CropToVisibleBounds()` 了一次
+- 这会让播放时出现“绯铃一会儿大一会儿小”的视觉抖动
+
+当前已经改为：
+
+- `idle_loop` 帧在运行时直接原样读取
+- 不再对每一帧做二次单独裁切
