@@ -763,3 +763,17 @@ http://127.0.0.1:4173
 - 这条线已经不再是“跑通但看不出变化”
 - 导出帧确实在变化，适合继续拿来试 `idle loop`
 - 但它依然是实验工具，不该直接替代正式动画生产线
+
+## 2026-03-25 feiling 已切到精灵帧待机
+
+独立 `feiling` 项目这边，绯铃正式待机路线已经开始从“单张图 + 微实验”切到“精灵帧循环”：
+
+- 用户提供了一张透明背景的待机 sprite sheet
+- 已重命名为：
+  - `C:\Users\Administrator\Desktop\feiling\assets\characters\feiling\references\source_exports\feiling_idle_loop_sheet_source_v1.png`
+- 新增拆分脚本：
+  - `C:\Users\Administrator\Desktop\feiling\scripts\build_feiling_idle_loop.py`
+- 当前已拆出 `61` 帧统一裁切后的 PNG：
+  - `C:\Users\Administrator\Desktop\feiling\assets\characters\feiling\animations\idle_loop`
+
+当前 `feiling` 的 WPF 桌宠也已经开始优先读取这组 `idle_loop` 帧做正式待机循环。

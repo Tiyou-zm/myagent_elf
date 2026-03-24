@@ -2175,3 +2175,33 @@ WPF 桌宠壳当前改成：
 - 但它当前仍然应该被视为：
   - 待机循环素材实验工具
   - 不是正式高精度动画生产线
+
+## Session 054 - 绯铃切到精灵帧待机
+
+日期：2026-03-25
+
+### 我们这一轮在做什么
+
+这一轮不再继续围绕单张图 blink overlay 打转，而是把用户提供的透明背景精灵帧 sheet 真正接进独立 `feiling` 项目，开始试正式待机循环。
+
+### 这一轮固化了什么
+
+- 将用户提供的待机 sheet 重命名为：
+  - `feiling_idle_loop_sheet_source_v1.png`
+- 新增拆分脚本：
+  - `C:\Users\Administrator\Desktop\feiling\scripts\build_feiling_idle_loop.py`
+- 把 sheet 按 `8x8` 网格切分，并自动跳过空白格
+- 统一计算全部有效帧的 alpha 联合边界，保证所有帧用同一裁切框
+- 实际生成 `61` 帧运行时 PNG：
+  - `C:\Users\Administrator\Desktop\feiling\assets\characters\feiling\animations\idle_loop`
+- 修改 `feiling` 的 WPF 桌宠，使其优先读取 `idle_loop` 目录里的帧做待机循环
+
+### 当前结论
+
+- 对独立 `feiling` 项目来说，正式待机路线已经开始切到精灵帧
+- 当前主线比“AI 微表情逐帧图”更稳，也更适合直接落到桌宠里
+- 后续如果这组帧循环观感足够好，可以继续沿这条路线扩：
+  - `idle`
+  - `happy`
+  - `wave`
+  - 轻微特效动作
