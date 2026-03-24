@@ -21,6 +21,7 @@
   - 当前可直接双击：
     - `C:\Users\Administrator\Desktop\feiling\run_feiling.bat`
     - `C:\Users\Administrator\Desktop\feiling\stop_feiling.bat`
+  - 当前桌宠壳继续单独打磨，不再把气泡、拖拽和主界面遮挡问题带回 `agent_study`
 
 仓库约定：
 
