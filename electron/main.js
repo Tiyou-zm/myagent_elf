@@ -67,12 +67,12 @@ function syncShellState() {
 
 function createPetWindow() {
   petWindow = new BrowserWindow({
-    width: 320,
-    height: 420,
-    minWidth: 320,
-    minHeight: 420,
-    maxWidth: 320,
-    maxHeight: 420,
+    width: 276,
+    height: 404,
+    minWidth: 276,
+    minHeight: 404,
+    maxWidth: 276,
+    maxHeight: 404,
     frame: false,
     transparent: true,
     resizable: false,
@@ -162,6 +162,28 @@ ipcMain.handle("desktop-shell:hide-search", () => {
 
 ipcMain.handle("desktop-shell:get-state", () => {
   return getShellState();
+});
+
+ipcMain.handle("desktop-shell:get-pet-bounds", () => {
+  if (!petWindow || petWindow.isDestroyed()) {
+    return null;
+  }
+
+  return petWindow.getBounds();
+});
+
+ipcMain.on("desktop-shell:move-pet-window", (_event, nextBounds) => {
+  if (!petWindow || petWindow.isDestroyed() || !nextBounds) {
+    return;
+  }
+
+  const x = Number.isFinite(nextBounds.x) ? Math.round(nextBounds.x) : null;
+  const y = Number.isFinite(nextBounds.y) ? Math.round(nextBounds.y) : null;
+  if (x === null || y === null) {
+    return;
+  }
+
+  petWindow.setPosition(x, y);
 });
 
 ipcMain.handle("desktop-shell:set-pet-state", (_event, nextState) => {
