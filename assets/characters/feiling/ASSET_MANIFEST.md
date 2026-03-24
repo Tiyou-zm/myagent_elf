@@ -137,3 +137,22 @@
 说明：
 - 运行时不再引用 JPG
 - `overlay_v1` 已退役，当前使用 `overlay_v2`
+
+## 2026-03-24 第二轮透明素材替换
+
+桌面 `绯铃/feelingv1.0/` 目录中的新一批透明素材已经覆盖到当前正式素材树：
+
+- `references/source_exports/*.png`
+- `base/feiling_master_v1.png`
+- `states/feiling_idle_v1.png`
+- `states/feiling_happy_soft_v1.png`
+- `states/feiling_thinking_v1.png`
+- `states/feiling_confused_v1.png`
+- `states/feiling_smug_v1.png`
+- `animations/feiling_idle_blink_half_v1.png`
+- `animations/feiling_idle_blink_closed_v1.png`
+
+当前原则：
+
+- 先按“可用优先”接入这批透明图
+- 后续如果母版继续精修，再在这套命名上继续覆盖

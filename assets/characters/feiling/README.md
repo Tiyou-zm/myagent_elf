@@ -67,3 +67,23 @@
 - `references/legacy_raster_exports/`
 
 当前 `source_exports/` 只保留透明 PNG 源文件。
+
+## 2026-03-24 第二轮透明素材覆盖
+
+桌面 `绯铃/feelingv1.0/` 目录中的新一批透明 PNG 已经覆盖进当前正式素材树。
+
+当前可直接使用的版本包括：
+
+- `base/feiling_master_v1.png`
+- `states/feiling_idle_v1.png`
+- `states/feiling_happy_soft_v1.png`
+- `states/feiling_thinking_v1.png`
+- `states/feiling_confused_v1.png`
+- `states/feiling_smug_v1.png`
+- `animations/feiling_idle_blink_half_v1.png`
+- `animations/feiling_idle_blink_closed_v1.png`
+
+当前原则：
+
+- 先让桌宠继续使用这一版可用透明素材
+- 后续如果母版继续微调，仍然沿用现有命名直接覆盖

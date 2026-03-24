@@ -1697,3 +1697,42 @@ WPF 桌宠壳当前改成：
   2. 菜单可点
   3. 再谈更细的视觉反馈
 - 同时菜单已经补上“退出桌宠”，方便高频测试时快速关闭当前壳体
+
+## Session 040 - 绯铃设定卡重写与透明素材替换
+
+日期：2026-03-24
+
+### 我们这一轮在做什么
+
+这一轮没有继续扩桌宠交互，而是先把绯铃这个角色本身补扎实，同时把新一批透明素材替换进正式目录。
+
+做了两件事：
+
+- 用桌面 `绯铃/feelingv1.0/` 里的第二轮透明 PNG 覆盖正式素材树
+- 重写 `OC_PROFILE.md`，把绯铃的人格、关系、语言风格、成长路线写成长期可复用的主设定卡
+
+### 这一轮学到的东西
+
+- 角色设定如果只停在“有气质”和“有几个关键词”，后面继续做桌宠时会反复漂
+- 真正稳定的 OC 文档，至少要把这些东西写清楚：
+  - 她是谁
+  - 她和主人的关系是什么
+  - 她怎么说话
+  - 她的腹黑边界在哪
+  - 她未来会长成什么样的桌宠角色
+
+### 这一轮固化了什么
+
+- `OC_PROFILE.md`
+  - 现在已经是绯铃的主设定卡
+- `assets/characters/feiling/base/feiling_master_v1.png`
+- `assets/characters/feiling/states/*.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_half_v1.png`
+- `assets/characters/feiling/animations/feiling_idle_blink_closed_v1.png`
+- `assets/characters/feiling/references/source_exports/*.png`
+
+### 当前结论
+
+- 绯铃现在不只是“能放进桌宠里的角色图”
+- 她的角色人格和运行时素材都进入了更稳定的状态
+- 后续继续做桌宠时，优先级可以更放心地转回交互与体验，而不是继续补基础设定
