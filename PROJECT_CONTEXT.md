@@ -12,6 +12,14 @@
 
 `C:\\Users\\Administrator\\Desktop\\agent_study`
 
+## 当前分线状态
+
+- `agent_study`
+  - 继续负责本地文件检索、搜索窗口和 Agent 方向实验
+- `C:\\Users\\Administrator\\Desktop\\feiling`
+  - 新的独立绯铃桌宠项目
+  - 当前只做陪伴型桌宠本体，不继续绑定搜索/Agent 入口
+
 ## Git 仓库
 
 - 本地仓库目录：`C:\\Users\\Administrator\\Desktop\\agent_study`
@@ -86,7 +94,10 @@
 
 ## 当前下一步
 
-已进入 `Python` 索引服务骨架实现，当前先把“扫描目录 -> 建索引 -> 查询”这条链路立起来。
+- `agent_study`
+  - 继续收口本地检索、对话搜索和 Agent 方向
+- `feiling`
+  - 继续打磨桌宠本体交互、素材和陪伴体验
 
 ## 当前服务骨架
 
