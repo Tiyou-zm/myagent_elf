@@ -2137,3 +2137,41 @@ WPF 桌宠壳当前改成：
   - `breath`
 - 下一步不该再纠结“能不能跑”，而是该开始看：
   - 导出的待机帧视觉质量是否值得继续投入
+
+## Session 053 - 试第一组待机动作组合
+
+日期：2026-03-25
+
+### 我们这一轮在做什么
+
+这一轮没有停留在“把帧导出来”，而是继续把待机输入改成更像桌宠的组合动作：
+
+- 耳朵微动 / 尾巴轻扫的方向先通过全身姿态量试探
+- 角色整体改成更放松的等待状态
+- 保留眨眼
+- 加入轻微头部与眼神移动
+
+### 这一轮固化了什么
+
+- `EasyVtuber_inspect/src/idle_export_client.py`
+  - 待机输入从单纯 `blink + breath` 升级为：
+    - 规律眨眼
+    - 放松呼吸
+    - 轻微头摆
+    - 轻微眼神漂移
+    - 小幅身体姿态变化
+- `EasyVtuber_inspect/export_feiling_idle_frames.ps1`
+  - 输出帧数从 `12` 提到 `24`
+  - 眨眼与呼吸参数同步调整，确保一轮导帧里能真正看见动作
+- 重新导出：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\output_frames\feiling_idle_test`
+- 重新生成：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\output_frames\feiling_idle_test_sheet.png`
+
+### 当前结论
+
+- 这条线已经不再是“只有颜色对、动作看不出来”
+- 导出帧已经确实发生变化，适合继续拿来做 `idle loop` 实验
+- 但它当前仍然应该被视为：
+  - 待机循环素材实验工具
+  - 不是正式高精度动画生产线

@@ -738,3 +738,28 @@ http://127.0.0.1:4173
 
 - `EasyVtuber` 现在已经可以作为“绯铃待机循环素材实验工具”继续往下用
 - 它不再只是理论备选，而是已经有第一轮实际输出
+
+## 2026-03-25 EasyVtuber 待机动作实验更新
+
+在跑通导帧之后，这条实验线又往前推了一步：不再只导出“几乎静止”的帧，而是开始直接试待机动作组合。
+
+当前已实际注入到 `idle_export_client.py` 的方向包括：
+
+- 规律眨眼
+- 放松呼吸
+- 轻微头部摆动
+- 轻微眼神移动
+- 一组更接近“等待中”的小动作
+
+这轮导出的产物已经扩到：
+
+- `24` 帧 PNG：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\output_frames\feiling_idle_test`
+- 更新后的预览精灵图：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\output_frames\feiling_idle_test_sheet.png`
+
+当前技术判断：
+
+- 这条线已经不再是“跑通但看不出变化”
+- 导出帧确实在变化，适合继续拿来试 `idle loop`
+- 但它依然是实验工具，不该直接替代正式动画生产线
