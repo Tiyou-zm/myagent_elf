@@ -67,15 +67,17 @@ function syncShellState() {
 
 function createPetWindow() {
   petWindow = new BrowserWindow({
-    width: 300,
-    height: 492,
-    minWidth: 300,
-    minHeight: 492,
-    maxWidth: 300,
-    maxHeight: 492,
+    width: 252,
+    height: 402,
+    minWidth: 252,
+    minHeight: 402,
+    maxWidth: 252,
+    maxHeight: 402,
+    show: false,
     frame: false,
     transparent: true,
     backgroundColor: "#00000000",
+    autoHideMenuBar: true,
     resizable: false,
     alwaysOnTop: true,
     skipTaskbar: true,
@@ -83,7 +85,8 @@ function createPetWindow() {
     minimizable: false,
     fullscreenable: false,
     thickFrame: false,
-    title: "Feiling Desktop Pet",
+    roundedCorners: false,
+    title: "",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -93,8 +96,10 @@ function createPetWindow() {
 
   petWindow.loadFile(path.join(__dirname, "pet.html"));
   petWindow.once("ready-to-show", () => {
+    petWindow.setMenuBarVisibility(false);
     positionPetWindow(petWindow);
     petWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    petWindow.show();
     syncShellState();
   });
   petWindow.on("closed", () => {

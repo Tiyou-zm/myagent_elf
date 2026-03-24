@@ -5,3 +5,5 @@ __pycache__/
 node_modules/
 data/*.db
 data/runtime/
+desktop/**/bin/
+desktop/**/obj/

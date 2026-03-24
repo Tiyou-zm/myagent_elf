@@ -547,3 +547,56 @@ http://127.0.0.1:4173
 - 减少桌宠对桌面的无意义遮挡
 - 让拖拽命中区更接近绯铃实际体积
 - 避免后面继续靠放大缩小去掩盖素材透明边界过大的问题
+
+## 2026-03-24 WPF 桌宠壳迁移
+
+这一步开始正式把“桌宠本体”从 Electron 迁到 WPF。
+
+原因很明确：
+
+- Electron 更适合作为当前搜索窗口宿主
+- 但对“透明、无边框、常驻、可拖拽桌宠”这件事，在当前机器上的稳定性不够理想
+- 所以桌宠壳和搜索窗开始分栈：
+  - WPF：负责桌宠本体
+  - Electron：继续承载现有搜索窗口
+
+当前已经落下的最小 WPF 桌宠壳：
+
+- `desktop/FeilingPetShell`
+
+它当前已经具备：
+
+- 绯铃母版显示
+- 透明无边框窗口
+- 拖拽
+- hover 反馈
+- click 反馈
+- 右侧菜单
+- 菜单里的“打开搜索”
+
+配套脚本：
+
+- `scripts/start_wpf_pet.ps1`
+- `scripts/stop_wpf_pet.ps1`
+- `scripts/start_search_window.ps1`
+
+当前运行方式：
+
+```powershell
+.\scripts\start_wpf_pet.ps1
+```
+
+前提：
+
+- 当前机器需要安装 `.NET 8 SDK`
+
+如果要单独拉起现有搜索窗口：
+
+```powershell
+.\scripts\start_search_window.ps1
+```
+
+这一步的意义：
+
+- 后端和搜索窗口不需要推倒重来
+- 桌宠本体终于开始用更适合它的技术栈承载

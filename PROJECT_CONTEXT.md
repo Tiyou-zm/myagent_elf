@@ -502,3 +502,51 @@ Electron 桌宠壳本轮改成更贴近真实产品形态的结构：
   - 桌宠窗口进一步收紧
 - `electron/pet.html`
   - 本体图片尺寸和右侧菜单锚点同步调整
+
+## 2026-03-24 桌宠壳迁到 WPF
+
+当前项目结构进一步明确成：
+
+- Python 后端：保留
+- Electron 搜索窗口：保留
+- 桌宠本体：迁到 WPF
+
+当前这样拆的原因：
+
+- Electron 继续承载搜索窗口没有问题
+- 但桌宠本体要求：
+  - 透明
+  - 无边框
+  - 常驻桌面
+  - 全身可拖拽
+  - 没有系统标题栏干扰
+
+在当前机器上，WPF 更适合承担这一层。
+
+当前新增：
+
+- WPF 项目：
+  - `desktop/FeilingPetShell`
+- 启动脚本：
+  - `scripts/start_wpf_pet.ps1`
+  - `scripts/stop_wpf_pet.ps1`
+- 搜索桥接脚本：
+  - `scripts/start_search_window.ps1`
+- 搜索窗专用 Electron 入口：
+  - `electron/search-main.js`
+
+当前最小 WPF 桌宠壳已经具备：
+
+1. 绯铃母版显示
+2. 透明无边框窗口
+3. 拖拽
+4. hover 反馈
+5. click 反馈
+6. 右侧菜单
+7. 菜单里打开现有搜索窗
+
+这意味着当前的迁移策略不是“全部重写”，而是：
+
+1. 先把桌宠本体迁走
+2. 搜索窗口继续沿用现有 Electron 实现
+3. 后面再视情况决定是否连搜索窗也进一步重构
