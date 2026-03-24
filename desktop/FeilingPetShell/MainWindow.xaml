@@ -120,6 +120,44 @@
                                 </StackPanel>
                             </DockPanel>
                         </Button>
+                        <Button x:Name="ExitPetButton"
+                                Click="ExitPetButton_OnClick"
+                                Cursor="Hand"
+                                Background="#FFF4E7E1"
+                                BorderBrush="#30AF705F"
+                                BorderThickness="1"
+                                Padding="12,10"
+                                Margin="0,8,0,0"
+                                HorizontalContentAlignment="Stretch">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="14">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <DockPanel>
+                                <Ellipse Width="10"
+                                         Height="10"
+                                         Fill="#FFB74953"
+                                         Margin="0,0,10,0"
+                                         VerticalAlignment="Center"
+                                         DockPanel.Dock="Right" />
+                                <StackPanel>
+                                    <TextBlock Text="退出桌宠"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               Foreground="#FF7A3A3A" />
+                                    <TextBlock Text="关闭当前绯铃桌宠窗口"
+                                               Margin="0,2,0,0"
+                                               FontSize="11"
+                                               Foreground="#B87A3A3A" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Button>
                     </StackPanel>
                 </Border>
             </Popup>

@@ -201,4 +201,10 @@ public partial class MainWindow : Window
             AnimatePetScale(1.0, 120);
         }
     }
+
+    private void ExitPetButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        MenuPopup.IsOpen = false;
+        Close();
+    }
 }
