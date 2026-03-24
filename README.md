@@ -26,8 +26,13 @@
   - 当前已补待机精灵任务单：
     - `C:\Users\Administrator\Desktop\feiling\BLINK_SPRITESHEET_BRIEF.md`
     - `C:\Users\Administrator\Desktop\feiling\IDLE_BREATH_SPRITESHEET_BRIEF.md`
-  - 当前已补混合表现任务单：
-    - `C:\Users\Administrator\Desktop\feiling\LIVE2D_SPRITE_HYBRID_BRIEF.md`
+- 当前已补混合表现任务单：
+  - `C:\Users\Administrator\Desktop\feiling\LIVE2D_SPRITE_HYBRID_BRIEF.md`
+- 当前新增 `EasyVtuber` 实验工具路径：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect`
+  - 已补 `--output_frames` 导出序列帧能力
+  - 已补 `--idle_export_input` 稳定待机输入模式
+  - 已补一键脚本：`C:\Users\Administrator\Desktop\EasyVtuber_inspect\export_feiling_idle_frames.ps1`
 
 仓库约定：
 

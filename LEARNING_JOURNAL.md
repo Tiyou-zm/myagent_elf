@@ -2043,3 +2043,40 @@ WPF 桌宠壳当前改成：
 - 后续更适合：
   - 主体走 Live2D
   - 演出走 sprite sheet
+
+## Session 050 - 补 EasyVtuber 待机导帧实验工具
+
+日期：2026-03-25
+
+### 我们这一轮在做什么
+
+这一轮没有继续硬做逐帧 AI 微动画，而是把 `EasyVtuber` 本地实验目录改成了一个“可导出绯铃待机 PNG 序列帧”的试验工具。
+
+### 这一轮固化了什么
+
+- 本地实验目录：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect`
+- 在 `src/args.py` 里新增了：
+  - `--output_frames`
+  - `--output_frames_dir`
+  - `--output_frames_count`
+  - `--output_frames_prefix`
+  - `--idle_export_input`
+- 在 `src/main.py` 里补了：
+  - 直接输出 PNG 序列帧的导出分支
+- 新增：
+  - `src/idle_export_client.py`
+  - 只负责稳定的 `blink + breath`，不依赖鼠标、不驱动嘴型
+- 新增一键导出脚本：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\export_feiling_idle_frames.ps1`
+- 已把绯铃母版同步到：
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\data\images\feiling.png`
+
+### 当前结论
+
+- `EasyVtuber` 这条线现在已经从“只做实时驱动”推进到了“可以实验性导出待机序列帧”
+- 这条路线更适合拿来试：
+  - `idle loop`
+  - `blink`
+  - `breath`
+- 但它目前仍然是实验工具，不是正式生产线

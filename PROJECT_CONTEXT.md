@@ -35,6 +35,13 @@
   - 当前新增：
     - `LIVE2D_SPRITE_HYBRID_BRIEF.md`
     - 明确后续绯铃主体走 Live2D、短动作走精灵图的混合路线
+  - 当前新增 `EasyVtuber` 实验目录：
+    - `C:\Users\Administrator\Desktop\EasyVtuber_inspect`
+    - 已改成可导出待机 PNG 序列帧的实验工具
+    - 重点新增：
+      - `--output_frames`
+      - `--idle_export_input`
+      - `export_feiling_idle_frames.ps1`
 
 ## Git 仓库
 
