@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from index_service.actions import LocalPathActionService
+from index_service.chat import ChatMessage, ChatReply, ChatService, SuggestedAction
 from index_service.config import Settings, get_settings
 from index_service.indexing import IndexingService
 from index_service.search import SearchService
@@ -64,6 +65,31 @@ class SearchResponse(BaseModel):
     results: list[SearchHitResponse]
 
 
+class ChatMessageRequest(BaseModel):
+    role: str = Field(pattern="^(user|assistant)$")
+    content: str = Field(min_length=1)
+
+
+class ChatRequest(BaseModel):
+    message: str = Field(min_length=1)
+    history: list[ChatMessageRequest] = Field(default_factory=list)
+    limit: int = Field(default=5, ge=1, le=10)
+
+
+class SuggestedActionResponse(BaseModel):
+    label: str
+    path: str
+    mode: str
+
+
+class ChatResponse(BaseModel):
+    message: str
+    reply: str
+    citations: list[SearchHitResponse]
+    actions: list[SuggestedActionResponse]
+    used_llm: bool
+
+
 class OpenPathRequest(BaseModel):
     path: str = Field(min_length=1)
     mode: str = Field(pattern="^(file|parent)$")
@@ -93,6 +119,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     store.initialize()
     indexing_service = IndexingService(settings, store)
     search_service = SearchService(store)
+    chat_service = ChatService(search_service, settings)
     action_service = LocalPathActionService()
 
     router = APIRouter(prefix=settings.api_prefix)
@@ -178,6 +205,43 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 )
                 for hit in summary.results
             ],
+        )
+
+    @router.post("/chat", response_model=ChatResponse)
+    def chat(request: ChatRequest) -> ChatResponse:
+        try:
+            reply = chat_service.reply(
+                request.message,
+                history=[ChatMessage(role=item.role, content=item.content) for item in request.history],
+                limit=request.limit,
+            )
+        except ValueError as exc:
+            raise _bad_request(str(exc)) from exc
+
+        return ChatResponse(
+            message=reply.message,
+            reply=reply.reply,
+            citations=[
+                SearchHitResponse(
+                    path=hit.path,
+                    match_type=hit.match_type,
+                    chunk_index=hit.chunk_index,
+                    start_line=hit.start_line,
+                    end_line=hit.end_line,
+                    snippet=hit.snippet,
+                    score=hit.score,
+                )
+                for hit in reply.citations
+            ],
+            actions=[
+                SuggestedActionResponse(
+                    label=action.label,
+                    path=action.path,
+                    mode=action.mode,
+                )
+                for action in reply.actions
+            ],
+            used_llm=reply.used_llm,
         )
 
     @router.post("/open", response_model=ActionResponse)

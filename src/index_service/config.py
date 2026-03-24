@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from functools import lru_cache
+import os
 from pathlib import Path
 
 
@@ -22,6 +23,10 @@ class Settings:
     chunk_size_chars: int = 1200
     chunk_overlap_chars: int = 200
     max_file_size_bytes: int = 2 * 1024 * 1024
+    llm_base_url: str | None = field(default_factory=lambda: os.getenv("FEILING_LLM_BASE_URL"))
+    llm_api_key: str | None = field(default_factory=lambda: os.getenv("FEILING_LLM_API_KEY"))
+    llm_model: str | None = field(default_factory=lambda: os.getenv("FEILING_LLM_MODEL"))
+    llm_timeout_seconds: float = field(default_factory=lambda: float(os.getenv("FEILING_LLM_TIMEOUT_SECONDS", "20")))
     allowed_extensions: set[str] = field(
         default_factory=lambda: {
             ".md",

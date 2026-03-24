@@ -63,6 +63,7 @@
 - `POST /api/v1/index`
 - `POST /api/v1/search`
 - `POST /api/v1/search/files`
+- `POST /api/v1/chat`
 - `POST /api/v1/open`
 
 ## 本地运行
@@ -93,6 +94,15 @@ python -m uvicorn index_service.main:app --app-dir src --reload
 `POST /api/v1/search/files`
 
 - 作用：按文件名或路径搜索
+
+`POST /api/v1/chat`
+
+- 作用：把“对话输入 -> 检索 -> 绯铃口吻回答 -> 可打开动作”收成一个统一接口
+- 当前支持：
+  - 本地搜索结果整合
+  - 绯铃口吻回答
+  - 返回“打开文件 / 打开目录”候选动作
+  - 可选接入 OpenAI 兼容 LLM API
 
 `GET /api/v1/roots`
 
@@ -641,3 +651,24 @@ http://127.0.0.1:4173
 - `FEILING_DIALOGUE_GUIDE.md`
 
 后续只要是绯铃会说出来的字，都应优先参考这份台词与语气手册。
+
+## 2026-03-24 气泡式搜索与对话接口
+
+当前搜索窗口不再只做“表单 + 结果列表”，而是开始向真正的对话入口收口：
+
+- `playground/index.html`
+  - 已改成气泡式对话界面
+- `POST /api/v1/chat`
+  - 统一处理：
+    - 用户输入
+    - 内容搜索 / 文件搜索
+    - 绯铃口吻回答
+    - 打开文件 / 打开目录候选动作
+
+当前 LLM 接入方式也已经预留成可插拔：
+
+- `FEILING_LLM_BASE_URL`
+- `FEILING_LLM_API_KEY`
+- `FEILING_LLM_MODEL`
+
+如果这些环境变量存在，后端会按 OpenAI 兼容接口尝试调用；没有配置时，就先走本地检索模板回答。

@@ -194,6 +194,36 @@ class IndexingServiceTest(unittest.TestCase):
                 self.assertEqual(parent_response.json()["path"], str(root.resolve()))
                 launch_mock.assert_called_with(root.resolve())
 
+    def test_chat_endpoint_returns_reply_and_actions(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            sample_file = root / "notes.md"
+            sample_file.write_text(
+                "Feiling can answer in bubble style and open files.\n",
+                encoding="utf-8",
+            )
+
+            app = create_app(Settings(database_path=root / "index.db"))
+            client = TestClient(app)
+            client.post("/api/v1/index", json={"roots": [str(root)]})
+
+            response = client.post(
+                "/api/v1/chat",
+                json={
+                    "message": "bubble style",
+                    "history": [{"role": "user", "content": "之前我在找素材"}],
+                    "limit": 5,
+                },
+            )
+            self.assertEqual(response.status_code, 200)
+            payload = response.json()
+            self.assertEqual(payload["message"], "bubble style")
+            self.assertTrue(payload["reply"])
+            self.assertGreaterEqual(len(payload["citations"]), 1)
+            self.assertGreaterEqual(len(payload["actions"]), 1)
+            self.assertEqual(payload["actions"][0]["mode"], "file")
+            self.assertFalse(payload["used_llm"])
+
 
 
 if __name__ == "__main__":

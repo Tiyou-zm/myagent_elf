@@ -3,82 +3,54 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agent Study Frontend Shell</title>
+    <title>绯铃对话搜索</title>
     <style>
       :root {
-        --bg: #f3efe4;
-        --panel: #fffaf0;
-        --line: #d7ccb7;
-        --text: #1d1c19;
-        --muted: #665f52;
-        --accent: #0b6e4f;
-        --accent-soft: #d8efe6;
+        --bg: #f6f0e6;
+        --panel: rgba(255, 250, 242, 0.9);
+        --line: #dbcdbd;
+        --text: #2f2623;
+        --muted: #7a6961;
+        --accent: #d35f67;
+        --accent-soft: #fde7e1;
+        --bubble-user: #efe1d4;
+        --bubble-feiling: #fffaf5;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
         font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
-        background:
-          radial-gradient(circle at top right, rgba(11, 110, 79, 0.12), transparent 28%),
-          linear-gradient(180deg, #f8f4ea 0%, var(--bg) 100%);
         color: var(--text);
+        background:
+          radial-gradient(circle at top right, rgba(211, 95, 103, 0.12), transparent 30%),
+          linear-gradient(180deg, #faf5ea 0%, var(--bg) 100%);
       }
 
       .page {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 40px 20px 64px;
-      }
-
-      .hero {
-        margin-bottom: 24px;
-      }
-
-      .eyebrow {
-        display: inline-block;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: var(--accent-soft);
-        color: var(--accent);
-        font-size: 13px;
-        letter-spacing: 0.04em;
-      }
-
-      h1 {
-        margin: 16px 0 8px;
-        font-size: clamp(32px, 5vw, 52px);
-        line-height: 1.02;
-      }
-
-      .hero p {
-        margin: 0;
-        max-width: 760px;
-        color: var(--muted);
-        font-size: 16px;
-        line-height: 1.7;
-      }
-
-      .grid {
         display: grid;
-        gap: 20px;
-        grid-template-columns: 320px minmax(0, 1fr);
+        grid-template-columns: 280px minmax(0, 1fr);
+        min-height: 100vh;
       }
 
-      .panel {
-        background: color-mix(in srgb, var(--panel) 96%, white 4%);
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        padding: 18px;
-        box-shadow: 0 20px 40px rgba(36, 32, 24, 0.06);
+      .sidebar {
+        padding: 24px 18px;
+        border-right: 1px solid rgba(124, 96, 77, 0.12);
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
       }
 
-      .panel h2 {
-        margin: 0 0 14px;
-        font-size: 18px;
+      .sidebar h1 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .sidebar p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 13px;
       }
 
       .field {
@@ -88,18 +60,18 @@
       }
 
       .field label {
-        font-size: 13px;
         color: var(--muted);
+        font-size: 12px;
       }
 
       .field input {
         width: 100%;
         border: 1px solid var(--line);
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 12px 14px;
-        background: rgba(255, 255, 255, 0.85);
-        font: inherit;
+        background: rgba(255,255,255,0.72);
         color: inherit;
+        font: inherit;
       }
 
       .button-row {
@@ -110,8 +82,8 @@
       button {
         appearance: none;
         border: 0;
-        border-radius: 12px;
-        padding: 12px 14px;
+        border-radius: 14px;
+        padding: 11px 14px;
         background: var(--accent);
         color: white;
         font: inherit;
@@ -119,154 +91,206 @@
         transition: transform 120ms ease, opacity 120ms ease;
       }
 
-      button.secondary {
-        background: #6a5d3b;
-      }
+      button:hover { transform: translateY(-1px); }
+      button:disabled { opacity: 0.55; cursor: wait; transform: none; }
 
-      button.ghost {
-        background: #ece4d3;
+      button.secondary {
+        background: #efe1d4;
         color: var(--text);
       }
 
-      button:hover {
-        transform: translateY(-1px);
-      }
-
-      button:disabled {
-        opacity: 0.6;
-        cursor: wait;
-        transform: none;
-      }
-
       .status {
-        min-height: 52px;
-        margin-bottom: 16px;
-        padding: 14px 16px;
+        margin-top: 18px;
+        padding: 12px 14px;
         border-radius: 16px;
-        background: #f7f0de;
-        border: 1px solid #e2d5b2;
-        color: #5d4c1a;
+        background: rgba(255, 248, 236, 0.9);
+        border: 1px solid rgba(121, 88, 67, 0.12);
+        color: var(--muted);
+        font-size: 13px;
         line-height: 1.6;
         white-space: pre-wrap;
       }
 
-      .status.error {
-        background: #fdebec;
-        border-color: #efb6bc;
-        color: #882f39;
-      }
-
-      .result-list {
+      .chat-shell {
         display: grid;
-        gap: 12px;
+        grid-template-rows: auto 1fr auto;
+        min-height: 100vh;
+        padding: 24px;
       }
 
-      .result-card {
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 14px 16px;
-        background: rgba(255, 255, 255, 0.7);
+      .chat-head {
+        padding: 4px 6px 18px;
       }
 
-      .result-card strong {
-        display: block;
-        margin-bottom: 6px;
-        font-size: 14px;
-        word-break: break-all;
-      }
-
-      .meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 8px;
-        color: var(--muted);
+      .chat-head .eyebrow {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
         font-size: 12px;
       }
 
-      .snippet {
+      .chat-head h2 {
+        margin: 12px 0 6px;
+        font-size: 30px;
+      }
+
+      .chat-head p {
         margin: 0;
+        color: var(--muted);
         line-height: 1.7;
+      }
+
+      .chat-list {
+        overflow: auto;
+        padding: 10px 4px 18px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .message {
+        display: grid;
+        gap: 8px;
+      }
+
+      .message.user {
+        justify-items: end;
+      }
+
+      .message.assistant {
+        justify-items: start;
+      }
+
+      .bubble {
+        max-width: min(760px, 88%);
+        padding: 14px 16px;
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(47, 38, 35, 0.06);
+        border: 1px solid rgba(121, 88, 67, 0.08);
+        line-height: 1.75;
         white-space: pre-wrap;
         word-break: break-word;
       }
 
-      .result-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 12px;
+      .user .bubble {
+        background: var(--bubble-user);
+        border-bottom-right-radius: 8px;
       }
 
-      .result-actions button {
+      .assistant .bubble {
+        background: var(--bubble-feiling);
+        border-bottom-left-radius: 8px;
+      }
+
+      .meta {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0 4px;
+      }
+
+      .citations, .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-width: min(760px, 88%);
+      }
+
+      .citation {
+        padding: 8px 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(121, 88, 67, 0.12);
+        background: rgba(255,255,255,0.68);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .actions button {
         padding: 8px 12px;
         font-size: 13px;
       }
 
-      .empty {
-        color: var(--muted);
-        padding: 18px;
-        text-align: center;
-        border: 1px dashed var(--line);
-        border-radius: 16px;
+      .composer {
+        background: var(--panel);
+        border: 1px solid rgba(121, 88, 67, 0.12);
+        border-radius: 22px;
+        box-shadow: 0 18px 38px rgba(47, 38, 35, 0.08);
+        padding: 14px;
+        display: grid;
+        gap: 12px;
       }
 
-      @media (max-width: 860px) {
-        .grid {
-          grid-template-columns: 1fr;
-        }
+      .composer textarea {
+        width: 100%;
+        min-height: 96px;
+        resize: vertical;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        outline: none;
+        line-height: 1.7;
+      }
+
+      .composer-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .composer-tip {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      @media (max-width: 920px) {
+        .page { grid-template-columns: 1fr; }
+        .sidebar { border-right: 0; border-bottom: 1px solid rgba(124, 96, 77, 0.12); }
+        .chat-shell { min-height: auto; }
+        .bubble, .citations, .actions { max-width: 100%; }
       }
     </style>
   </head>
   <body>
     <main class="page">
-      <section class="hero">
-        <span class="eyebrow">Thin Frontend Shell</span>
-        <h1>先把前端调用链真正接起来</h1>
-        <p>
-          这个页面继续承担最薄的搜索壳，但现在它还会把桌宠状态带起来。
-          目标不是做最终 UI，而是先让绯铃在搜索过程中有明确反应。
-        </p>
-      </section>
+      <aside class="sidebar">
+        <h1>绯铃对话搜索</h1>
+        <p>先把搜索和对话合成一个入口。绯铃负责找结果、解释结果，也会顺手问你要不要打开。</p>
 
-      <section class="grid">
-        <aside class="panel">
-          <h2>接口控制台</h2>
+        <div class="field">
+          <label for="baseUrl">后端地址</label>
+          <input id="baseUrl" value="http://127.0.0.1:8000" />
+        </div>
 
-          <div class="field">
-            <label for="baseUrl">后端地址</label>
-            <input id="baseUrl" value="http://127.0.0.1:8000" />
-          </div>
+        <div class="field">
+          <label for="rootPath">索引目录</label>
+          <input id="rootPath" value="C:\Users\Administrator\Desktop\agent_study" />
+        </div>
 
-          <div class="field">
-            <label for="rootPath">索引目录</label>
-            <input id="rootPath" value="C:\Users\Administrator\Desktop\agent_study" />
-          </div>
+        <div class="button-row">
+          <button id="indexBtn">建立索引</button>
+          <button id="rootsBtn" class="secondary">查看根目录</button>
+          <button id="healthBtn" class="secondary">健康检查</button>
+        </div>
 
-          <div class="field">
-            <label for="query">内容搜索词</label>
-            <input id="query" value="Python" />
-          </div>
+        <div id="status" class="status">绯铃已经在这儿了。先建索引，再直接像聊天一样问她。</div>
+      </aside>
 
-          <div class="field">
-            <label for="fileQuery">文件名搜索词</label>
-            <input id="fileQuery" value="README" />
-          </div>
+      <section class="chat-shell">
+        <header class="chat-head">
+          <span class="eyebrow">Bubble Search</span>
+          <h2>和绯铃说一句人话就行</h2>
+          <p>比如“帮我找 README 里关于索引服务的内容”，或者“找一下 feiling 素材目录”。</p>
+        </header>
 
-          <div class="button-row">
-            <button id="healthBtn">健康检查</button>
-            <button id="indexBtn" class="secondary">建立索引</button>
-            <button id="contentBtn">内容搜索</button>
-            <button id="fileBtn" class="secondary">文件名搜索</button>
-            <button id="rootsBtn" class="ghost">查看根目录</button>
-          </div>
-        </aside>
+        <section id="chatList" class="chat-list"></section>
 
-        <section class="panel">
-          <h2>返回结果</h2>
-          <div id="status" class="status">等待调用。</div>
-          <div id="results" class="result-list">
-            <div class="empty">先点左侧按钮，观察接口结果和绯铃状态联动。</div>
+        <section class="composer">
+          <textarea id="messageInput" placeholder="比如：帮我找一下绯铃素材目录，顺便告诉我最适合当母版的是哪张。"></textarea>
+          <div class="composer-foot">
+            <span class="composer-tip">结果会以绯铃口吻回答，并给出可直接打开的候选动作。</span>
+            <button id="sendBtn">发送给绯铃</button>
           </div>
         </section>
       </section>
@@ -275,100 +299,83 @@
     <script>
       const state = {
         statusEl: document.getElementById("status"),
-        resultsEl: document.getElementById("results"),
+        chatList: document.getElementById("chatList"),
         baseUrl: document.getElementById("baseUrl"),
         rootPath: document.getElementById("rootPath"),
-        query: document.getElementById("query"),
-        fileQuery: document.getElementById("fileQuery"),
+        messageInput: document.getElementById("messageInput"),
+        history: [],
       };
 
-      const buttons = Array.from(document.querySelectorAll("button"));
-
-      async function syncPetState(nextState) {
-        if (!window.desktopShell || !window.desktopShell.setPetState) {
-          return;
-        }
-
-        try {
-          await window.desktopShell.setPetState(nextState);
-        } catch (_error) {
-          // 非 Electron 环境下静默忽略。
-        }
-      }
+      const controls = Array.from(document.querySelectorAll("button, textarea, input"));
 
       function setLoading(isLoading) {
-        buttons.forEach((button) => {
-          button.disabled = isLoading;
+        controls.forEach((el) => {
+          if ("disabled" in el) {
+            el.disabled = isLoading;
+          }
         });
+      }
+
+      async function syncPetState(nextState) {
+        if (!window.desktopShell || !window.desktopShell.setPetState) return;
+        try {
+          await window.desktopShell.setPetState(nextState);
+        } catch (_error) {}
       }
 
       function setStatus(message, isError = false) {
         state.statusEl.textContent = message;
-        state.statusEl.classList.toggle("error", isError);
+        state.statusEl.style.color = isError ? "#8b3940" : "";
       }
 
-      function renderJsonCard(title, payload) {
-        const card = document.createElement("article");
-        card.className = "result-card";
-        card.innerHTML = `
-          <strong>${title}</strong>
-          <pre class="snippet">${JSON.stringify(payload, null, 2)}</pre>
-        `;
-        return card;
+      function escapeHtml(input) {
+        return input
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
       }
 
-      function renderSearchResults(payload) {
-        if (!payload.results.length) {
-          state.resultsEl.innerHTML = '<div class="empty">这次没有命中结果。</div>';
-          return;
+      function addMessage(role, content, extra = {}) {
+        const wrapper = document.createElement("article");
+        wrapper.className = `message ${role}`;
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = role === "user" ? "你" : "绯铃";
+
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.innerHTML = escapeHtml(content);
+
+        wrapper.appendChild(meta);
+        wrapper.appendChild(bubble);
+
+        if (extra.citations?.length) {
+          const citationRow = document.createElement("div");
+          citationRow.className = "citations";
+          extra.citations.forEach((item) => {
+            const node = document.createElement("div");
+            node.className = "citation";
+            node.textContent = `${item.path} · ${item.match_type}`;
+            citationRow.appendChild(node);
+          });
+          wrapper.appendChild(citationRow);
         }
 
-        state.resultsEl.innerHTML = "";
-        payload.results.forEach((item) => {
-          const card = document.createElement("article");
-          card.className = "result-card";
-          card.innerHTML = `
-            <strong>${item.path}</strong>
-            <div class="meta">
-              <span>类型：${item.match_type}</span>
-              <span>块：${item.chunk_index}</span>
-              <span>行：${item.start_line}-${item.end_line}</span>
-              <span>分数：${item.score}</span>
-            </div>
-            <p class="snippet">${item.snippet}</p>
-            <div class="result-actions">
-              <button class="open-file" data-path="${item.path}">打开文件</button>
-              <button class="ghost open-parent" data-path="${item.path}">打开目录</button>
-            </div>
-          `;
-          card.querySelector(".open-file").addEventListener("click", () =>
-            run(() => openPath(item.path, "file")),
-          );
-          card.querySelector(".open-parent").addEventListener("click", () =>
-            run(() => openPath(item.path, "parent")),
-          );
-          state.resultsEl.appendChild(card);
-        });
-      }
-
-      function renderRoots(payload) {
-        if (!payload.roots.length) {
-          state.resultsEl.innerHTML = '<div class="empty">当前还没有登记过索引根目录。</div>';
-          return;
+        if (extra.actions?.length) {
+          const actionRow = document.createElement("div");
+          actionRow.className = "actions";
+          extra.actions.forEach((action) => {
+            const button = document.createElement("button");
+            button.textContent = action.label;
+            button.addEventListener("click", () => run(() => openPath(action.path, action.mode)));
+            actionRow.appendChild(button);
+          });
+          wrapper.appendChild(actionRow);
         }
 
-        state.resultsEl.innerHTML = "";
-        payload.roots.forEach((root) => {
-          const card = document.createElement("article");
-          card.className = "result-card";
-          card.innerHTML = `
-            <strong>${root.root_path}</strong>
-            <div class="meta">
-              <span>最近索引：${root.last_indexed_at}</span>
-            </div>
-          `;
-          state.resultsEl.appendChild(card);
-        });
+        state.chatList.appendChild(wrapper);
+        state.chatList.scrollTop = state.chatList.scrollHeight;
       }
 
       async function request(path, options = {}) {
@@ -378,7 +385,6 @@
           },
           ...options,
         });
-
         const payload = await response.json();
         if (!response.ok) {
           const detail = payload.detail || {};
@@ -393,78 +399,71 @@
           body: JSON.stringify({ path, mode }),
         });
         setStatus(payload.message);
+        addMessage("assistant", mode === "file" ? "我替你打开了，直接看吧。" : "目录我也帮你打开了。");
+        state.history.push({ role: "assistant", content: payload.message });
         await syncPetState("happy_soft");
       }
 
       async function run(action) {
         try {
           setLoading(true);
-          setStatus("请求发送中...");
           await action();
         } catch (error) {
-          state.resultsEl.innerHTML = '<div class="empty">本次调用失败。</div>';
           setStatus(error.message, true);
+          addMessage("assistant", `这次有点不对。${error.message}`);
           await syncPetState("confused");
         } finally {
           setLoading(false);
         }
       }
 
-      document.getElementById("healthBtn").addEventListener("click", () =>
-        run(async () => {
-          const payload = await request("/healthz", { method: "GET" });
-          setStatus(payload.message);
-          state.resultsEl.innerHTML = "";
-          state.resultsEl.appendChild(renderJsonCard("健康检查", payload));
-          await syncPetState("happy_soft");
-        }),
-      );
+      async function sendChat() {
+        const message = state.messageInput.value.trim();
+        if (!message) return;
+
+        state.messageInput.value = "";
+        addMessage("user", message);
+        state.history.push({ role: "user", content: message });
+        setStatus("绯铃在找了。");
+        await syncPetState("thinking");
+
+        const payload = await request("/api/v1/chat", {
+          method: "POST",
+          body: JSON.stringify({
+            message,
+            history: state.history.slice(-8),
+            limit: 5,
+          }),
+        });
+
+        addMessage("assistant", payload.reply, {
+          citations: payload.citations,
+          actions: payload.actions,
+        });
+        state.history.push({ role: "assistant", content: payload.reply });
+        setStatus(payload.used_llm ? "这次回答走了 LLM。": "这次回答先走本地检索模板。");
+        await syncPetState(payload.citations.length ? "smug" : "confused");
+      }
+
+      document.getElementById("sendBtn").addEventListener("click", () => run(sendChat));
+      state.messageInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          run(sendChat);
+        }
+      });
 
       document.getElementById("indexBtn").addEventListener("click", () =>
         run(async () => {
           await syncPetState("thinking");
           const payload = await request("/api/v1/index", {
             method: "POST",
-            body: JSON.stringify({
-              roots: [state.rootPath.value],
-            }),
+            body: JSON.stringify({ roots: [state.rootPath.value] }),
           });
           setStatus(payload.message);
-          state.resultsEl.innerHTML = "";
-          state.resultsEl.appendChild(renderJsonCard("索引结果", payload));
-          await syncPetState(payload.indexed_files > 0 ? "happy_soft" : "confused");
-        }),
-      );
-
-      document.getElementById("contentBtn").addEventListener("click", () =>
-        run(async () => {
-          await syncPetState("thinking");
-          const payload = await request("/api/v1/search", {
-            method: "POST",
-            body: JSON.stringify({
-              query: state.query.value,
-              limit: 10,
-            }),
-          });
-          setStatus(payload.message);
-          renderSearchResults(payload);
-          await syncPetState(payload.results.length ? "smug" : "confused");
-        }),
-      );
-
-      document.getElementById("fileBtn").addEventListener("click", () =>
-        run(async () => {
-          await syncPetState("thinking");
-          const payload = await request("/api/v1/search/files", {
-            method: "POST",
-            body: JSON.stringify({
-              query: state.fileQuery.value,
-              limit: 10,
-            }),
-          });
-          setStatus(payload.message);
-          renderSearchResults(payload);
-          await syncPetState(payload.results.length ? "smug" : "confused");
+          addMessage("assistant", `我先把目录理了一遍。${payload.indexed_files} 个文件更新进索引里了。`);
+          state.history.push({ role: "assistant", content: payload.message });
+          await syncPetState("happy_soft");
         }),
       );
 
@@ -472,15 +471,27 @@
         run(async () => {
           await syncPetState("thinking");
           const payload = await request("/api/v1/roots", { method: "GET" });
+          const text = payload.roots.length
+            ? `我现在记着这些目录：\n${payload.roots.map((item) => `- ${item.root_path}`).join("\n")}`
+            : "我这边暂时还没记住任何索引目录。";
+          addMessage("assistant", text);
           setStatus(payload.message);
-          renderRoots(payload);
+          state.history.push({ role: "assistant", content: text });
           await syncPetState(payload.roots.length ? "happy_soft" : "confused");
         }),
       );
 
-      window.addEventListener("error", async () => {
-        await syncPetState("confused");
-      });
+      document.getElementById("healthBtn").addEventListener("click", () =>
+        run(async () => {
+          const payload = await request("/healthz", { method: "GET" });
+          addMessage("assistant", "我在，后端也还好好的。");
+          setStatus(payload.message);
+          state.history.push({ role: "assistant", content: payload.message });
+          await syncPetState("happy_soft");
+        }),
+      );
+
+      addMessage("assistant", "我在。你直接跟我说想找什么就行。");
     </script>
   </body>
 </html>
