@@ -27,6 +27,7 @@
 直接看：
 
 - `C:\Users\Administrator\Desktop\feiling\README.md`
+- `C:\Users\Administrator\Desktop\feiling\docs`
 - `C:\Users\Administrator\Desktop\feiling\run_feiling.bat`
 - `C:\Users\Administrator\Desktop\feiling\stop_feiling.bat`
 

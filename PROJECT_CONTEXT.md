@@ -295,16 +295,9 @@
 - 核心性格：安静、细心、很爱主人、偶尔腹黑毒舌
 - 产品气质：桌宠是主体，搜索只是她暂时已具备的一项能力
 
-已固化的角色素材文档：
+相关角色设定与出图文档现已独立迁入：
 
-- `OC_PROFILE.md`
-- `OC_ART_PROMPT.md`
-- `PET_ANIMATION_PLAN.md`
-- `OC_VISUAL_LOCK.md`
-- `OC_ART_MASTER.md`
-- `FULLBODY_MASTER_BRIEF.md`
-- `STATE_SET_BRIEF.md`
-- `FIRST_ANIMATION_BRIEF.md`
+- `C:\Users\Administrator\Desktop\feiling\docs`
 
 当前针对 AI 出图阶段新增的关键约束：
 
@@ -632,7 +625,7 @@ Electron 桌宠壳本轮改成更贴近真实产品形态的结构：
 当前又完成了两项对后续桌宠非常关键的收口：
 
 - 使用桌面 `绯铃/feelingv1.0/` 里的第二轮透明 PNG 覆盖正式素材树
-- 重写 `OC_PROFILE.md`，把绯铃从“有气质的角色”补成“有长期成长空间的桌宠角色”
+- 重写并迁出 `OC_PROFILE.md`，把绯铃从“有气质的角色”补成“有长期成长空间的桌宠角色”
 
 这意味着当前项目里和绯铃有关的两条线都更稳定了：
 
@@ -647,9 +640,9 @@ Electron 桌宠壳本轮改成更贴近真实产品形态的结构：
 - 本质偏爱主人
 - 整体气质比最初更阳光一点、更活一点，但仍然不是吵闹型吉祥物
 
-并且已经单独补上：
+并且已经单独补上绯铃台词手册，现位于：
 
-- `FEILING_DIALOGUE_GUIDE.md`
+- `C:\Users\Administrator\Desktop\feiling\docs\FEILING_DIALOGUE_GUIDE.md`
 
 这意味着后续桌宠里的按钮文案、气泡台词、状态反馈都不应该再临场发挥，而要尽量统一到同一套语气系统里。
 

@@ -2321,3 +2321,32 @@ WPF 桌宠壳当前改成：
 - `feiling` 继续只做绯铃陪伴型桌宠
 - `EasyVtuber_inspect` 继续只做待机导帧实验
 - 以后从别的线程接手时，应直接进入对应目录，而不是再从主仓库 README 里翻过程日志
+
+## Session 059 - 迁出绯铃专属文档
+
+日期：2026-03-26
+
+### 我们这一轮在做什么
+
+这一轮进一步把主仓库里残留的绯铃专属文档彻底迁出，不再让 `agent_study` 根目录继续堆放 OC、出图和动画任务单。
+
+### 这一轮固化了什么
+
+- 把这些文件统一迁入：
+  - `C:\Users\Administrator\Desktop\feiling\docs`
+- 迁移范围包括：
+  - `OC_PROFILE.md`
+  - `FEILING_DIALOGUE_GUIDE.md`
+  - `OC_ART_MASTER.md`
+  - `OC_ART_PROMPT.md`
+  - `OC_VISUAL_LOCK.md`
+  - `PET_ANIMATION_PLAN.md`
+  - `FULLBODY_MASTER_BRIEF.md`
+  - `STATE_SET_BRIEF.md`
+  - `FIRST_ANIMATION_BRIEF.md`
+  - `IDLE_BLINK_BRIEF.md`
+
+### 当前结论
+
+- `agent_study` 根目录不再保留绯铃专属设定和出图文档
+- 绯铃相关文档现在统一以 `C:\Users\Administrator\Desktop\feiling\docs` 为准
