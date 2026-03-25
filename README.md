@@ -804,3 +804,25 @@ http://127.0.0.1:4173
   - `0 -> 1 -> ... -> 60 -> 59 -> ... -> 1 -> 0`
 
 这样更适合当前这类待机动作素材。
+
+## 2026-03-25 feiling 已开始接移动行为
+
+独立 `feiling` 项目当前已经不再只停留在“能待机、能菜单”，而是开始接入桌宠移动行为骨架。
+
+当前已落的方向：
+
+- 菜单中新增：
+  - `开始闲逛`
+  - `追逐鼠标`
+  - `固定位置`
+- 三种模式互斥：
+  - `Pinned`
+  - `Wander`
+  - `FollowMouse`
+- 闲逛按“走一小段 -> 停一会儿 -> 再换点”的思路实现
+- 手动拖拽绯铃后，默认回到固定位置
+
+配套文档也已在独立项目中补齐：
+
+- `C:\Users\Administrator\Desktop\feiling\FEILING_MOVEMENT_PLAN.md`
+- `C:\Users\Administrator\Desktop\feiling\WALK_LOOP_BRIEF.md`
