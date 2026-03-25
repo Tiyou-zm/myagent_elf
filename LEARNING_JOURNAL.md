@@ -2350,3 +2350,25 @@ WPF 桌宠壳当前改成：
 
 - `agent_study` 根目录不再保留绯铃专属设定和出图文档
 - 绯铃相关文档现在统一以 `C:\Users\Administrator\Desktop\feiling\docs` 为准
+
+## Session 060 - 分离独立 Project Context
+
+日期：2026-03-26
+
+### 我们这一轮在做什么
+
+这一轮进一步收口分线边界，不只把 README 分开，还把 `PROJECT_CONTEXT` 也拆成各自独立维护。
+
+### 这一轮固化了什么
+
+- `agent_study/PROJECT_CONTEXT.md`
+  - 改成只描述主仓库自己的职责、边界和下一步
+- 新增：
+  - `C:\Users\Administrator\Desktop\feiling\PROJECT_CONTEXT.md`
+  - `C:\Users\Administrator\Desktop\EasyVtuber_inspect\PROJECT_CONTEXT.md`
+
+### 当前结论
+
+- `agent_study` 不再继续保存绯铃桌宠和 `EasyVtuber` 的详细上下文
+- `feiling` 和 `EasyVtuber_inspect` 都有了自己的独立 `PROJECT_CONTEXT`
+- 以后从别的线程接手时，应直接读对应目录下的 `PROJECT_CONTEXT.md`
