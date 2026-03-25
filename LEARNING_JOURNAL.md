@@ -2295,4 +2295,29 @@ WPF 桌宠壳当前改成：
   - 移动状态
   - 走路素材
   - 待机循环
- 逐步形成一套统一的表现逻辑
+逐步形成一套统一的表现逻辑
+
+## Session 058 - 收口独立项目文档边界
+
+日期：2026-03-26
+
+### 我们这一轮在做什么
+
+这一轮没有继续给主仓库堆绯铃或 `EasyVtuber` 细节，而是正式把这两条线从 `agent_study` 的 README 里收出去，改成独立项目维护。
+
+### 这一轮固化了什么
+
+- `agent_study/README.md`
+  - 只保留主仓库职责、独立项目入口和短索引
+  - 不再继续记录绯铃桌宠和 `EasyVtuber` 实验的详细日志
+- `C:\Users\Administrator\Desktop\feiling\README.md`
+  - 改成独立桌宠项目 README
+- `C:\Users\Administrator\Desktop\EasyVtuber_inspect\README_LOCAL.md`
+  - 新增本地实验 README
+
+### 当前结论
+
+- `agent_study` 继续只做检索、搜索窗口和 Agent 方向
+- `feiling` 继续只做绯铃陪伴型桌宠
+- `EasyVtuber_inspect` 继续只做待机导帧实验
+- 以后从别的线程接手时，应直接进入对应目录，而不是再从主仓库 README 里翻过程日志

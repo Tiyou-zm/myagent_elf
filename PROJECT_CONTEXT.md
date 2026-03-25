@@ -19,29 +19,14 @@
 - `C:\\Users\\Administrator\\Desktop\\feiling`
   - 新的独立绯铃桌宠项目
   - 当前只做陪伴型桌宠本体，不继续绑定搜索/Agent 入口
+  - 后续桌宠实现、素材和交互调优都在该目录内独立维护
   - 当前提供根目录一键脚本：
     - `run_feiling.bat`
     - `stop_feiling.bat`
-  - 当前继续围绕：
-    - 主窗边界收紧
-    - 独立气泡窗
-    - 降低桌面遮挡
-  - 当前最新方向：
-    - 主窗优先继续向角色真实边界贴近
-  - 当前已补：
-    - `BLINK_SPRITESHEET_BRIEF.md`
-    - `IDLE_BREATH_SPRITESHEET_BRIEF.md`
-    - 为后续待机精灵图出图提供独立任务单
-  - 当前新增：
-    - `LIVE2D_SPRITE_HYBRID_BRIEF.md`
-    - 明确后续绯铃主体走 Live2D、短动作走精灵图的混合路线
   - 当前新增 `EasyVtuber` 实验目录：
     - `C:\Users\Administrator\Desktop\EasyVtuber_inspect`
-    - 已改成可导出待机 PNG 序列帧的实验工具
-    - 重点新增：
-      - `--output_frames`
-      - `--idle_export_input`
-      - `export_feiling_idle_frames.ps1`
+    - 作为独立实验目录存在
+    - 后续导帧、性能和模型实验都在该目录内独立维护
 
 ## Git 仓库
 
